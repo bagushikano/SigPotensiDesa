@@ -19,7 +19,7 @@ Route::get('/login', 'Admin\Auth\LoginController@loginForm')->name('Login Form')
 Route::post('/login', 'Admin\Auth\LoginController@login')->name('Login');
 Route::post('/logout', 'Admin\Auth\LoginController@logout')->name('Logout');
 
-Route::get('/dashboard', 'Admin\dashboard\DashboardController@dashboard')->name('Dashboard Admin');
+Route::get('/dashboard', 'Admin\Dashboard\DashboardController@dashboard')->name('Dashboard Admin');
 
 Route::get('/manajemen-desa', 'Admin\ManajemenDesa\ManajemenDesaController@semuaDesa')->name('Manajemen Desa');
 Route::post('/manajemen-desa/tambah', 'Admin\ManajemenDesa\ManajemenDesaController@tambahDesa')->name('Tambah Desa');
