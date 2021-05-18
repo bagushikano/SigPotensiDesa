@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', 'user\landing\LandingController@landing')->name('Landing Page');
+Route::get('/', 'User\Landing\LandingController@landing')->name('Landing Page');
 
 Route::get('/login', 'Admin\Auth\LoginController@loginForm')->name('Login Form')->middleware('guest');
 Route::post('/login', 'Admin\Auth\LoginController@login')->name('Login');
