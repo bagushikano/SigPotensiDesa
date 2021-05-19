@@ -15,19 +15,24 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/maps/icon/{id}', 'Admin\Images\ImageController@getIcon');
 
+
 Route::get('/', 'User\Landing\LandingController@landing')->name('Landing Page');
+
 
 Route::get('/login', 'Admin\Auth\LoginController@loginForm')->name('Login Form')->middleware('guest');
 Route::post('/login', 'Admin\Auth\LoginController@login')->name('Login');
 Route::post('/logout', 'Admin\Auth\LoginController@logout')->name('Logout');
 
+
 Route::get('/dashboard', 'Admin\Dashboard\DashboardController@dashboard')->name('Dashboard Admin');
+
 
 Route::get('/manajemen-desa', 'Admin\ManajemenDesa\ManajemenDesaController@semuaDesa')->name('Manajemen Desa');
 Route::post('/manajemen-desa/tambah', 'Admin\ManajemenDesa\ManajemenDesaController@tambahDesa')->name('Tambah Desa');
 Route::get('/manajemen-desa/polyline/{desa}', 'Admin\ManajemenDesa\ManajemenDesaController@polylineDesa')->name('Polyline Desa');
 Route::get('/manajemen-desa/detail/{desa}', 'Admin\ManajemenDesa\ManajemenDesaController@detailDesa')->name('Detail Desa');
 Route::post('/manajemen-desa/update/{desa}', 'Admin\ManajemenDesa\ManajemenDesaController@updateDesa')->name('Update Desa');
+
 
 Route::get('/pasar', 'Admin\PotensiDesa\PasarController@semuaPasar')->name('Pasar');
 Route::get('/pasar/tambah', 'Admin\PotensiDesa\PasarController@tambahPasar')->name('Tambah Pasar');
@@ -36,8 +41,16 @@ Route::get('/pasar/detail/{pasar}', 'Admin\PotensiDesa\PasarController@detailPas
 Route::post('/pasar/update/{pasar}', 'Admin\PotensiDesa\PasarController@updatePasar')->name('Update Pasar');
 Route::post('/pasar/hapus/{pasar}', 'Admin\PotensiDesa\PasarController@hapusPasar')->name('Hapus Pasar');
 
+
 Route::get('/pusat-pemerintahan', 'Admin\PotensiDesa\PuspemController@semuaPuspem')->name('Puspem');
+Route::get('/pusat-pemerintahan/tambah', 'Admin\PotensiDesa\PuspemController@tambahPuspem')->name('Tambah Puspem');
+Route::post('/pusat-pemerintahan/simpan', 'Admin\PotensiDesa\PuspemController@simpanPuspem')->name('Simpan Puspem');
+Route::get('/pusat-pemerintahan/detail/{puspem}', 'Admin\PotensiDesa\PuspemController@detailPuspem')->name('Detail Puspem');
+Route::post('/pusat-pemerintahan/update/{puspem}', 'Admin\PotensiDesa\PuspemController@updatePuspem')->name('Update Puspem');
+Route::post('/pusat-pemerintahan/hapus/{puspem}', 'Admin\PotensiDesa\PuspemController@hapusPuspem')->name('Hapus Puspem');
+
 
 Route::get('/sekolah', 'Admin\PotensiDesa\SekolahController@semuaSekolah')->name('Sekolah');
+
 
 Route::get('/tempat-ibadah', 'Admin\PotensiDesa\TempatIbadahController@semuaTempatIbadah')->name('Tempat Ibadah');

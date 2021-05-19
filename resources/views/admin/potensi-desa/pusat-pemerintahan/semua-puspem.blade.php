@@ -29,52 +29,67 @@
                                 <h3 class="card-title my-auto">Daftar Pusat Pemerintahan</h3>
                             </div>
                             <div class="col-6 my-auto d-flex justify-content-end">
-                                <a data-bs-toggle="modal" data-bs-target="#tambahDesa" class="card-title btn btn-success my-auto">Tambah Desa</a>
+                                <a href="{{ route('Tambah Puspem') }}" class="card-title btn btn-success my-auto">Tambah Puspem</a>
                             </div>
                         </div>
                     </div>
-                    {{-- @if ($desa->count() < 1)
+                    @if ($puspem->count() < 1)
                         <div class="card-body my-auto">
-                            <p class="fs-5 my-auto text-center">Tidak Terdapat Data Desa</p>
+                            <p class="fs-5 my-auto text-center">Tidak Terdapat Data Pusat Pemerintahan</p>
                         </div>
                     @else
                         <div class="card-body table-responsive-md">
-                            <table id="tbDesa" class="table table-bordered table-hover">
+                            <table id="tbPuspem" class="table table-bordered table-hover">
                                 <thead class="text-center">
                                     <tr>
                                         <th>No</th>
-                                        <th>Nama Desa</th>
+                                        <th>Nama Puspem</th>
+                                        <th>Tingkat</th>
                                         <th class="d-md-none">Tindakan</th>
                                         <th class="d-none d-md-table-cell">Tindakan</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($desa as $data)
+                                    @foreach ($puspem as $data)
                                         <tr class="text-center align-middle my-auto">
                                             <td class="align-middle">{{ $loop->iteration }}</td>
                                             <td class="align-middle">{{ $data->nama }}</td>
+                                            <td class="align-middle">{{ $data->tingkat }}</td>
                                             <td class="text-center align-middle d-md-none">
-                                                <a href="{{ route('Detail Desa', $data->id) }}" class="btn btn-warning btn-sm">
+                                                <a href="{{ route('Detail Puspem', $data->id) }}" class="btn btn-warning btn-sm">
                                                     <i class="fas fa-eye"></i>
                                                 </a>
+                                                <form action="{{ route('Hapus Puspem', $data->id) }}" method="POST" class="d-inline">
+                                                    @csrf
+                                                    <button type="submit" class="btn btn-sm btn-danger">
+                                                        <i class="fas fa-trash"></i>
+                                                        Hapus
+                                                    </button>
+                                                </form>
                                             </td>
                                             <td class="text-center align-middle d-none d-md-table-cell">
-                                                <a href="{{ route('Detail Desa', $data->id) }}" class="btn btn-warning btn-sm">
+                                                <a href="{{ route('Detail Puspem', $data->id) }}" class="btn btn-warning btn-sm">
                                                     <i class="fas fa-eye"></i>
                                                     Detail
                                                 </a>
+                                                <form action="{{ route('Hapus Puspem', $data->id) }}" method="POST" class="d-inline">
+                                                    @csrf
+                                                    <button type="submit" class="btn btn-sm btn-danger">
+                                                        <i class="fas fa-trash"></i>
+                                                        Hapus
+                                                    </button>
+                                                </form>
                                             </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
                             </table>
                         </div>
-                    @endif --}}
+                    @endif
                 </div>
             </div>
         </div>
     </div>
-    {{-- @include('modal/tambah-desa')   --}}
 @endsection
 
 @push('js')
@@ -86,17 +101,18 @@
 
     <script type="text/javascript">
         $(document).ready(function(){
-            $('#admin-manajemen-desa').addClass('menu-open');
-            $('#manajemen-desa').addClass('active');
+            $('#list-potensi-desa').addClass('menu-is-opening menu-open');
+            $('#potensi-desa').addClass('active');
+            $('#pusat-pemerintahan').addClass('active');
         });
 
         $(function () {
-            $("#tbDesa").DataTable({
+            $("#tbPuspem").DataTable({
                 "responsive": false, "lengthChange": false, "autoWidth": false,
                 "oLanguage": {
                     "sSearch": "Cari:",
                     "sZeroRecords": "Data Tidak Ditemukan",
-                    "sSearchPlaceholder": "Cari desa ...",
+                    "sSearchPlaceholder": "Cari puspem ...",
                     "infoEmpty": "Menampilkan 0 Data",
                     "infoFiltered": "(dari _MAX_ Data)"
                 },

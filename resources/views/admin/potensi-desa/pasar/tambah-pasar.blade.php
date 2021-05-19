@@ -55,7 +55,7 @@
                                 </div>
                                 <div class="col-sm-12 col-md-6">
                                     <div class="form-floating mb-3">
-                                        <select class="form-select" id="lokasi_desa" name="lokasi_desa" aria-label="Floating label select example" name="desa" required>
+                                        <select class="form-select" id="lokasi_desa" name="lokasi_desa" required>
                                             <option disabled selected value="">Pilih desa lokasi pasar</option>
                                             @foreach ($desa as $data)
                                                 <option value="{{ $data->id }}" onclick="showBatasDesa('{{$data->id}}')">{{ $data->nama }}</option>
@@ -194,6 +194,8 @@
                     for(; Object.keys(mymap._layers).length > 1;) {
                         mymap.removeLayer(mymap._layers[Object.keys(mymap._layers)[1]]);
                     }
+                    $('#latPasar').val(''); // Set field latPasar dengan nilai lat baru
+                    $('#lngPasar').val(''); // Set field lngPasar dengan nilai lng baru
                     let koor = jQuery.parseJSON(element['batas_wilayah']);
                     let pathCoords = makePolygon(koor);
                     pathLine = L.polygon(pathCoords, {
@@ -218,9 +220,16 @@
             return c;
         }
 
+        // Inisialisasi Map Icon
+        let mapIcon = L.icon({
+            iconUrl: "/maps/icon/1",
+            iconSize: [27, 27],
+            iconAnchor: [16, 16],
+        });
+
         // Digunakan untuk membuat event on klik pada batas desa yang tampil
         function klikBatasDesa(e) {
-            marker = new L.marker(e.latlng);
+            marker = new L.marker(e.latlng, {icon: mapIcon});
             pathLine.off('click', klikBatasDesa); // Disable fungsi onClik pada layer batas desa
             // Event ketika marker pada map di klik
             marker.on('click', function() {

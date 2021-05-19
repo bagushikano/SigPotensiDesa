@@ -21,6 +21,11 @@ class Desa extends Model
         return $this->hasMany(Pasar::class, 'id_desa', 'id');
     }
 
+    public function puspem()
+    {
+        return $this->hasMany(Puspem::class, 'id_desa', 'id');
+    }
+
     public function potensiDesa()
     {
         return $this->hasMany(PotensiDesa::class, 'id_desa', 'id');

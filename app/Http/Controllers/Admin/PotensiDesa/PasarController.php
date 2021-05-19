@@ -35,9 +35,9 @@ class PasarController extends Controller
             'lng' => $request->lngPasar,
         ]);
 
-        $cekPotensiDesa = PotensiDesa::where('id_desa', $request->desa)->first();
+        $cekPotensiDesa = PotensiDesa::where('id_desa', $request->lokasi_desa)->first();
         if ($cekPotensiDesa) {
-            $potensiDesa = PotensiDesa::where('id_desa', $request->desa)->update([
+            $potensiDesa = PotensiDesa::where('id_desa', $request->lokasi_desa)->update([
                 'pasar' => $cekPotensiDesa->pasar + 1
             ]);
         } else {

@@ -19,4 +19,9 @@ class JenisPotensi extends Model
     {
         return $this->belongsTo(Pasar::class);
     }
+
+    public function puspem()
+    {
+        return $this->belongsTo(Puspem::class);
+    }
 }

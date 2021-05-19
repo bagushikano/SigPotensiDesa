@@ -26,10 +26,10 @@
                     <div class="card-header">
                         <div class="row">
                             <div class="col-6 my-auto">
-                                <h3 class="card-title my-auto">Daftar Desa</h3>
+                                <h3 class="card-title my-auto">Daftar Pasar</h3>
                             </div>
                             <div class="col-6 my-auto d-flex justify-content-end">
-                                <a href="{{ route('Tambah Pasar') }}" class="card-title btn btn-success my-auto">Tambah Desa</a>
+                                <a href="{{ route('Tambah Pasar') }}" class="card-title btn btn-success my-auto">Tambah Pasar</a>
                             </div>
                         </div>
                     </div>
