@@ -204,7 +204,7 @@
 
         // Inisialisasi Map Icon
         let mapIcon = L.icon({
-            iconUrl: "/icon/pasar.svg",
+            iconUrl: "/maps/icon/1",
             iconSize: [27, 27],
             iconAnchor: [16, 32],
             popupAnchor: [0, -32],

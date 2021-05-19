@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/maps/icon/{id}', 'Admin\Images\ImageController@getIcon');
+
 Route::get('/', 'User\Landing\LandingController@landing')->name('Landing Page');
 
 Route::get('/login', 'Admin\Auth\LoginController@loginForm')->name('Login Form')->middleware('guest');
