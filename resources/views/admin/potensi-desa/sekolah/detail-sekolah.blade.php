@@ -17,12 +17,12 @@
 
 @section('content')
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h3 col-lg-auto text-center text-md-start">Tambah Pusat Pemerintahan</h1>
+        <h1 class="h3 col-lg-auto text-center text-md-start">Detail Sekolah</h1>
         <div class="col-auto ml-auto text-right mt-n1">
             <nav aria-label="breadcrumb text-center">
                 <ol class="breadcrumb bg-transparent p-0 mt-1 mb-0">
-                    <li class="breadcrumb-item"><a class="text-decoration-none" href="{{ route('Puspem') }}">Manajemen Puspem</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Tambah Baru</li>
+                    <li class="breadcrumb-item"><a class="text-decoration-none" href="{{ route('Sekolah') }}">Manajemen Sekolah</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Detail</li>
                 </ol>
             </nav>
         </div>
@@ -32,35 +32,46 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header my-auto text-center">
-                        <p class="my-auto">Tambah Data Pusat Pemerintahan</p>
+                        <p class="my-auto">Peta Lokasi Sekolah</p>
                     </div>
                     <div class="card-body">
-                        <form action="{{ route('Simpan Puspem') }}" method="POST" class="needs-validation" novalidate>
+                        <div id="mapid"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header my-auto text-center">
+                        <p class="my-auto">Data Data Sekolah</p>
+                    </div>
+                    <div class="card-body">
+                        <form action="{{ route('Update Sekolah', $sekolah->id) }}" method="POST" class="needs-validation" novalidate>
                             @csrf
                             <div class="row">
-                                <div class="col-12">
+                                <div class="col-sm-12 col-md-6">
                                     <div class="form-floating mb-3">
-                                        <input type="text" class="form-control @error('nama_puspem') is-invalid @enderror" id="nama_puspem" name="nama_puspem" placeholder="Masukan nama pusat pemerintahan" value="{{ old('nama_puspem') }}" autocomplete="off" required>
-                                        <label for="nama_puspem">Nama Pusat Pemerintahan</label>
-                                        @error('nama_puspem')
+                                        <input type="text" class="form-control @error('nama_sekolah') is-invalid @enderror" id="nama_sekolah" name="nama_sekolah" placeholder="Masukan nama pusat pemerintahan" value="{{ old('nama_sekolah', $sekolah->nama) }}" autocomplete="off" required>
+                                        <label for="nama_sekolah">Nama Sekolah</label>
+                                        @error('nama_sekolah')
                                             <div class="invalid-feedback text-start">
                                                 {{ $message }}
                                             </div>
                                         @else
                                             <div class="invalid-feedback">
-                                                Nama Pusat Pemerintahan wajib diisi
+                                                Nama Sekolah wajib diisi
                                             </div>
                                         @enderror
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row">
                                 <div class="col-sm-12 col-md-6">
                                     <div class="form-floating mb-3">
                                         <select class="form-select" id="lokasi_desa" name="lokasi_desa" required>
-                                            <option disabled selected value="">Pilih desa lokasi puspem</option>
                                             @foreach ($desa as $data)
-                                                <option value="{{ $data->id }}" onclick="showBatasDesa('{{$data->id}}')">{{ $data->nama }}</option>
+                                                @if ($data->id == $sekolah->desa->id)
+                                                    <option selected value="{{ $sekolah->id_desa }}" onclick="showBatasDesa('{{$data->id}}')">{{ $sekolah->desa->nama }}</option>
+                                                @else
+                                                    <option value="{{ $data->id }}" onclick="showBatasDesa('{{$data->id}}')">{{ $data->nama }}</option>
+                                                @endif
                                             @endforeach
                                         </select>
                                         @error('lokasi_desa')
@@ -69,60 +80,87 @@
                                             </div>
                                         @else
                                             <div class="invalid-feedback">
-                                                Desa lokasi puspem wajib diisi
+                                                Desa lokasi sekolah wajib diisi
                                             </div>
                                         @enderror
                                         <label for="lokasi_desa">Lokasi Desa</label>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="row">
                                 <div class="col-sm-12 col-md-6">
                                     <div class="form-floating mb-3">
-                                        <select class="form-select" id="tingkat_pemerintahan" name="tingkat_pemerintahan" name="desa" required>
-                                            <option disabled selected value="">Pilih tingkat pemerintahan</option>
-                                            <option value="Pemda">Pemda</option>
-                                            <option value="Pemkab">Pemkab</option>
-                                            <option value="Pemprov">Pemprov</option>
+                                        <select class="form-select" id="jenjang" name="jenjang" name="desa" required>
+                                            <option selected value="{{ $sekolah->jenjang }}">{{ $sekolah->jenjang }}</option>
+                                            <option value="Paud">Paud</option>
+                                            <option value="TK">TK</option>
+                                            <option value="SD">SD</option>
+                                            <option value="SMP">SMP</option>
+                                            <option value="SMA">SMA</option>
+                                            <option value="SMK">SMK</option>
+                                            <option value="Universitas">Universitas</option>
                                         </select>
-                                        @error('tingkat_pemerintahan')
+                                        @error('jenjang')
                                             <div class="invalid-feedback text-start">
                                                 {{ $message }}
                                             </div>
                                         @else
                                             <div class="invalid-feedback">
-                                                Tingkat pemerintahan wajib diisi
+                                                Jenjang sekolah wajib diisi
                                             </div>
                                         @enderror
-                                        <label for="tingkat_pemerintahan">Tingkat Pemerintahan</label>
+                                        <label for="jenjang">Jenjang Sekolah</label>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 col-md-6">
+                                    <div class="form-floating mb-3">
+                                        <select class="form-select" id="jenis_sekolah" name="jenis_sekolah" name="desa" required>
+                                            @if ($sekolah->jenis_sekolah == 'Sekolah Negeri')
+                                                <option selected value="Sekolah Swasta">Sekolah Swasta</option>
+                                            @else
+                                                <option value="Sekolah Negeri">Sekolah Negeri</option>
+                                            @endif
+                                        </select>
+                                        @error('jenis_sekolah')
+                                            <div class="invalid-feedback text-start">
+                                                {{ $message }}
+                                            </div>
+                                        @else
+                                            <div class="invalid-feedback">
+                                                Jenis sekolah wajib diisi
+                                            </div>
+                                        @enderror
+                                        <label for="jenis_sekolah">Jenis Sekolah</label>
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-sm-12 col-md-6">
                                     <div class="mb-3">
-                                        <label for="latPuspem" class="form-label">Koordinat Latitude</label>
-                                        <input type="text" class="form-control disabled" id="latPuspem" name="latPuspem" placeholder="Koordinat latitude pusat pemerintahan" required readonly>
-                                        @error('latPuspem')
+                                        <label for="latSekolah" class="form-label">Koordinat Latitude</label>
+                                        <input type="text" class="form-control disabled" id="latSekolah" name="latSekolah" value="{{ old('latSekolah', $sekolah->lat) }}" placeholder="Koordinat latitude sekolah" required readonly>
+                                        @error('latSekolah')
                                             <div class="invalid-feedback text-start">
                                                 {{ $message }}
                                             </div>
                                         @else
                                             <div class="invalid-feedback">
-                                                Silahkan pilih lokasi pusat pemerintahan pada peta
+                                                Silahkan pilih lokasi sekolah pada peta
                                             </div>
                                         @enderror
                                     </div>
                                 </div>
                                 <div class="col-sm-12 col-md-6">
                                     <div class="mb-3">
-                                        <label for="lngPuspem" class="form-label">Koordinat Longitude</label>
-                                        <input type="text" class="form-control" id="lngPuspem" name="lngPuspem" placeholder="Koordinat longitude pasar" required readonly>
-                                        @error('lngPuspem')
+                                        <label for="lngSekolah" class="form-label">Koordinat Longitude</label>
+                                        <input type="text" class="form-control" id="lngSekolah" name="lngSekolah" value="{{ old('lngSekolah', $sekolah->lng) }}" placeholder="Koordinat longitude sekolah" required readonly>
+                                        @error('lngSekolah')
                                             <div class="invalid-feedback text-start">
                                                 {{ $message }}
                                             </div>
                                         @else
                                             <div class="invalid-feedback">
-                                                Silahkan pilih lokasi pusat pemerintahan pada peta
+                                                Silahkan pilih lokasi sekolah pada peta
                                             </div>
                                         @enderror
                                     </div>
@@ -131,8 +169,8 @@
                             <div class="row">
                                 <div class="col-12">
                                     <div class="mb-3">
-                                        <label for="alamat" class="form-label">Alamat Pusat Pemerintahan</label>
-                                        <textarea class="form-control @error('alamat') is-invalid @enderror" id="alamat" placeholder="Masukan alamat pasar" name="alamat" style="height: 60px" required>{{ old('alamat') }}</textarea>
+                                        <label for="alamat" class="form-label">Alamat Sekolah</label>
+                                        <textarea class="form-control @error('alamat') is-invalid @enderror" id="alamat" placeholder="Masukan alamat pasar" name="alamat" style="height: 60px" required>{{ old('alamat', $sekolah->alamat) }}</textarea>
                                         @error('alamat')
                                             <div class="invalid-feedback text-start">
                                                 {{ $message }}
@@ -154,16 +192,6 @@
                     </div>
                 </div>
             </div>
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-header my-auto text-center">
-                        <p class="my-auto">Peta Pusat Pemerintahan</p>
-                    </div>
-                    <div class="card-body">
-                        <div id="mapid"></div>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 @endsection
@@ -182,7 +210,7 @@
         $(document).ready(function(){
             $('#list-potensi-desa').addClass('menu-is-opening menu-open');
             $('#potensi-desa').addClass('active');
-            $('#pusat-pemerintahan').addClass('active');
+            $('#sekolah').addClass('active');
         });
 
         // Inisialisasi Map
@@ -206,26 +234,63 @@
 
         let pathLine;
 
-        // Menampilkan batas desa sesuai desa yang dipilih
+        // Memunculkan batas desa (Polyline) dari db bedasarkan id_desa di field
+        let desa = {!! json_encode($satuDesa) !!}
+        desa.forEach(element => {
+            let koor = jQuery.parseJSON(element['batas_wilayah']);
+            let pathCoords = makePolygon(koor);
+            pathLine = L.polygon(pathCoords, {
+                id: element['id'],
+                color: element['warna'],
+                fillColor: element['warna'],
+                fillOpacity: 0.4,
+                fillOpacity: 0.4,
+                nama: element['nama'],
+            }).addTo(mymap); 
+        });
+
+        // Inisialisasi Map Icon
+        let mapIcon = L.icon({
+            iconUrl: "/maps/icon/3",
+            iconSize: [27, 27],
+            iconAnchor: [16, 16],
+            popupAnchor: [0, -8],
+        });
+
+        // Menampilkan Marker dari db
+        let sekolah = {!! json_encode($sekolah) !!}
+        let marker = L.marker([sekolah.lat, sekolah.lng], {
+            icon: mapIcon,
+        }).addTo(mymap);
+
+        marker.dragging.enable();
+
+        marker.on('dragend', function(e){
+            $('#latSekolah').val(e.target._latlng.lat); // Set field latSekolah dengan nilai lat baru
+            $('#lngSekolah').val(e.target._latlng.lng); // Set field lngPSekolah dengan nilai lng baru
+        });
+
+        // Menampilkan batas desa (Polyline) ketika desa dipilih pada field Lokasi Desa
         function showBatasDesa(desa) {
             let myDesa = {!! json_encode($desa->toArray()) !!}
             myDesa.forEach(element => {
                 if(element['id'] == desa){
-                    // Menghapus batas desa sebelumnya ketika desa baru dipilih
+                    // Menghapus semua Polyline yang ada sebelumnya, sebelum memunculkan Polyline baru
                     for(; Object.keys(mymap._layers).length > 1;) {
                         mymap.removeLayer(mymap._layers[Object.keys(mymap._layers)[1]]);
                     }
-                    $('#latPuspem').val(''); // Set field latPuspem dengan nilai lat baru
-                    $('#lngPuspem').val(''); // Set field lngPuspem dengan nilai lng baru
+                    let sekolah = {!! json_encode($sekolah) !!}
+                    let marker = L.marker([sekolah.lat, sekolah.lng], {
+                        icon: mapIcon,
+                    }).bindPopup().addTo(mymap);
                     let koor = jQuery.parseJSON(element['batas_wilayah']);
                     let pathCoords = makePolygon(koor);
-                    pathLine = L.polygon(pathCoords, {
+                    let pathLine = L.polygon(pathCoords, {
                         id: element['id'],
                         color: element['warna'],
                         fillColor: element['warna'],
                         fillOpacity: 0.4,
                     }).addTo(mymap);
-                    pathLine.on('click', klikBatasDesa); // Memanggil fungsi klikBatasDesa
                 }
             });
         }
@@ -240,29 +305,6 @@
             }
             return c;
         }
-
-        // Inisialisasi Map Icon
-        let mapIcon = L.icon({
-            iconUrl: "/maps/icon/2",
-            iconSize: [27, 27],
-            iconAnchor: [16, 16],
-        });
-
-        // Digunakan untuk membuat event on klik pada batas desa yang tampil
-        function klikBatasDesa(e) {
-            marker = new L.marker(e.latlng, {icon: mapIcon});
-            pathLine.off('click', klikBatasDesa); // Disable fungsi onClik pada layer batas desa
-            // Event ketika marker pada map di klik
-            marker.on('click', function() {
-                mymap.removeLayer(marker) // Menghapus marker
-                $('#latPuspem').val(''); // Set field latPuspem dengan nilai lat baru
-                $('#lngPuspem').val(''); // Set field lngPuspem dengan nilai lng baru
-                pathLine.on('click', klikBatasDesa); // Enable fungsi onClik pada layer batas desa setelah marker sebelumnya di hapus
-            });
-            $('#latPuspem').val(e.latlng.lat); // Set field latPuspem dengan nilai lat baru
-            $('#lngPuspem').val(e.latlng.lng); // Set field lngPuspem dengan nilai lng baru
-            mymap.addLayer(marker);
-        };
 
         // JS bawaan dari Bootstrap 5 untuk melakukan realtime validation ketika form required
         (function () {

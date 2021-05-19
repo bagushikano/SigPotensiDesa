@@ -63,7 +63,6 @@
                                                     @csrf
                                                     <button type="submit" class="btn btn-sm btn-danger">
                                                         <i class="fas fa-trash"></i>
-                                                        Hapus
                                                     </button>
                                                 </form>
                                             </td>

@@ -51,6 +51,11 @@ Route::post('/pusat-pemerintahan/hapus/{puspem}', 'Admin\PotensiDesa\PuspemContr
 
 
 Route::get('/sekolah', 'Admin\PotensiDesa\SekolahController@semuaSekolah')->name('Sekolah');
+Route::get('/sekolah/tambah', 'Admin\PotensiDesa\SekolahController@tambahSekolah')->name('Tambah Sekolah');
+Route::post('/sekolah/simpan', 'Admin\PotensiDesa\SekolahController@simpanSekolah')->name('Simpan Sekolah');
+Route::get('/sekolah/detail/{sekolah}', 'Admin\PotensiDesa\SekolahController@detailSekolah')->name('Detail Sekolah');
+Route::post('/sekolah/update/{sekolah}', 'Admin\PotensiDesa\SekolahController@updateSekolah')->name('Update Sekolah');
+Route::post('/sekolah/hapus/{sekolah}', 'Admin\PotensiDesa\SekolahController@hapusSekolah')->name('Hapus Sekolah');
 
 
 Route::get('/tempat-ibadah', 'Admin\PotensiDesa\TempatIbadahController@semuaTempatIbadah')->name('Tempat Ibadah');

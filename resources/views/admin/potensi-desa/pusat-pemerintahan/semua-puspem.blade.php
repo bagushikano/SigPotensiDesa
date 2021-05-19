@@ -13,7 +13,7 @@
         <div class="col-auto ml-auto text-right mt-n1">
             <nav aria-label="breadcrumb text-center">
                 <ol class="breadcrumb bg-transparent p-0 mt-1 mb-0">
-                    <li class="breadcrumb-item"><a class="text-decoration-none" href="/">Dashboard</a></li>
+                    <li class="breadcrumb-item"><a class="text-decoration-none" href="{{ route('Dashboard Admin') }}">Dashboard</a></li>
                     <li class="breadcrumb-item active" aria-current="page">Pusat Pemerintahan</li>
                 </ol>
             </nav>
@@ -63,7 +63,6 @@
                                                     @csrf
                                                     <button type="submit" class="btn btn-sm btn-danger">
                                                         <i class="fas fa-trash"></i>
-                                                        Hapus
                                                     </button>
                                                 </form>
                                             </td>

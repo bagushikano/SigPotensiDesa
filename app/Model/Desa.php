@@ -26,6 +26,11 @@ class Desa extends Model
         return $this->hasMany(Puspem::class, 'id_desa', 'id');
     }
 
+    public function sekolah()
+    {
+        return $this->hasMany(Sekolah::class, 'id_desa', 'id');
+    }
+
     public function potensiDesa()
     {
         return $this->hasMany(PotensiDesa::class, 'id_desa', 'id');

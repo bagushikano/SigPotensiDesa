@@ -24,4 +24,9 @@ class JenisPotensi extends Model
     {
         return $this->belongsTo(Puspem::class);
     }
+
+    public function sekolah()
+    {
+        return $this->belongsTo(Sekolah::class);
+    }
 }
