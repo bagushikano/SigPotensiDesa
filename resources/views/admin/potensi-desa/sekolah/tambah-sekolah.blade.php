@@ -266,7 +266,7 @@
 
         // Inisialisasi Map Icon
         let mapIcon = L.icon({
-            iconUrl: "/maps/icon/2",
+            iconUrl: "/maps/icon/3",
             iconSize: [27, 27],
             iconAnchor: [16, 16],
         });
