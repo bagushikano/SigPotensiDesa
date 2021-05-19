@@ -59,3 +59,8 @@ Route::post('/sekolah/hapus/{sekolah}', 'Admin\PotensiDesa\SekolahController@hap
 
 
 Route::get('/tempat-ibadah', 'Admin\PotensiDesa\TempatIbadahController@semuaTempatIbadah')->name('Tempat Ibadah');
+Route::get('/tempat-ibadah/tambah', 'Admin\PotensiDesa\TempatIbadahController@tambahTempatIbadah')->name('Tambah Tempat Ibadah');
+Route::post('/tempat-ibadah/simpan', 'Admin\PotensiDesa\TempatIbadahController@simpanTempatIbadah')->name('Simpan Tempat Ibadah');
+Route::get('/tempat-ibadah/detail/{tempatIbadah}', 'Admin\PotensiDesa\TempatIbadahController@detailTempatIbadah')->name('Detail Tempat Ibadah');
+Route::post('/tempat-ibadah/update/{tempatIbadah}', 'Admin\PotensiDesa\TempatIbadahController@updateTempatIbadah')->name('Update Tempat Ibadah');
+Route::post('/tempat-ibadah/hapus/{tempatIbadah}', 'Admin\PotensiDesa\TempatIbadahController@hapusTempatIbadah')->name('Hapus Tempat Ibadah');

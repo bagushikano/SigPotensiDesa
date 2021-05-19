@@ -66,13 +66,15 @@ class SekolahController extends Controller
 
     public function updateSekolah(Request $request, Sekolah $sekolah)
     {
-        if ($request->lokasi_desa == $sekolah->id_desa && 
-        $request->nama_sekolah == $sekolah->nama && 
-        $request->jenjang == $sekolah->jenjang && 
-        $request->jenis_sekolah == $sekolah->jenis_sekolah && 
-        $request->alamat == $sekolah->alamat && 
-        $request->latSekolah == $sekolah->lat && 
-        $request->lngSekolah == $sekolah->lng) {
+        if (
+            $request->lokasi_desa == $sekolah->id_desa && 
+            $request->nama_sekolah == $sekolah->nama && 
+            $request->jenjang == $sekolah->jenjang && 
+            $request->jenis_sekolah == $sekolah->jenis_sekolah && 
+            $request->alamat == $sekolah->alamat && 
+            $request->latSekolah == $sekolah->lat && 
+            $request->lngSekolah == $sekolah->lng
+        ) {
             return redirect()->back()->with('success', 'Data Potensi Desa (Sekolah) Berhasil Disimpan');
         } else {
             $updateSekolah = Sekolah::where('id', $sekolah->id)->update([

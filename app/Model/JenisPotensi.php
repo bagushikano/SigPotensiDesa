@@ -29,4 +29,9 @@ class JenisPotensi extends Model
     {
         return $this->belongsTo(Sekolah::class);
     }
+
+    public function tempatIbadah()
+    {
+        return $this->belongsTo(TempatIbadah::class);
+    }
 }

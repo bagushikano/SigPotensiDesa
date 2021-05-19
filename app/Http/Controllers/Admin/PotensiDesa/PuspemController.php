@@ -93,7 +93,14 @@ class PuspemController extends Controller
 
     public function updatePuspem(Request $request, Puspem $puspem)
     {
-        if ($request->lokasi_desa == $puspem->id_desa && $request->nama_puspem == $puspem->nama && $request->tingkat_pemerintahan == $puspem->tingkat && $request->alamat == $puspem->alamat && $request->latPuspem == $puspem->lat && $request->lngPuspem == $puspem->lng) {
+        if (
+            $request->lokasi_desa == $puspem->id_desa &&
+            $request->nama_puspem == $puspem->nama &&
+            $request->tingkat_pemerintahan == $puspem->tingkat &&
+            $request->alamat == $puspem->alamat &&
+            $request->latPuspem == $puspem->lat &&
+            $request->lngPuspem == $puspem->lng
+        ) {
             return redirect()->back()->with('success', 'Data Potensi Desa (Pusat Pemerintahan) Berhasil Disimpan');
         } else {
             $updatePuspem = Puspem::where('id', $puspem->id)->update([

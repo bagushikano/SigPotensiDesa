@@ -145,12 +145,6 @@
                     }, false)
                 })
         })()
-
-        function resetForm() {
-            $("#formTambahDesa").trigger("reset");
-            $('#nama_desa').removeClass('is-invalid');
-            $("#nama_desa").val('');
-        }
     </script>
 
     @if (count($errors) > 0)

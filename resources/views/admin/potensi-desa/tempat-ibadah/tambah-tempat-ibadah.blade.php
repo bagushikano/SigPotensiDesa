@@ -17,11 +17,11 @@
 
 @section('content')
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h3 col-lg-auto text-center text-md-start">Tambah Sekolah</h1>
+        <h1 class="h3 col-lg-auto text-center text-md-start">Tambah Tempat Ibadah</h1>
         <div class="col-auto ml-auto text-right mt-n1">
             <nav aria-label="breadcrumb text-center">
                 <ol class="breadcrumb bg-transparent p-0 mt-1 mb-0">
-                    <li class="breadcrumb-item"><a class="text-decoration-none" href="{{ route('Puspem') }}">Manajemen Sekolah</a></li>
+                    <li class="breadcrumb-item"><a class="text-decoration-none" href="{{ route('Tempat Ibadah') }}">Manajemen Tempat Ibadah</a></li>
                     <li class="breadcrumb-item active" aria-current="page">Tambah Baru</li>
                 </ol>
             </nav>
@@ -32,31 +32,33 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header my-auto text-center">
-                        <p class="my-auto">Tambah Data Sekolah</p>
+                        <p class="my-auto">Tambah Data Tempat Ibadah</p>
                     </div>
                     <div class="card-body">
-                        <form action="{{ route('Simpan Sekolah') }}" method="POST" class="needs-validation" novalidate>
+                        <form action="{{ route('Simpan Tempat Ibadah') }}" method="POST" class="needs-validation" novalidate>
                             @csrf
                             <div class="row">
-                                <div class="col-sm-12 col-md-6">
+                                <div class="col-12">
                                     <div class="form-floating mb-3">
-                                        <input type="text" class="form-control @error('nama_sekolah') is-invalid @enderror" id="nama_sekolah" name="nama_sekolah" placeholder="Masukan nama pusat pemerintahan" value="{{ old('nama_sekolah') }}" autocomplete="off" required>
-                                        <label for="nama_sekolah">Nama Sekolah</label>
-                                        @error('nama_sekolah')
+                                        <input type="text" class="form-control @error('nama_tempat_ibadah') is-invalid @enderror" id="nama_tempat_ibadah" name="nama_tempat_ibadah" placeholder="Masukan nama tempat ibadah" value="{{ old('nama_tempat_ibadah') }}" autocomplete="off" required>
+                                        <label for="nama_tempat_ibadah">Nama Tempat Ibadah</label>
+                                        @error('nama_tempat_ibadah')
                                             <div class="invalid-feedback text-start">
                                                 {{ $message }}
                                             </div>
                                         @else
                                             <div class="invalid-feedback">
-                                                Nama Sekolah wajib diisi
+                                                Nama tempat ibadah wajib diisi
                                             </div>
                                         @enderror
                                     </div>
                                 </div>
+                            </div>
+                            <div class="row">
                                 <div class="col-sm-12 col-md-6">
                                     <div class="form-floating mb-3">
                                         <select class="form-select" id="lokasi_desa" name="lokasi_desa" required>
-                                            <option disabled selected value="">Pilih desa lokasi sekolah</option>
+                                            <option disabled selected value="">Pilih desa lokasi tempat ibadah</option>
                                             @foreach ($desa as $data)
                                                 <option value="{{ $data->id }}" onclick="showBatasDesa('{{$data->id}}')">{{ $data->nama }}</option>
                                             @endforeach
@@ -67,85 +69,63 @@
                                             </div>
                                         @else
                                             <div class="invalid-feedback">
-                                                Desa lokasi sekolah wajib diisi
+                                                Desa lokasi tempat ibadah wajib diisi
                                             </div>
                                         @enderror
                                         <label for="lokasi_desa">Lokasi Desa</label>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row">
                                 <div class="col-sm-12 col-md-6">
                                     <div class="form-floating mb-3">
-                                        <select class="form-select" id="jenjang" name="jenjang" required>
-                                            <option disabled selected value="">Pilih Jenjang Sekolah</option>
-                                            <option value="Paud">Paud</option>
-                                            <option value="TK">TK</option>
-                                            <option value="SD">SD</option>
-                                            <option value="SMP">SMP</option>
-                                            <option value="SMA">SMA</option>
-                                            <option value="SMK">SMK</option>
-                                            <option value="Universitas">Universitas</option>
+                                        <select class="form-select" id="umat_agama" name="umat_agama" required>
+                                            <option disabled selected value="">Pilih Umat Agama</option>
+                                            <option value="Hindu">Hindu</option>
+                                            <option value="Islam">Islam</option>
+                                            <option value="Budha">Budha</option>
+                                            <option value="Kristen Protestan">Kristen Protestan</option>
+                                            <option value="Kristen Katolik">Kristen Katolik</option>
+                                            <option value="Konghucu">Konghucu</option>
                                         </select>
-                                        @error('jenjang')
+                                        @error('umat_agama')
                                             <div class="invalid-feedback text-start">
                                                 {{ $message }}
                                             </div>
                                         @else
                                             <div class="invalid-feedback">
-                                                Jenjang sekolah wajib diisi
+                                                Umat agama wajib diisi
                                             </div>
                                         @enderror
-                                        <label for="jenjang">Jenjang Sekolah</label>
-                                    </div>
-                                </div>
-                                <div class="col-sm-12 col-md-6">
-                                    <div class="form-floating mb-3">
-                                        <select class="form-select" id="jenis_sekolah" name="jenis_sekolah" name="desa" required>
-                                            <option disabled selected value="">Pilih jenis sekolah</option>
-                                                <option value="Sekolah Negeri">Sekolah Negeri</option>
-                                                <option value="Sekolah Swasta">Sekolah Swasta</option>
-                                        </select>
-                                        @error('jenis_sekolah')
-                                            <div class="invalid-feedback text-start">
-                                                {{ $message }}
-                                            </div>
-                                        @else
-                                            <div class="invalid-feedback">
-                                                Jenis sekolah wajib diisi
-                                            </div>
-                                        @enderror
-                                        <label for="jenis_sekolah">Jenis Sekolah</label>
+                                        <label for="umat_agama">Umat Agama</label>
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-sm-12 col-md-6">
                                     <div class="mb-3">
-                                        <label for="latSekolah" class="form-label">Koordinat Latitude</label>
-                                        <input type="text" class="form-control disabled" id="latSekolah" name="latSekolah" placeholder="Koordinat latitude sekolah" required readonly>
-                                        @error('latSekolah')
+                                        <label for="latTempatIbadah" class="form-label">Koordinat Latitude</label>
+                                        <input type="text" class="form-control disabled" id="latTempatIbadah" name="latTempatIbadah" placeholder="Koordinat latitude tempat ibadah" required readonly>
+                                        @error('latTempatIbadah')
                                             <div class="invalid-feedback text-start">
                                                 {{ $message }}
                                             </div>
                                         @else
                                             <div class="invalid-feedback">
-                                                Silahkan pilih lokasi sekolah pada peta
+                                                Silahkan pilih lokasi tempat ibadah pada peta
                                             </div>
                                         @enderror
                                     </div>
                                 </div>
                                 <div class="col-sm-12 col-md-6">
                                     <div class="mb-3">
-                                        <label for="lngSekolah" class="form-label">Koordinat Longitude</label>
-                                        <input type="text" class="form-control" id="lngSekolah" name="lngSekolah" placeholder="Koordinat longitude sekolah" required readonly>
-                                        @error('lngSekolah')
+                                        <label for="lngTempatIbadah" class="form-label">Koordinat Longitude</label>
+                                        <input type="text" class="form-control" id="lngTempatIbadah" name="lngTempatIbadah" placeholder="Koordinat longitude tempat ibadah" required readonly>
+                                        @error('lngTempatIbadah')
                                             <div class="invalid-feedback text-start">
                                                 {{ $message }}
                                             </div>
                                         @else
                                             <div class="invalid-feedback">
-                                                Silahkan pilih lokasi sekolah pada peta
+                                                Silahkan pilih lokasi tempat ibadah pada peta
                                             </div>
                                         @enderror
                                     </div>
@@ -154,15 +134,15 @@
                             <div class="row">
                                 <div class="col-12">
                                     <div class="mb-3">
-                                        <label for="alamat" class="form-label">Alamat Sekolah</label>
-                                        <textarea class="form-control @error('alamat') is-invalid @enderror" id="alamat" placeholder="Masukan alamat pasar" name="alamat" style="height: 60px" required>{{ old('alamat') }}</textarea>
+                                        <label for="alamat" class="form-label">Alamat Tempat Ibadah</label>
+                                        <textarea class="form-control @error('alamat') is-invalid @enderror" id="alamat" placeholder="Masukan alamat tempat ibadah" name="alamat" style="height: 60px" required>{{ old('alamat') }}</textarea>
                                         @error('alamat')
                                             <div class="invalid-feedback text-start">
                                                 {{ $message }}
                                             </div>
                                         @else
                                             <div class="invalid-feedback">
-                                                Alamat pusat pemerintahan wajib diisi
+                                                Alamat tempat ibadah wajib diisi
                                             </div>
                                         @enderror
                                     </div>
@@ -180,7 +160,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header my-auto text-center">
-                        <p class="my-auto">Peta Sekolah</p>
+                        <p class="my-auto">Peta Tempat Ibadah</p>
                     </div>
                     <div class="card-body">
                         <div id="mapid"></div>
@@ -205,7 +185,7 @@
         $(document).ready(function(){
             $('#list-potensi-desa').addClass('menu-is-opening menu-open');
             $('#potensi-desa').addClass('active');
-            $('#sekolah').addClass('active');
+            $('#tempat-ibadah').addClass('active');
         });
 
         // Inisialisasi Map
@@ -238,8 +218,8 @@
                     for(; Object.keys(mymap._layers).length > 1;) {
                         mymap.removeLayer(mymap._layers[Object.keys(mymap._layers)[1]]);
                     }
-                    $('#latSekolah').val(''); // Set field latSekolah dengan nilai lat baru
-                    $('#lngSekolah').val(''); // Set field lngSekolah dengan nilai lng baru
+                    $('#latTempatIbadah').val(''); // Set field latTempatIbadah dengan nilai lat baru
+                    $('#lngTempatIbadah').val(''); // Set field lngTempatIbadah dengan nilai lng baru
                     let koor = jQuery.parseJSON(element['batas_wilayah']);
                     let pathCoords = makePolygon(koor);
                     pathLine = L.polygon(pathCoords, {
@@ -266,7 +246,7 @@
 
         // Inisialisasi Map Icon
         let mapIcon = L.icon({
-            iconUrl: "/maps/icon/3",
+            iconUrl: "/maps/icon/4",
             iconSize: [27, 27],
             iconAnchor: [16, 16],
         });
@@ -278,12 +258,12 @@
             // Event ketika marker pada map di klik
             marker.on('click', function() {
                 mymap.removeLayer(marker) // Menghapus marker
-                $('#latSekolah').val(''); // Set field latSekolah dengan nilai lat baru
-                $('#lngSekolah').val(''); // Set field lngSekolah dengan nilai lng baru
+                $('#latTempatIbadah').val(''); // Set field latTempatIbadah dengan nilai lat baru
+                $('#lngTempatIbadah').val(''); // Set field lngTempatIbadah dengan nilai lng baru
                 pathLine.on('click', klikBatasDesa); // Enable fungsi onClik pada layer batas desa setelah marker sebelumnya di hapus
             });
-            $('#latSekolah').val(e.latlng.lat); // Set field latSekolah dengan nilai lat baru
-            $('#lngSekolah').val(e.latlng.lng); // Set field lngSekolah dengan nilai lng baru
+            $('#latTempatIbadah').val(e.latlng.lat); // Set field latTempatIbadah dengan nilai lat baru
+            $('#lngTempatIbadah').val(e.latlng.lng); // Set field lngTempatIbadah dengan nilai lng baru
             mymap.addLayer(marker);
         };
 
