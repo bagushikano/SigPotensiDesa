@@ -116,11 +116,11 @@
                                     <div class="form-floating mb-3">
                                         <select class="form-select" id="jenis_sekolah" name="jenis_sekolah" name="desa" required>
                                             @if ($sekolah->jenis_sekolah == 'Sekolah Negeri')
-                                                <option selected value="Sekolah Swasta">Sekolah Swasta</option>
-                                                <option value="Sekolah Negeri">Sekolah Negeri</option>
-                                            @else
                                                 <option selected value="Sekolah Negeri">Sekolah Negeri</option>
                                                 <option value="Sekolah Swasta">Sekolah Swasta</option>
+                                            @else
+                                                <option selected value="Sekolah Swasta">Sekolah Swasta</option>
+                                                <option value="Sekolah Negeri">Sekolah Negeri</option>
                                             @endif
                                         </select>
                                         @error('jenis_sekolah')
