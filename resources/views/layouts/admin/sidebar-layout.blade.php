@@ -66,12 +66,6 @@
                         </a>
                         <ul class="nav nav-treeview ms-3">
                             <li class="nav-item">
-                                <a href="" id="data-potensi-desa" class="nav-link">
-                                    <i class="fas fa-tags nav-icon"></i>
-                                    <p>Data Potensi Desa</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
                                 <a href="{{ route('Pasar') }}" id="pasar" class="nav-link">
                                     <i class="fas fa-shopping-basket nav-icon"></i>
                                     <p>Pasar</p>

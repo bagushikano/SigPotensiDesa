@@ -237,7 +237,7 @@
 
         // Inisialisasi Map Icon
         let mapIcon = L.icon({
-            iconUrl: "/maps/icon/1",
+            iconUrl: "/maps/icon/2",
             iconSize: [27, 27],
             iconAnchor: [16, 16],
             popupAnchor: [0, -8],
@@ -249,26 +249,12 @@
             icon: mapIcon,
         }).addTo(mymap);
 
-        // // Menampilkan Marker dari db dengan pop up
-        // let puspem = {!! json_encode($puspem) !!}
-        // let marker = L.marker([puspem.lat, puspem.lng], {
-        //     icon: mapIcon,
-        // }).bindPopup().addTo(mymap);
-
         marker.dragging.enable();
 
         marker.on('dragend', function(e){
             $('#latPuspem').val(e.target._latlng.lat); // Set field latPuspem dengan nilai lat baru
             $('#lngPuspem').val(e.target._latlng.lng); // Set field lngPuspem dengan nilai lng baru
         });
-
-        // var msg = "<ul class='list-unstyled'><li class='fw-bold text-center mb-2'>{{$puspem->nama}}</li><li>Tingkat: {{$puspem->tingkat}}</li><li>Alamat: {{$puspem->alamat}}</li><li><a class='text-decoration-none text-dark' target='_blank' href='https://www.google.com/maps/place/{{$puspem->lat}},{{$puspem->lng}}''><i class='fas fa-map-marked-alt'></i> Lihat di Gmaps</a></li></ul>"
-        // marker.bindPopup(msg);
-
-        // // Memunculkan popup ketika marker di click
-        // marker.on('click', function() {
-        //     marker.openPopup();
-        // });
 
         // Menampilkan batas desa (Polyline) ketika desa dipilih pada field Lokasi Desa
         function showBatasDesa(desa) {

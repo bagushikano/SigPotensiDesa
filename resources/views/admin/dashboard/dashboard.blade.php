@@ -73,7 +73,7 @@
             } );
         });
 
-        //MENYAMBUNGKAN KOORDINAT DESA
+        // Menghubungkan antar koordinat batas desa
         function makePolygon(data){
             var c = [];
             for(i in data) {
@@ -83,5 +83,79 @@
             }
             return c;
         }
+
+
+        // Inisialisasi Map Icon
+        let pasarIcon = L.icon({
+            iconUrl: "/maps/icon/1",
+            iconSize: [27, 27],
+            iconAnchor: [16, 16],
+            popupAnchor: [0, -8],
+        });
+        let puspemIcon = L.icon({
+            iconUrl: "/maps/icon/2",
+            iconSize: [27, 27],
+            iconAnchor: [16, 16],
+            popupAnchor: [0, -8],
+        });
+        let sekolahIcon = L.icon({
+            iconUrl: "/maps/icon/3",
+            iconSize: [27, 27],
+            iconAnchor: [16, 16],
+            popupAnchor: [0, -8],
+        });
+        let tempatIbadahIcon = L.icon({
+            iconUrl: "/maps/icon/4",
+            iconSize: [27, 27],
+            iconAnchor: [16, 16],
+            popupAnchor: [0, -8],
+        });
+
+
+        // Menampilkan Marker dari db
+        let pasar = {!! json_encode($pasar) !!}
+        pasar.forEach(element => {
+            let markerPasar = L.marker([element.lat, element.lng], {
+                icon: pasarIcon,
+            }).bindPopup().addTo(mymap);
+            var msgPasar = "<ul class='list-unstyled'><li class='fw-bold text-center mb-2'>"+element['nama']+"</li><li>Desa: "+element['nama_desa']+"</li><li>Alamat: "+element['alamat']+"</li><li><a class='text-decoration-none text-dark' target='_blank' href='https://www.google.com/maps/place/"+element['lat']+","+element['lng']+"''><i class='fas fa-map-marked-alt'></i> Lihat di Gmaps</a></li></ul>"
+            markerPasar.bindPopup(msgPasar);
+            markerPasar.on('click', function() {
+                markerPasar.openPopup();
+            });
+        });
+        let puspem = {!! json_encode($puspem) !!}
+        puspem.forEach(element => {
+            let markerPuspem = L.marker([element.lat, element.lng], {
+                icon: puspemIcon,
+            }).bindPopup().addTo(mymap);
+            var msgPuspem = "<ul class='list-unstyled'><li class='fw-bold text-center mb-2'>"+element['nama']+"</li><li>Desa: "+element['nama_desa']+"</li><li>Tingkat: "+element['tingkat']+"</li><li>Alamat: "+element['alamat']+"</li><li><a class='text-decoration-none text-dark' target='_blank' href='https://www.google.com/maps/place/"+element['lat']+","+element['lng']+"''><i class='fas fa-map-marked-alt'></i> Lihat di Gmaps</a></li></ul>"
+            markerPuspem.bindPopup(msgPuspem);
+            markerPuspem.on('click', function() {
+                markerPuspem.openPopup();
+            });
+        });
+        let sekolah = {!! json_encode($sekolah) !!}
+        sekolah.forEach(element => {
+            let markerSekolah = L.marker([element.lat, element.lng], {
+                icon: sekolahIcon,
+            }).bindPopup().addTo(mymap);
+            var msgSekolah = "<ul class='list-unstyled'><li class='fw-bold text-center mb-2'>"+element['nama']+"</li><li>Desa: "+element['nama_desa']+"</li><li>Jenjang: "+element['jenjang']+"</li><li>Jenis Sekolah: "+element['jenis_sekolah']+"</li><li>Alamat: "+element['alamat']+"</li><li><a class='text-decoration-none text-dark' target='_blank' href='https://www.google.com/maps/place/"+element['lat']+","+element['lng']+"''><i class='fas fa-map-marked-alt'></i> Lihat di Gmaps</a></li></ul>"
+            markerSekolah.bindPopup(msgSekolah);
+            markerSekolah.on('click', function() {
+                markerSekolah.openPopup();
+            });
+        });
+        let tempatIbadah = {!! json_encode($tempatIbadah) !!}
+        tempatIbadah.forEach(element => {
+            let markerTempatIbadah = L.marker([element.lat, element.lng], {
+                icon: sekolahIcon,
+            }).bindPopup().addTo(mymap);
+            var msgTempatIbadah = "<ul class='list-unstyled'><li class='fw-bold text-center mb-2'>"+element['nama']+"</li><li>Desa: "+element['nama_desa']+"</li><li>Ibadat Umat: "+element['agama']+"</li><li>Alamat: "+element['alamat']+"</li><li><a class='text-decoration-none text-dark' target='_blank' href='https://www.google.com/maps/place/"+element['lat']+","+element['lng']+"''><i class='fas fa-map-marked-alt'></i> Lihat di Gmaps</a></li></ul>"
+            markerTempatIbadah.bindPopup(msgTempatIbadah);
+            markerTempatIbadah.on('click', function() {
+                markerTempatIbadah.openPopup();
+            });
+        });
     </script>
 @endpush
