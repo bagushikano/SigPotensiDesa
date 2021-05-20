@@ -35,7 +35,7 @@
                         <p class="my-auto">Tambah Data Pasar</p>
                     </div>
                     <div class="card-body">
-                        <form action="{{ route('Simpan Pasar') }}" method="POST" class="needs-validation" novalidate>
+                        <form action="{{ route('Simpan Pasar') }}" enctype="multipart/form-data" method="POST" class="needs-validation" novalidate>
                             @csrf
                             <div class="row">
                                 <div class="col-sm-12 col-md-6">
@@ -53,6 +53,7 @@
                                         @enderror
                                     </div>
                                 </div>
+                                @include('modal/tambah-foto')
                                 <div class="col-sm-12 col-md-6">
                                     <div class="form-floating mb-3">
                                         <select class="form-select" id="lokasi_desa" name="lokasi_desa" required>
@@ -125,6 +126,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-12 text-right">
+                                    <a data-bs-toggle="modal" data-bs-target="#tambahFoto" class="card-title btn btn-primary">Tambah Foto Pasar</a>
                                     <button type="submit" class="btn btn-sm btn-outline-success">Simpan Data</button>
                                 </div>
                             </div>
@@ -150,7 +152,8 @@
     <script src="{{ asset('admin-template/plugins/datatables/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('admin-template/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
     <script src="{{ asset('admin-template/plugins/datatables-responsive/js/dataTables.responsive.min.js') }}"></script>
-    <script src="{{ asset('admin-template/plugins/datatables-responsive/js/responsive.bootstrap4.min.js')}}"></script>
+    <script src="{{ asset('admin-template/plugins/datatables-responsive/js/responsive.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('admin-template/plugins/bs-custom-file-input/bs-custom-file-input.min.js') }}"></script>
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
     integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
     crossorigin="anonymous"></script>
@@ -161,6 +164,18 @@
             $('#list-potensi-desa').addClass('menu-is-opening menu-open');
             $('#potensi-desa').addClass('active');
             $('#pasar').addClass('active');
+        });
+
+        $(function () {
+            bsCustomFileInput.init();
+        });
+
+        $('#inputFoto').on('change', function(event){
+            var img = document.getElementById('img_preview');
+            img.src = URL.createObjectURL(event.target.files[0]);
+            img.onload = function() {
+                URL.revokeObjectURL(img.src) // free memory
+            }
         });
 
         // Inisialisasi Map

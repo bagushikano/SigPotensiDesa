@@ -14,6 +14,7 @@ class Puspem extends Model
         'id_desa',
         'id_jenis_potensi',
         'nama',
+        'foto',
         'tingkat',
         'alamat',
         'lat',

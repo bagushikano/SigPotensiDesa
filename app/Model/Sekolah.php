@@ -14,6 +14,7 @@ class Sekolah extends Model
         'id_desa',
         'id_jenis_potensi',
         'nama',
+        'foto',
         'jenjang',
         'jenis_sekolah',
         'alamat',

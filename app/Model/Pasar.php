@@ -14,6 +14,7 @@ class Pasar extends Model
         'id_desa',
         'id_jenis_potensi',
         'nama',
+        'foto',
         'alamat',
         'lat',
         'lng',

@@ -38,6 +38,7 @@ Route::get('/pasar', 'Admin\PotensiDesa\PasarController@semuaPasar')->name('Pasa
 Route::get('/pasar/tambah', 'Admin\PotensiDesa\PasarController@tambahPasar')->name('Tambah Pasar');
 Route::post('/pasar/simpan', 'Admin\PotensiDesa\PasarController@simpanPasar')->name('Simpan Pasar');
 Route::get('/pasar/detail/{pasar}', 'Admin\PotensiDesa\PasarController@detailPasar')->name('Detail Pasar');
+Route::get('/pasar/getImg/{idPasar}', 'Admin\PotensiDesa\PasarController@imgPasar')->name('Image Pasar');
 Route::post('/pasar/update/{pasar}', 'Admin\PotensiDesa\PasarController@updatePasar')->name('Update Pasar');
 Route::post('/pasar/hapus/{pasar}', 'Admin\PotensiDesa\PasarController@hapusPasar')->name('Hapus Pasar');
 

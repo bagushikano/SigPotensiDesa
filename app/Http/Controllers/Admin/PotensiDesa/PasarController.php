@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Admin\PotensiDesa;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\File;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use App\Mover;
 use App\Model\Pasar;
 use App\Model\Desa;
 use App\Model\JenisPotensi;
@@ -26,10 +28,17 @@ class PasarController extends Controller
     
     public function simpanPasar(Request $request)
     {
+        if ($request->foto == NULL) {
+            $filename = NULL;
+        } else {
+            $filename = Mover::moverImg($request->file('foto'), 'app/images/marker/');
+        }
+
         $pasar = Pasar::create([
             'id_desa' => $request->lokasi_desa,
             'id_jenis_potensi' => 1,
             'nama' => $request->nama_pasar,
+            'foto' => $filename,
             'alamat' => $request->alamat,
             'lat' => $request->latPasar,
             'lng' => $request->lngPasar,
@@ -62,6 +71,20 @@ class PasarController extends Controller
         return view('admin/potensi-desa/pasar/detail-pasar', compact('pasar', 'desa', 'satuDesa'));
     }
 
+    public function imgPasar($idPasar)
+    {
+        $pasar = Pasar::where('id', $idPasar)->first();
+
+        return response()->file(
+            storage_path($pasar->foto)
+        );
+
+        $desa = Desa::get();
+        $satuDesa = Desa::where('id', $pasar->id_desa)->get();
+
+        return view('admin/potensi-desa/pasar/detail-pasar', compact('pasar', 'desa', 'satuDesa'));
+    }
+
     public function hapusPasar(Pasar $pasar)
     {
         $today = Carbon::now()->setTimezone('GMT+8')->toDateString();
@@ -84,12 +107,32 @@ class PasarController extends Controller
 
     public function updatePasar(Request $request, Pasar $pasar)
     {
-        if ($request->lokasi_desa == $pasar->id_desa && $request->nama_pasar == $pasar->nama && $request->alamat == $pasar->alamat && $request->latPasar == $pasar->lat && $request->lngPasar == $pasar->lng) {
+        // return($request);
+        if ($request->lokasi_desa == $pasar->id_desa && $request->nama_pasar == $pasar->nama && $request->alamat == $pasar->alamat && $request->latPasar == $pasar->lat && $request->lngPasar == $pasar->lng && $request->file('foto') == NULL) {
             return redirect()->back()->with('success', 'Data Potensi Desa (Pasar) Berhasil Disimpan');
         } else {
+            if ($pasar->foto == NULL) {
+                $imgMarker = 'NULL';
+
+                if ($request->file('foto') == NULL) {
+                    $imgMarker = NULL;
+                } else {
+                    $filename = Mover::moverImg($request->file('foto'), 'app/images/marker/');
+                    $imgMarker = $filename;
+                }
+            } else {
+                if ($request->file('foto') == NULL) {
+                    $imgMarker = $pasar->foto;
+                } else {
+                    $filename = Mover::moverImg($request->file('foto'), 'app/images/marker/');
+                    $imgMarker = $filename;
+                }
+            }
+            
             $updatePasar = Pasar::where('id', $pasar->id)->update([
                 'id_desa' => $request->lokasi_desa,
                 'nama' => $request->nama_pasar,
+                'foto' => $imgMarker,
                 'alamat' => $request->alamat,
                 'lat' => $request->latPasar,
                 'lng' => $request->lngPasar,

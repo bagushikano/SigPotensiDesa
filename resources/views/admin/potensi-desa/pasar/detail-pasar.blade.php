@@ -45,7 +45,7 @@
                         <p class="my-auto">Data Data Pasar</p>
                     </div>
                     <div class="card-body">
-                        <form action="{{ route('Update Pasar', $pasar->id) }}" method="POST" class="needs-validation" novalidate>
+                        <form action="{{ route('Update Pasar', $pasar->id) }}" enctype="multipart/form-data" method="POST" class="needs-validation" novalidate>
                             @csrf
                             <div class="row">
                                 <div class="col-sm-12 col-md-6">
@@ -63,6 +63,7 @@
                                         @enderror
                                     </div>
                                 </div>
+                                @include('modal/detail-foto-pasar')
                                 <div class="col-sm-12 col-md-6">
                                     <div class="form-floating mb-3">
                                         <select class="form-select" id="lokasi_desa" name="lokasi_desa" aria-label="Floating label select example" required>
@@ -138,6 +139,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-12 text-right">
+                                    <a data-bs-toggle="modal" data-bs-target="#detailFoto" class="card-title btn btn-sm btn-primary">Ganti Foto Pasar</a>
                                     <button type="submit" class="btn btn-sm btn-outline-success">Simpan Pembaharuan Data</button>
                                 </div>
                             </div>
@@ -154,6 +156,7 @@
     <script src="{{ asset('admin-template/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
     <script src="{{ asset('admin-template/plugins/datatables-responsive/js/dataTables.responsive.min.js') }}"></script>
     <script src="{{ asset('admin-template/plugins/datatables-responsive/js/responsive.bootstrap4.min.js')}}"></script>
+    <script src="{{ asset('admin-template/plugins/bs-custom-file-input/bs-custom-file-input.min.js') }}"></script>
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
     integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
     crossorigin="anonymous"></script>
@@ -164,7 +167,30 @@
             $('#list-potensi-desa').addClass('menu-is-opening menu-open');
             $('#potensi-desa').addClass('active');
             $('#pasar').addClass('active');
+
+            document.getElementById('labelFoto').innerHTML
+                = 'Ganti Foto Pasar';
         });
+        
+        $(function () {
+            bsCustomFileInput.init();
+        });
+
+        $('#inputFoto').on('change', function(event){
+            var img = document.getElementById('img_preview');
+            img.src = URL.createObjectURL(event.target.files[0]);
+            img.onload = function() {
+                URL.revokeObjectURL(img.src) // free memory
+            }
+        });
+
+        $('#closeModal').on('click', function () {
+            $(this).find('img').trigger('reset');
+            $('#img_preview').attr('src', "{{route('Image Pasar', $pasar->id)}}");
+            $("#inputFoto").val('');
+            document.getElementById('labelFoto').innerHTML
+                = 'Ganti Foto Pasar';
+        })
 
         // Inisialisasi Map
         let mymap = L.map('mapid', { zoomControl: false }).setView([-8.477003, 115.0407526], 10);
