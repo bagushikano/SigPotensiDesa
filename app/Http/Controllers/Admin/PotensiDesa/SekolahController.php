@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Admin\PotensiDesa;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\File;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use App\Mover;
 use App\Model\Sekolah;
 use App\Model\Desa;
 use App\Model\JenisPotensi;
@@ -26,10 +28,17 @@ class SekolahController extends Controller
 
     public function simpanSekolah(Request $request)
     {
+        if ($request->foto == NULL) {
+            $filename = NULL;
+        } else {
+            $filename = Mover::moverImg($request->file('foto'), 'app/images/marker/sekolah/');
+        }
+
         $sekolah = Sekolah::create([
             'id_desa' => $request->lokasi_desa,
             'id_jenis_potensi' => 3,
             'nama' => $request->nama_sekolah,
+            'foto' => $filename,
             'jenjang' => $request->jenjang,
             'jenis_sekolah' => $request->jenis_sekolah,
             'alamat' => $request->alamat,
@@ -64,6 +73,15 @@ class SekolahController extends Controller
         return view('admin/potensi-desa/sekolah/detail-sekolah', compact('sekolah', 'desa', 'satuDesa'));
     }
 
+    public function imgSekolah($idSekolah)
+    {
+        $sekolah = Sekolah::where('id', $idSekolah)->first();
+
+        return response()->file(
+            storage_path($sekolah->foto)
+        );
+    }
+
     public function updateSekolah(Request $request, Sekolah $sekolah)
     {
         if (
@@ -73,13 +91,33 @@ class SekolahController extends Controller
             $request->jenis_sekolah == $sekolah->jenis_sekolah && 
             $request->alamat == $sekolah->alamat && 
             $request->latSekolah == $sekolah->lat && 
-            $request->lngSekolah == $sekolah->lng
+            $request->lngSekolah == $sekolah->lng &&
+            $request->file('foto') == NULL
         ) {
             return redirect()->back()->with('success', 'Data Potensi Desa (Sekolah) Berhasil Disimpan');
         } else {
+            if ($sekolah->foto == NULL) {
+                $imgMarker = 'NULL';
+
+                if ($request->file('foto') == NULL) {
+                    $imgMarker = NULL;
+                } else {
+                    $filename = Mover::moverImg($request->file('foto'), 'app/images/marker/sekolah/');
+                    $imgMarker = $filename;
+                }
+            } else {
+                if ($request->file('foto') == NULL) {
+                    $imgMarker = $sekolah->foto;
+                } else {
+                    $filename = Mover::moverImg($request->file('foto'), 'app/images/marker/sekolah/');
+                    $imgMarker = $filename;
+                }
+            }
+
             $updateSekolah = Sekolah::where('id', $sekolah->id)->update([
                 'id_desa' => $request->lokasi_desa,
                 'nama' => $request->nama_sekolah,
+                'foto' => $filename,
                 'jenjang' => $request->jenjang,
                 'jenis_sekolah' => $request->jenis_sekolah,
                 'alamat' => $request->alamat,

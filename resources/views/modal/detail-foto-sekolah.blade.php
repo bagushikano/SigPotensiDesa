@@ -2,17 +2,17 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Foto Pasar</h5>
+                <h5 class="modal-title">Foto Sekolah</h5>
                 <button class="btn-close" id="closeModal" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <div class="form-group">
-                    <label class="d-flex justify-content-center" for="inputFoto">Foto Potensi Desa (Pasar)</label>
-                    @if ($pasar->foto == NULL)
+                    <label class="d-flex justify-content-center" for="inputFoto">Foto Potensi Desa (Sekolah)</label>
+                    @if ($sekolah->foto == NULL)
                         <p class="text-center">Foto belum ditambahkan</p>
                         <img class="mb-2" id="img_preview" src="" width="100%" alt="">
                     @else
-                        <img class="mb-2" id="img_preview" src="{{ route('Image Pasar', $pasar->id) }}" width="100%" alt="">
+                        <img class="mb-2" id="img_preview" src="{{ route('Image Sekolah', $sekolah->id) }}" width="100%" alt="">
                     @endif
                     <div class="input-group">
                         <div class="custom-file">

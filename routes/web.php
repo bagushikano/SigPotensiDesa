@@ -56,6 +56,7 @@ Route::get('/sekolah', 'Admin\PotensiDesa\SekolahController@semuaSekolah')->name
 Route::get('/sekolah/tambah', 'Admin\PotensiDesa\SekolahController@tambahSekolah')->name('Tambah Sekolah');
 Route::post('/sekolah/simpan', 'Admin\PotensiDesa\SekolahController@simpanSekolah')->name('Simpan Sekolah');
 Route::get('/sekolah/detail/{sekolah}', 'Admin\PotensiDesa\SekolahController@detailSekolah')->name('Detail Sekolah');
+Route::get('/sekolah/getImg/{idSekolah}', 'Admin\PotensiDesa\SekolahController@imgSekolah')->name('Image Sekolah');
 Route::post('/sekolah/update/{sekolah}', 'Admin\PotensiDesa\SekolahController@updateSekolah')->name('Update Sekolah');
 Route::post('/sekolah/hapus/{sekolah}', 'Admin\PotensiDesa\SekolahController@hapusSekolah')->name('Hapus Sekolah');
 
