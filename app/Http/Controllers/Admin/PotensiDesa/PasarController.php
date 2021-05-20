@@ -78,11 +78,6 @@ class PasarController extends Controller
         return response()->file(
             storage_path($pasar->foto)
         );
-
-        $desa = Desa::get();
-        $satuDesa = Desa::where('id', $pasar->id_desa)->get();
-
-        return view('admin/potensi-desa/pasar/detail-pasar', compact('pasar', 'desa', 'satuDesa'));
     }
 
     public function hapusPasar(Pasar $pasar)
@@ -107,8 +102,14 @@ class PasarController extends Controller
 
     public function updatePasar(Request $request, Pasar $pasar)
     {
-        // return($request);
-        if ($request->lokasi_desa == $pasar->id_desa && $request->nama_pasar == $pasar->nama && $request->alamat == $pasar->alamat && $request->latPasar == $pasar->lat && $request->lngPasar == $pasar->lng && $request->file('foto') == NULL) {
+        if (
+            $request->lokasi_desa == $pasar->id_desa &&
+            $request->nama_pasar == $pasar->nama &&
+            $request->alamat == $pasar->alamat &&
+            $request->latPasar == $pasar->lat &&
+            $request->lngPasar == $pasar->lng &&
+            $request->file('foto') == NULL
+        ) {
             return redirect()->back()->with('success', 'Data Potensi Desa (Pasar) Berhasil Disimpan');
         } else {
             if ($pasar->foto == NULL) {
@@ -117,14 +118,14 @@ class PasarController extends Controller
                 if ($request->file('foto') == NULL) {
                     $imgMarker = NULL;
                 } else {
-                    $filename = Mover::moverImg($request->file('foto'), 'app/images/marker/');
+                    $filename = Mover::moverImg($request->file('foto'), 'app/images/marker/pasar/');
                     $imgMarker = $filename;
                 }
             } else {
                 if ($request->file('foto') == NULL) {
                     $imgMarker = $pasar->foto;
                 } else {
-                    $filename = Mover::moverImg($request->file('foto'), 'app/images/marker/');
+                    $filename = Mover::moverImg($request->file('foto'), 'app/images/marker/pasar/');
                     $imgMarker = $filename;
                 }
             }

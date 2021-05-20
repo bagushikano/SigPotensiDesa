@@ -47,6 +47,7 @@ Route::get('/pusat-pemerintahan', 'Admin\PotensiDesa\PuspemController@semuaPuspe
 Route::get('/pusat-pemerintahan/tambah', 'Admin\PotensiDesa\PuspemController@tambahPuspem')->name('Tambah Puspem');
 Route::post('/pusat-pemerintahan/simpan', 'Admin\PotensiDesa\PuspemController@simpanPuspem')->name('Simpan Puspem');
 Route::get('/pusat-pemerintahan/detail/{puspem}', 'Admin\PotensiDesa\PuspemController@detailPuspem')->name('Detail Puspem');
+Route::get('/pusat-pemerintahan/getImg/{idPuspem}', 'Admin\PotensiDesa\PuspemController@imgPuspem')->name('Image Puspem');
 Route::post('/pusat-pemerintahan/update/{puspem}', 'Admin\PotensiDesa\PuspemController@updatePuspem')->name('Update Puspem');
 Route::post('/pusat-pemerintahan/hapus/{puspem}', 'Admin\PotensiDesa\PuspemController@hapusPuspem')->name('Hapus Puspem');
 

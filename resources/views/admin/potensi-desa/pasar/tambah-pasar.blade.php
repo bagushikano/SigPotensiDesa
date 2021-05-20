@@ -126,7 +126,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-12 text-right">
-                                    <a data-bs-toggle="modal" data-bs-target="#tambahFoto" class="card-title btn btn-primary">Tambah Foto Pasar</a>
+                                    <a data-bs-toggle="modal" data-bs-target="#tambahFoto" class="card-title btn btn-sm btn-primary">Tambah Foto Pasar</a>
                                     <button type="submit" class="btn btn-sm btn-outline-success">Simpan Data</button>
                                 </div>
                             </div>

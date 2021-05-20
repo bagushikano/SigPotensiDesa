@@ -167,9 +167,7 @@
             $('#list-potensi-desa').addClass('menu-is-opening menu-open');
             $('#potensi-desa').addClass('active');
             $('#pasar').addClass('active');
-
-            document.getElementById('labelFoto').innerHTML
-                = 'Ganti Foto Pasar';
+            document.getElementById('labelFoto').innerHTML='Ganti Foto Pasar';
         });
         
         $(function () {

@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Admin\PotensiDesa;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\File;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use App\Mover;
 use App\Model\Puspem;
 use App\Model\Desa;
 use App\Model\JenisPotensi;
@@ -26,11 +28,17 @@ class PuspemController extends Controller
 
     public function simpanPuspem(Request $request)
     {
-        // return($request);
+        if ($request->foto == NULL) {
+            $filename = NULL;
+        } else {
+            $filename = Mover::moverImg($request->file('foto'), 'app/images/marker/puspem');
+        }
+
         $puspem = Puspem::create([
             'id_desa' => $request->lokasi_desa,
             'id_jenis_potensi' => 2,
             'nama' => $request->nama_puspem,
+            'foto' => $filename,
             'tingkat' => $request->tingkat_pemerintahan,
             'alamat' => $request->alamat,
             'lat' => $request->latPuspem,
@@ -62,6 +70,15 @@ class PuspemController extends Controller
         $satuDesa = Desa::where('id', $puspem->id_desa)->get();
 
         return view('admin/potensi-desa/pusat-pemerintahan/detail-puspem', compact('puspem', 'desa', 'satuDesa'));
+    }
+
+    public function imgPuspem($idPuspem)
+    {
+        $puspem = Puspem::where('id', $idPuspem)->first();
+
+        return response()->file(
+            storage_path($puspem->foto)
+        );
     }
 
     public function hapusPuspem(Puspem $puspem)
@@ -99,13 +116,33 @@ class PuspemController extends Controller
             $request->tingkat_pemerintahan == $puspem->tingkat &&
             $request->alamat == $puspem->alamat &&
             $request->latPuspem == $puspem->lat &&
-            $request->lngPuspem == $puspem->lng
+            $request->lngPuspem == $puspem->lng &&
+            $request->file('foto') == NULL
         ) {
             return redirect()->back()->with('success', 'Data Potensi Desa (Pusat Pemerintahan) Berhasil Disimpan');
         } else {
+            if ($puspem->foto == NULL) {
+                $imgMarker = 'NULL';
+
+                if ($request->file('foto') == NULL) {
+                    $imgMarker = NULL;
+                } else {
+                    $filename = Mover::moverImg($request->file('foto'), 'app/images/marker/puspem/');
+                    $imgMarker = $filename;
+                }
+            } else {
+                if ($request->file('foto') == NULL) {
+                    $imgMarker = $puspem->foto;
+                } else {
+                    $filename = Mover::moverImg($request->file('foto'), 'app/images/marker/puspem/');
+                    $imgMarker = $filename;
+                }
+            }
+
             $updatePuspem = Puspem::where('id', $puspem->id)->update([
                 'id_desa' => $request->lokasi_desa,
                 'nama' => $request->nama_puspem,
+                'foto' => $filename,
                 'tingkat' => $request->tingkat_pemerintahan,
                 'alamat' => $request->alamat,
                 'lat' => $request->latPuspem,
