@@ -31,7 +31,7 @@ class PuspemController extends Controller
         if ($request->foto == NULL) {
             $filename = NULL;
         } else {
-            $filename = Mover::moverImg($request->file('foto'), 'app/images/marker/puspem');
+            $filename = Mover::moverImg($request->file('foto'), 'app/images/marker/puspem/');
         }
 
         $puspem = Puspem::create([

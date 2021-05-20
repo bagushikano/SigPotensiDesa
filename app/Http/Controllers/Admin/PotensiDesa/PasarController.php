@@ -31,7 +31,7 @@ class PasarController extends Controller
         if ($request->foto == NULL) {
             $filename = NULL;
         } else {
-            $filename = Mover::moverImg($request->file('foto'), 'app/images/marker/');
+            $filename = Mover::moverImg($request->file('foto'), 'app/images/marker/tempatIbadah/');
         }
 
         $pasar = Pasar::create([

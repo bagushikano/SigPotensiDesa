@@ -45,7 +45,7 @@
                         <p class="my-auto">Data Data Tempat Ibadah</p>
                     </div>
                     <div class="card-body">
-                        <form action="{{ route('Update Tempat Ibadah', $tempatIbadah->id) }}" method="POST" class="needs-validation" novalidate>
+                        <form action="{{ route('Update Tempat Ibadah', $tempatIbadah->id) }}" enctype="multipart/form-data" method="POST" class="needs-validation" novalidate>
                             @csrf
                             <div class="row">
                                 <div class="col-12">
@@ -64,6 +64,7 @@
                                     </div>
                                 </div>
                             </div>
+                            @include('modal/detail-foto-tempat-ibadah')
                             <div class="row">
                                 <div class="col-sm-12 col-md-6">
                                     <div class="form-floating mb-3">
@@ -163,6 +164,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-12 text-right">
+                                    <a data-bs-toggle="modal" data-bs-target="#detailFoto" class="card-title btn btn-sm btn-primary">Ganti Foto Pasar</a>
                                     <button type="submit" class="btn btn-sm btn-outline-success">Simpan Data</button>
                                 </div>
                             </div>
@@ -182,6 +184,9 @@
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
     integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
     crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+    integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+    crossorigin="anonymous"></script>
     <script src="https://unpkg.com/@geoman-io/leaflet-geoman-free@latest/dist/leaflet-geoman.min.js"></script>
 
     <script type="text/javascript">
@@ -189,7 +194,28 @@
             $('#list-potensi-desa').addClass('menu-is-opening menu-open');
             $('#potensi-desa').addClass('active');
             $('#tempat-ibadah').addClass('active');
+            document.getElementById('labelFoto').innerHTML='Ganti Foto Tempat Ibadah';
         });
+
+        $(function () {
+            bsCustomFileInput.init();
+        });
+
+        $('#inputFoto').on('change', function(event){
+            var img = document.getElementById('img_preview');
+            img.src = URL.createObjectURL(event.target.files[0]);
+            img.onload = function() {
+                URL.revokeObjectURL(img.src) // free memory
+            }
+        });
+
+        $('#closeModal').on('click', function () {
+            $(this).find('img').trigger('reset');
+            $('#img_preview').attr('src', "{{route('Image Tempat Ibadah', $tempatIbadah->id)}}");
+            $("#inputFoto").val('');
+            document.getElementById('labelFoto').innerHTML
+                = 'Ganti Foto Tempat Ibadah';
+        })
 
         // Inisialisasi Map
         let mymap = L.map('mapid', { zoomControl: false }).setView([-8.477003, 115.0407526], 10);

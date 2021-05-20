@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Admin\PotensiDesa;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\File;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use App\Mover;
 use App\Model\TempatIbadah;
 use App\Model\Desa;
 use App\Model\JenisPotensi;
@@ -26,10 +28,17 @@ class TempatIbadahController extends Controller
 
     public function simpanTempatIbadah(Request $request)
     {
+        if ($request->foto == NULL) {
+            $filename = NULL;
+        } else {
+            $filename = Mover::moverImg($request->file('foto'), 'app/images/marker/tempatIbadah/');
+        }
+
         $tempatIbadah = TempatIbadah::create([
             'id_desa' => $request->lokasi_desa,
             'id_jenis_potensi' => 3,
             'nama' => $request->nama_tempat_ibadah,
+            'foto' => $filename,
             'agama' => $request->umat_agama,
             'alamat' => $request->alamat,
             'lat' => $request->latTempatIbadah,
@@ -63,6 +72,15 @@ class TempatIbadahController extends Controller
         return view('admin/potensi-desa/tempat-ibadah/detail-tempat-ibadah', compact('tempatIbadah', 'desa', 'satuDesa'));
     }
 
+    public function imgTempatIbadah($idTempatIbadah)
+    {
+        $tempatIbadah = TempatIbadah::where('id', $idTempatIbadah)->first();
+
+        return response()->file(
+            storage_path($tempatIbadah->foto)
+        );
+    }
+
     public function updateTempatIbadah(Request $request, TempatIbadah $tempatIbadah)
     {
         if (
@@ -71,13 +89,33 @@ class TempatIbadahController extends Controller
             $request->umat_agama == $tempatIbadah->agama && 
             $request->alamat == $tempatIbadah->alamat && 
             $request->latTempatIbadah == $tempatIbadah->lat && 
-            $request->lngTempatIbadah == $tempatIbadah->lng
+            $request->lngTempatIbadah == $tempatIbadah->lng &&
+            $request->file('foto') == NULL
         ) {
             return redirect()->back()->with('success', 'Data Potensi Desa (Tempat Ibadah) Berhasil Disimpan');
         } else {
+            if ($tempatIbadah->foto == NULL) {
+                $imgMarker = 'NULL';
+
+                if ($request->file('foto') == NULL) {
+                    $imgMarker = NULL;
+                } else {
+                    $filename = Mover::moverImg($request->file('foto'), 'app/images/marker/tempatIbadah/');
+                    $imgMarker = $filename;
+                }
+            } else {
+                if ($request->file('foto') == NULL) {
+                    $imgMarker = $tempatIbadah->foto;
+                } else {
+                    $filename = Mover::moverImg($request->file('foto'), 'app/images/marker/tempatIbadah/');
+                    $imgMarker = $filename;
+                }
+            }
+
             $updateTempatIbadah = TempatIbadah::where('id', $tempatIbadah->id)->update([
                 'id_desa' => $request->lokasi_desa,
                 'nama' => $request->nama_tempat_ibadah,
+                'foto' => $filename,
                 'agama' => $request->umat_agama,
                 'alamat' => $request->alamat,
                 'lat' => $request->latTempatIbadah,
