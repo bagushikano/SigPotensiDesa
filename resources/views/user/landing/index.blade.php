@@ -35,7 +35,7 @@
     </style>
 </head>
 <body>
-    <ul class="nav justify-content-end navbar-light fixed-top mt-2">
+    <ul class="nav justify-content-end navbar-light fixed-top">
         <li class="nav-item dropdown me-4">
             <a class="nav-link link-dark" data-bs-toggle="dropdown">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-grid-3x3-gap-fill" viewBox="0 0 16 16">
@@ -47,6 +47,24 @@
             </ul>
         </li>
     </ul>
+    <div class="fixed-top" style="width: 25rem;">
+        <div class="row">
+            <div class="col-10 bg-light overflow-auto" id="sidebar" style="height: 100vh;">
+                <div class="card-body mx-auto">
+                    <img class="card-img-top" id="img_preview" src="" alt="">
+                    <p class="text-center" id="loader">Silahkan Tunggu ...</p>
+                    <div class="form-floating mt-2 mb-3">
+                        <input type="text" class="form-control" id="nama" value="Nama Objectnya" placeholder="name@example.com">
+                        <label for="nama">Potensi Desa</label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-2 mt-2">
+                <button class="btn btn-secondary btn-sm ms-3" onclick="showSidebar()" id="tombolshow"><i class="fas fa-angle-double-right"></i></button>
+                <button class="btn btn-secondary btn-sm" onclick="hideSidebar()" id="tombolhide"><i class="fas fa-angle-double-left"></i></button>
+            </div>
+        </div>
+    </div>
     @include('modal/info-desa') 
     <div id="mapid"></div>
 
@@ -74,6 +92,26 @@
             position: 'bottomright'
         }).addTo(mymap);
 
+        $("#tombolhide").hide();
+        $("#sidebar").hide();
+        // $("#loader").hide();
+
+        function showSidebar() {
+            // $("#tombolshow").click(function() {
+                $("#sidebar").show();
+                $("#tombolshow").hide();
+                $("#tombolhide").show();
+            // });
+        }
+        
+        function hideSidebar(params) {
+            // $("#tombolhide").click(function() {
+                $("#sidebar").hide();
+                $("#tombolhide").hide();
+                $("#tombolshow").show();
+            // });
+        }
+
         var desa = {!! json_encode($desa->toArray()) !!}
         desa.forEach(element => {
             var koor = jQuery.parseJSON(element['batas_wilayah']);
@@ -91,7 +129,7 @@
             pathLine.on('click', function(e) {
                 $('#detailDesa').modal('show');
                 $("#nama_desa").val(element['nama']);
-            } );
+            });
         });
 
         // Menghubungkan antar koordinat batas desa
@@ -141,7 +179,15 @@
             var msgPasar = "<ul class='list-unstyled'><li class='fw-bold text-center mb-2'>"+element['nama']+"</li><li>Desa: "+element['nama_desa']+"</li><li>Alamat: "+element['alamat']+"</li><li><a class='text-decoration-none text-dark' target='_blank' href='https://www.google.com/maps/place/"+element['lat']+","+element['lng']+"''><i class='fas fa-map-marked-alt'></i> Lihat di Gmaps</a></li></ul>"
             markerPasar.bindPopup(msgPasar);
             markerPasar.on('click', function() {
-                markerPasar.openPopup();
+                $('#img_preview').hide();
+                $("#loader").show();
+                setTimeout(function(){
+                    $('#img_preview').attr('src', "/pasar/getImg/"+element['id']);
+                    $('#img_preview').show();
+                    $("#loader").hide();
+                    $("#nama").val(element['nama']);
+                }, 2000);
+                showSidebar();
             });
         });
         let puspem = {!! json_encode($puspem) !!}
@@ -152,7 +198,15 @@
             var msgPuspem = "<ul class='list-unstyled'><li class='fw-bold text-center mb-2'>"+element['nama']+"</li><li>Desa: "+element['nama_desa']+"</li><li>Tingkat: "+element['tingkat']+"</li><li>Alamat: "+element['alamat']+"</li><li><a class='text-decoration-none text-dark' target='_blank' href='https://www.google.com/maps/place/"+element['lat']+","+element['lng']+"''><i class='fas fa-map-marked-alt'></i> Lihat di Gmaps</a></li></ul>"
             markerPuspem.bindPopup(msgPuspem);
             markerPuspem.on('click', function() {
-                markerPuspem.openPopup();
+                $('#img_preview').hide();
+                $("#loader").show();
+                setTimeout(function(){
+                    $('#img_preview').attr('src', "/pusat-pemerintahan/getImg/"+element['id']);
+                    $('#img_preview').show();
+                    $("#loader").hide();
+                    $("#nama").val(element['nama']);
+                }, 2000);
+                showSidebar();
             });
         });
         let sekolah = {!! json_encode($sekolah) !!}
@@ -163,18 +217,34 @@
             var msgSekolah = "<ul class='list-unstyled'><li class='fw-bold text-center mb-2'>"+element['nama']+"</li><li>Desa: "+element['nama_desa']+"</li><li>Jenjang: "+element['jenjang']+"</li><li>Jenis Sekolah: "+element['jenis_sekolah']+"</li><li>Alamat: "+element['alamat']+"</li><li><a class='text-decoration-none text-dark' target='_blank' href='https://www.google.com/maps/place/"+element['lat']+","+element['lng']+"''><i class='fas fa-map-marked-alt'></i> Lihat di Gmaps</a></li></ul>"
             markerSekolah.bindPopup(msgSekolah);
             markerSekolah.on('click', function() {
-                markerSekolah.openPopup();
+                $('#img_preview').hide();
+                $("#loader").show();
+                setTimeout(function(){
+                    $('#img_preview').attr('src', "/sekolah/getImg/"+element['id']);
+                    $('#img_preview').show();
+                    $("#loader").hide();
+                    $("#nama").val(element['nama']);
+                }, 2000);
+                showSidebar();
             });
         });
         let tempatIbadah = {!! json_encode($tempatIbadah) !!}
         tempatIbadah.forEach(element => {
             let markerTempatIbadah = L.marker([element.lat, element.lng], {
-                icon: sekolahIcon,
+                icon: tempatIbadahIcon,
             }).bindPopup().addTo(mymap);
             var msgTempatIbadah = "<ul class='list-unstyled'><li class='fw-bold text-center mb-2'>"+element['nama']+"</li><li>Desa: "+element['nama_desa']+"</li><li>Ibadat Umat: "+element['agama']+"</li><li>Alamat: "+element['alamat']+"</li><li><a class='text-decoration-none text-dark' target='_blank' href='https://www.google.com/maps/place/"+element['lat']+","+element['lng']+"''><i class='fas fa-map-marked-alt'></i> Lihat di Gmaps</a></li></ul>"
             markerTempatIbadah.bindPopup(msgTempatIbadah);
             markerTempatIbadah.on('click', function() {
-                markerTempatIbadah.openPopup();
+                $('#img_preview').hide();
+                $("#loader").show();
+                setTimeout(function(){
+                    $('#img_preview').attr('src', "/tempat-ibadah/getImg/"+element['id']);
+                    $('#img_preview').show();
+                    $("#loader").hide();
+                    $("#nama").val(element['nama']);
+                }, 2000);
+                showSidebar();
             });
         });
     </script>
