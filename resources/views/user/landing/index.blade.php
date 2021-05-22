@@ -123,17 +123,18 @@
         $("#formAgama").hide();
         $("#linkGmaps").hide();
         $("#loader").hide();
+        batasDesa();
         // mymap.invalidateSize()
 
         function showSidebar() {
             $("#sidebar").show();
         }
         
-        function hideSidebar(params) {
+        function hideSidebar() {
             $("#sidebar").hide();
         }
 
-        function batasDesa(params) {
+        function batasDesa() {
             var desa = {!! json_encode($desa->toArray()) !!}
             desa.forEach(element => {
                 var koor = jQuery.parseJSON(element['batas_wilayah']);
@@ -347,6 +348,7 @@
                 for(; Object.keys(mymap._layers).length > 2;) {
                     mymap.removeLayer(mymap._layers[Object.keys(mymap._layers)[2]]);
                 }
+                batasDesa();
             } else {
                 for(; Object.keys(mymap._layers).length > 1;) {
                     mymap.removeLayer(mymap._layers[Object.keys(mymap._layers)[1]]);
