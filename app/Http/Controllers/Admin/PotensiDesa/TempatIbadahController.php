@@ -72,13 +72,24 @@ class TempatIbadahController extends Controller
         return view('admin/potensi-desa/tempat-ibadah/detail-tempat-ibadah', compact('tempatIbadah', 'desa', 'satuDesa'));
     }
 
-    public function imgTempatIbadah($idTempatIbadah)
+    public function imgTempatIbadah(TempatIbadah $tempatIbadah)
     {
-        $tempatIbadah = TempatIbadah::where('id', $idTempatIbadah)->first();
-
-        return response()->file(
-            storage_path($tempatIbadah->foto)
-        );
+        if ($tempatIbadah->foto != NULL) {
+            if(File::exists(storage_path($tempatIbadah->foto))) {
+                return response()->file(
+                    storage_path($tempatIbadah->foto)
+                );
+            } else {
+                return response()->file(
+                    public_path('default-potensi-desa.png')
+                );
+            }
+        } else {
+            return response()->file(
+                public_path('default-potensi-desa.png')
+            );
+        }
+        
     }
 
     public function updateTempatIbadah(Request $request, TempatIbadah $tempatIbadah)

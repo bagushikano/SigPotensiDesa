@@ -73,13 +73,23 @@ class SekolahController extends Controller
         return view('admin/potensi-desa/sekolah/detail-sekolah', compact('sekolah', 'desa', 'satuDesa'));
     }
 
-    public function imgSekolah($idSekolah)
+    public function imgSekolah(Sekolah $sekolah)
     {
-        $sekolah = Sekolah::where('id', $idSekolah)->first();
-
-        return response()->file(
-            storage_path($sekolah->foto)
-        );
+        if ($sekolah->foto != NULL) {
+            if(File::exists(storage_path($sekolah->foto))) {
+                return response()->file(
+                    storage_path($sekolah->foto)
+                );
+            } else {
+                return response()->file(
+                    public_path('default-potensi-desa.png')
+                );
+            }
+        } else {
+            return response()->file(
+                public_path('default-potensi-desa.png')
+            );
+        }
     }
 
     public function updateSekolah(Request $request, Sekolah $sekolah)

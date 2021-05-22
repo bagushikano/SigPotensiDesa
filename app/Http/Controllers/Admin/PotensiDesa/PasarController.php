@@ -71,13 +71,26 @@ class PasarController extends Controller
         return view('admin/potensi-desa/pasar/detail-pasar', compact('pasar', 'desa', 'satuDesa'));
     }
 
-    public function imgPasar($idPasar)
+    public function imgPasar(Pasar $pasar)
     {
-        $pasar = Pasar::where('id', $idPasar)->first();
+        // $pasar = Pasar::where('id', $idPasar)->first();
 
-        return response()->file(
-            storage_path($pasar->foto)
-        );
+        if ($pasar->foto != NULL) {
+            if(File::exists(storage_path($pasar->foto))) {
+                return response()->file(
+                    storage_path($pasar->foto)
+                );
+            } else {
+                return response()->file(
+                    public_path('default-potensi-desa.png')
+                );
+            }
+        } else {
+            return response()->file(
+                public_path('default-potensi-desa.png')
+            );
+        }
+        
     }
 
     public function hapusPasar(Pasar $pasar)

@@ -72,13 +72,23 @@ class PuspemController extends Controller
         return view('admin/potensi-desa/pusat-pemerintahan/detail-puspem', compact('puspem', 'desa', 'satuDesa'));
     }
 
-    public function imgPuspem($idPuspem)
+    public function imgPuspem(Puspem $puspem)
     {
-        $puspem = Puspem::where('id', $idPuspem)->first();
-
-        return response()->file(
-            storage_path($puspem->foto)
-        );
+        if ($puspem->foto != NULL) {
+            if(File::exists(storage_path($puspem->foto))) {
+                return response()->file(
+                    storage_path($puspem->foto)
+                );
+            } else {
+                return response()->file(
+                    public_path('/default-potensi-desa.png')
+                );
+            }
+        } else {
+            return response()->file(
+                public_path('/default-potensi-desa.png')
+            );
+        }
     }
 
     public function hapusPuspem(Puspem $puspem)
