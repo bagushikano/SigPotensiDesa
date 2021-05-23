@@ -21,7 +21,7 @@
         <div class="col-auto ml-auto text-right mt-n1">
             <nav aria-label="breadcrumb text-center">
                 <ol class="breadcrumb bg-transparent p-0 mt-1 mb-0">
-                    <li class="breadcrumb-item"><a class="text-decoration-none" href="{{ route('Puspem') }}">Manajemen Sekolah</a></li>
+                    <li class="breadcrumb-item"><a class="text-decoration-none" href="{{ route('Sekolah') }}">Manajemen Sekolah</a></li>
                     <li class="breadcrumb-item active" aria-current="page">Tambah Baru</li>
                 </ol>
             </nav>
@@ -41,7 +41,7 @@
                                 <div class="col-sm-12 col-md-6">
                                     <div class="form-floating mb-3">
                                         <input type="text" class="form-control @error('nama_sekolah') is-invalid @enderror" id="nama_sekolah" name="nama_sekolah" placeholder="Masukan nama pusat pemerintahan" value="{{ old('nama_sekolah') }}" autocomplete="off" required>
-                                        <label for="nama_sekolah">Nama Sekolah</label>
+                                        <label for="nama_sekolah">Nama Sekolah<span class="text-danger">*</span></label>
                                         @error('nama_sekolah')
                                             <div class="invalid-feedback text-start">
                                                 {{ $message }}
@@ -59,7 +59,11 @@
                                         <select class="form-select" id="lokasi_desa" name="lokasi_desa" required>
                                             <option disabled selected value="">Pilih desa lokasi sekolah</option>
                                             @foreach ($desa as $data)
-                                                <option value="{{ $data->id }}" onclick="showBatasDesa('{{$data->id}}')">{{ $data->nama }}</option>
+                                                @if ($data->batas_wilayah == NULL)
+                                                <option value="" disabled>{{ $data->nama }}</option>
+                                                @else
+                                                    <option value="{{ $data->id }}" onclick="showBatasDesa('{{$data->id}}')">{{ $data->nama }}</option>
+                                                @endif
                                             @endforeach
                                         </select>
                                         @error('lokasi_desa')
@@ -71,7 +75,7 @@
                                                 Desa lokasi sekolah wajib diisi
                                             </div>
                                         @enderror
-                                        <label for="lokasi_desa">Lokasi Desa</label>
+                                        <label for="lokasi_desa">Lokasi Desa<span class="text-danger">*</span></label>
                                     </div>
                                 </div>
                             </div>
@@ -97,15 +101,15 @@
                                                 Jenjang sekolah wajib diisi
                                             </div>
                                         @enderror
-                                        <label for="jenjang">Jenjang Sekolah</label>
+                                        <label for="jenjang">Jenjang Sekolah<span class="text-danger">*</span></label>
                                     </div>
                                 </div>
                                 <div class="col-sm-12 col-md-6">
                                     <div class="form-floating mb-3">
                                         <select class="form-select" id="jenis_sekolah" name="jenis_sekolah" name="desa" required>
                                             <option disabled selected value="">Pilih jenis sekolah</option>
-                                                <option value="Sekolah Negeri">Sekolah Negeri</option>
-                                                <option value="Sekolah Swasta">Sekolah Swasta</option>
+                                            <option value="Sekolah Negeri">Sekolah Negeri</option>
+                                            <option value="Sekolah Swasta">Sekolah Swasta</option>
                                         </select>
                                         @error('jenis_sekolah')
                                             <div class="invalid-feedback text-start">
@@ -116,54 +120,39 @@
                                                 Jenis sekolah wajib diisi
                                             </div>
                                         @enderror
-                                        <label for="jenis_sekolah">Jenis Sekolah</label>
+                                        <label for="jenis_sekolah">Jenis Sekolah<span class="text-danger">*</span></label>
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-sm-12 col-md-6">
                                     <div class="mb-3">
-                                        <label for="latSekolah" class="form-label">Koordinat Latitude</label>
+                                        <label for="latSekolah" class="form-label">Koordinat Latitude<span class="text-danger">*</span></label>
                                         <input type="text" class="form-control disabled" id="latSekolah" name="latSekolah" placeholder="Koordinat latitude sekolah" required readonly>
-                                        @error('latSekolah')
-                                            <div class="invalid-feedback text-start">
-                                                {{ $message }}
-                                            </div>
-                                        @else
-                                            <div class="invalid-feedback">
-                                                Silahkan pilih lokasi sekolah pada peta
-                                            </div>
-                                        @enderror
                                     </div>
                                 </div>
                                 <div class="col-sm-12 col-md-6">
                                     <div class="mb-3">
-                                        <label for="lngSekolah" class="form-label">Koordinat Longitude</label>
+                                        <label for="lngSekolah" class="form-label">Koordinat Longitude<span class="text-danger">*</span></label>
                                         <input type="text" class="form-control" id="lngSekolah" name="lngSekolah" placeholder="Koordinat longitude sekolah" required readonly>
-                                        @error('lngSekolah')
-                                            <div class="invalid-feedback text-start">
-                                                {{ $message }}
-                                            </div>
-                                        @else
-                                            <div class="invalid-feedback">
-                                                Silahkan pilih lokasi sekolah pada peta
-                                            </div>
-                                        @enderror
                                     </div>
                                 </div>
+                                @if ($errors->has('lngSekolah') && $errors->has('latSekolah'))
+                                    <p class="text-end text-danger">Lokasi sekolah pada peta wajib ditentukan</p>
+                                @endif
                             </div>
                             <div class="row">
                                 <div class="col-12">
                                     <div class="mb-3">
                                         <label for="alamat" class="form-label">Alamat Sekolah</label>
-                                        <textarea class="form-control @error('alamat') is-invalid @enderror" id="alamat" placeholder="Masukan alamat pasar" name="alamat" style="height: 60px" required>{{ old('alamat') }}</textarea>
+                                        <textarea class="form-control @error('alamat') is-invalid @enderror" id="alamat" placeholder="Masukan alamat sekolah" name="alamat" style="height: 60px" required>{{ old('alamat') }}</textarea>
                                         @error('alamat')
                                             <div class="invalid-feedback text-start">
                                                 {{ $message }}
                                             </div>
                                         @else
                                             <div class="invalid-feedback">
-                                                Alamat pusat pemerintahan wajib diisi
+                                                Alamat sekolah wajib diisi
                                             </div>
                                         @enderror
                                     </div>
@@ -174,6 +163,9 @@
                                     <a data-bs-toggle="modal" data-bs-target="#tambahFoto" class="card-title btn btn-sm btn-primary">Tambah Foto Sekolah</a>
                                     <button type="submit" class="btn btn-sm btn-outline-success">Simpan Data</button>
                                 </div>
+                            </div>
+                            <div class="row">
+                                <span class="text-danger text-end">* Data wajib diisi</span>
                             </div>
                         </form>
                     </div>
@@ -215,12 +207,15 @@
             bsCustomFileInput.init();
         });
 
+        $('#img_preview').hide();
+
         $('#inputFoto').on('change', function(event){
             var img = document.getElementById('img_preview');
             img.src = URL.createObjectURL(event.target.files[0]);
             img.onload = function() {
                 URL.revokeObjectURL(img.src) // free memory
             }
+            $('#img_preview').show();
         });
 
         // Inisialisasi Map
@@ -319,6 +314,14 @@
                 })
         })()
     </script>
+
+    @if ($errors->has('foto'))
+        <script type="text/javascript">
+            $( document ).ready(function() {
+                $('#tambahFoto').modal('show');
+            });
+        </script>
+    @endif
 
     @if($message = Session::get('success'))
         <script>

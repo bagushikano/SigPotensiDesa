@@ -60,26 +60,23 @@
                                                 <a href="{{ route('Detail Sekolah', $data->id) }}" class="btn btn-warning btn-sm">
                                                     <i class="fas fa-eye"></i>
                                                 </a>
-                                                <form action="{{ route('Hapus Sekolah', $data->id) }}" method="POST" class="d-inline">
-                                                    @csrf
-                                                    <button type="submit" class="btn btn-sm btn-danger">
-                                                        <i class="fas fa-trash"></i>
-                                                    </button>
-                                                </form>
+                                                <button onclick="deleteSekolah('{{$data->id}}')" class="btn btn-sm btn-danger">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
                                             </td>
                                             <td class="text-center align-middle d-none d-md-table-cell">
                                                 <a href="{{ route('Detail Sekolah', $data->id) }}" class="btn btn-warning btn-sm">
                                                     <i class="fas fa-eye"></i>
                                                     Detail
                                                 </a>
-                                                <form action="{{ route('Hapus Sekolah', $data->id) }}" method="POST" class="d-inline">
-                                                    @csrf
-                                                    <button type="submit" class="btn btn-sm btn-danger">
-                                                        <i class="fas fa-trash"></i>
-                                                        Hapus
-                                                    </button>
-                                                </form>
+                                                <button onclick="deleteSekolah('{{$data->id}}')" class="btn btn-sm btn-danger">
+                                                    <i class="fas fa-trash"></i>
+                                                    Hapus
+                                                </button>
                                             </td>
+                                            <form action="{{ route('Hapus Sekolah', $data->id) }}" id="hapus-sekolah" method="POST" class="d-inline">
+                                                @csrf
+                                            </form>
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -126,26 +123,22 @@
             });
         });
 
-        // Example starter JavaScript for disabling form submissions if there are invalid fields
-        (function () {
-            'use strict'
-
-            // Fetch all the forms we want to apply custom Bootstrap validation styles to
-            var forms = document.querySelectorAll('.needs-validation')
-
-            // Loop over them and prevent submission
-            Array.prototype.slice.call(forms)
-                .forEach(function (form) {
-                    form.addEventListener('submit', function (event) {
-                        if (!form.checkValidity()) {
-                        event.preventDefault()
-                        event.stopPropagation()
-                        }
-
-                        form.classList.add('was-validated')
-                    }, false)
-                })
-        })()
+        function deleteSekolah(desa) {
+            Swal.fire({
+                title: 'Peringatan',
+                text: 'Apakah anda yakin akan menghapus sekolah ?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: "Ya, hapus",
+                cancelButtonText: 'Tidak, batalkan',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $('#hapus-sekolah').submit();
+                }
+            })
+        }
     </script>
 
     @if (count($errors) > 0)

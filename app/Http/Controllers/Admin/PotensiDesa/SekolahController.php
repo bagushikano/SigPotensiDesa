@@ -28,6 +28,31 @@ class SekolahController extends Controller
 
     public function simpanSekolah(Request $request)
     {
+        $this->validate($request,[
+            'lokasi_desa' => "required",
+            'nama_sekolah' => "required|regex:/^[a-z ,.'-]+$/i|min:3|max:100",
+            'foto' => "image|mimes:jpeg,png,jpg|max:5000",
+            'jenjang' => "required",
+            'jenis_sekolah' => "required",
+            'alamat' => "required|regex:/^[a-z0-9 ,.'-]+$/i|min:3",
+            'latSekolah' => "required",
+            'lngSekolah' => "required",
+        ],
+        [
+            'lokasi_desa.required' => "Lokasi desa wajib dipilih",
+            'nama_sekolah.required' => "Nama sekolah wajib diisi",
+            'nama_sekolah.regex' => "Format penulisan nama sekolah tidak sesuai",
+            'nama_sekolah.min' => "Nama sekolah minimal berjumlah 3 karakter",
+            'nama_sekolah.max' => "Nama sekolah maksimal berjumlah 100 karakter",
+            'foto.image' => "Foto potensi desa harus berupa gambar",
+            'foto.mimes' => "Foto potensi desa harus berupa gambar png, jpg, jpeg",
+            'foto.max' => "Foto potensi desa maksimal berukuran 5 Mb",
+            'jenjang.required' => "Jenjang sekolah wajib dipilih",
+            'jenis_sekolah.required' => "Jenis sekolah wajib dipilih",
+            'alamat.required' => "Alamat sekolah wajib diisi",
+            'alamat.regex' => "Format penulisan alamat sekolah tidak sesuai",
+        ]);
+
         if ($request->foto == NULL) {
             $filename = NULL;
         } else {
@@ -94,6 +119,31 @@ class SekolahController extends Controller
 
     public function updateSekolah(Request $request, Sekolah $sekolah)
     {
+        $this->validate($request,[
+            'lokasi_desa' => "required",
+            'nama_sekolah' => "required|regex:/^[a-z ,.'-]+$/i|min:3|max:100",
+            'foto' => "image|mimes:jpeg,png,jpg|max:5000",
+            'jenjang' => "required",
+            'jenis_sekolah' => "required",
+            'alamat' => "required|regex:/^[a-z0-9 ,.'-]+$/i|min:3",
+            'latSekolah' => "required",
+            'lngSekolah' => "required",
+        ],
+        [
+            'lokasi_desa.required' => "Lokasi desa wajib dipilih",
+            'nama_sekolah.required' => "Nama sekolah wajib diisi",
+            'nama_sekolah.regex' => "Format penulisan nama sekolah tidak sesuai",
+            'nama_sekolah.min' => "Nama sekolah minimal berjumlah 3 karakter",
+            'nama_sekolah.max' => "Nama sekolah maksimal berjumlah 100 karakter",
+            'foto.image' => "Foto sekolah harus berupa gambar",
+            'foto.mimes' => "Foto sekolah harus berupa gambar png, jpg, jpeg",
+            'foto.max' => "Foto sekolah maksimal berukuran 5 Mb",
+            'jenjang.required' => "Jenjang sekolah wajib dipilih",
+            'jenis_sekolah.required' => "Jenis sekolah wajib dipilih",
+            'alamat.required' => "Alamat sekolah wajib diisi",
+            'alamat.regex' => "Format penulisan alamat sekolah tidak sesuai",
+        ]);
+
         if (
             $request->lokasi_desa == $sekolah->id_desa && 
             $request->nama_sekolah == $sekolah->nama && 
@@ -127,7 +177,7 @@ class SekolahController extends Controller
             $updateSekolah = Sekolah::where('id', $sekolah->id)->update([
                 'id_desa' => $request->lokasi_desa,
                 'nama' => $request->nama_sekolah,
-                'foto' => $filename,
+                'foto' => $imgMarker,
                 'jenjang' => $request->jenjang,
                 'jenis_sekolah' => $request->jenis_sekolah,
                 'alamat' => $request->alamat,

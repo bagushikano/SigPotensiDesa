@@ -42,9 +42,9 @@ class PasarController extends Controller
             'nama_pasar.regex' => "Format penulisan nama pasar tidak sesuai",
             'nama_pasar.min' => "Nama pasar minimal berjumlah 3 karakter",
             'nama_pasar.max' => "Nama pasar maksimal berjumlah 100 karakter",
-            'foto.image' => "Foto potensi desa harus berupa gambar",
-            'foto.mimes' => "Foto potensi desa harus berupa gambar png, jpg, jpeg",
-            'foto.max' => "Foto potensi desa maksimal berukuran 5 Mb",
+            'foto.image' => "Foto pasar harus berupa gambar",
+            'foto.mimes' => "Foto pasar harus berupa gambar png, jpg, jpeg",
+            'foto.max' => "Foto pasar maksimal berukuran 5 Mb",
             'alamat.required' => "Alamat pasar wajib diisi",
             'alamat.regex' => "Format penulisan alamat pasar tidak sesuai",
         ]);

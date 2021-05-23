@@ -51,7 +51,7 @@
                                 <div class="col-sm-12 col-md-6">
                                     <div class="form-floating mb-3">
                                         <input type="text" class="form-control @error('nama_sekolah') is-invalid @enderror" id="nama_sekolah" name="nama_sekolah" placeholder="Masukan nama pusat pemerintahan" value="{{ old('nama_sekolah', $sekolah->nama) }}" autocomplete="off" required>
-                                        <label for="nama_sekolah">Nama Sekolah</label>
+                                        <label for="nama_sekolah">Nama Sekolah<span class="text-danger">*</span></label>
                                         @error('nama_sekolah')
                                             <div class="invalid-feedback text-start">
                                                 {{ $message }}
@@ -71,7 +71,11 @@
                                                 @if ($data->id == $sekolah->desa->id)
                                                     <option selected value="{{ $sekolah->id_desa }}" onclick="showBatasDesa('{{$data->id}}')">{{ $sekolah->desa->nama }}</option>
                                                 @else
-                                                    <option value="{{ $data->id }}" onclick="showBatasDesa('{{$data->id}}')">{{ $data->nama }}</option>
+                                                    @if ($data->batas_wilayah == NULL)
+                                                    <option value="" disabled>{{ $data->nama }}</option>
+                                                    @else
+                                                        <option value="{{ $data->id }}" onclick="showBatasDesa('{{$data->id}}')">{{ $data->nama }}</option>
+                                                    @endif
                                                 @endif
                                             @endforeach
                                         </select>
@@ -84,7 +88,7 @@
                                                 Desa lokasi sekolah wajib diisi
                                             </div>
                                         @enderror
-                                        <label for="lokasi_desa">Lokasi Desa</label>
+                                        <label for="lokasi_desa">Lokasi Desa<span class="text-danger">*</span></label>
                                     </div>
                                 </div>
                             </div>
@@ -110,7 +114,7 @@
                                                 Jenjang sekolah wajib diisi
                                             </div>
                                         @enderror
-                                        <label for="jenjang">Jenjang Sekolah</label>
+                                        <label for="jenjang">Jenjang Sekolah<span class="text-danger">*</span></label>
                                     </div>
                                 </div>
                                 <div class="col-sm-12 col-md-6">
@@ -133,47 +137,32 @@
                                                 Jenis sekolah wajib diisi
                                             </div>
                                         @enderror
-                                        <label for="jenis_sekolah">Jenis Sekolah</label>
+                                        <label for="jenis_sekolah">Jenis Sekolah<span class="text-danger">*</span></label>
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-sm-12 col-md-6">
                                     <div class="mb-3">
-                                        <label for="latSekolah" class="form-label">Koordinat Latitude</label>
+                                        <label for="latSekolah" class="form-label">Koordinat Latitude<span class="text-danger">*</span></label>
                                         <input type="text" class="form-control disabled" id="latSekolah" name="latSekolah" value="{{ old('latSekolah', $sekolah->lat) }}" placeholder="Koordinat latitude sekolah" required readonly>
-                                        @error('latSekolah')
-                                            <div class="invalid-feedback text-start">
-                                                {{ $message }}
-                                            </div>
-                                        @else
-                                            <div class="invalid-feedback">
-                                                Silahkan pilih lokasi sekolah pada peta
-                                            </div>
-                                        @enderror
                                     </div>
                                 </div>
                                 <div class="col-sm-12 col-md-6">
                                     <div class="mb-3">
-                                        <label for="lngSekolah" class="form-label">Koordinat Longitude</label>
+                                        <label for="lngSekolah" class="form-label">Koordinat Longitude<span class="text-danger">*</span></label>
                                         <input type="text" class="form-control" id="lngSekolah" name="lngSekolah" value="{{ old('lngSekolah', $sekolah->lng) }}" placeholder="Koordinat longitude sekolah" required readonly>
-                                        @error('lngSekolah')
-                                            <div class="invalid-feedback text-start">
-                                                {{ $message }}
-                                            </div>
-                                        @else
-                                            <div class="invalid-feedback">
-                                                Silahkan pilih lokasi sekolah pada peta
-                                            </div>
-                                        @enderror
                                     </div>
                                 </div>
+                                @if ($errors->has('lngSekolah') && $errors->has('latSekolah'))
+                                    <p class="text-end text-danger">Lokasi sekolah pada peta wajib ditentukan</p>
+                                @endif
                             </div>
                             <div class="row">
                                 <div class="col-12">
                                     <div class="mb-3">
-                                        <label for="alamat" class="form-label">Alamat Sekolah</label>
-                                        <textarea class="form-control @error('alamat') is-invalid @enderror" id="alamat" placeholder="Masukan alamat pasar" name="alamat" style="height: 60px" required>{{ old('alamat', $sekolah->alamat) }}</textarea>
+                                        <label for="alamat" class="form-label">Alamat Sekolah<span class="text-danger">*</span></label>
+                                        <textarea class="form-control @error('alamat') is-invalid @enderror" id="alamat" placeholder="Masukan alamat sekolah" name="alamat" style="height: 60px" required>{{ old('alamat', $sekolah->alamat) }}</textarea>
                                         @error('alamat')
                                             <div class="invalid-feedback text-start">
                                                 {{ $message }}
@@ -191,6 +180,9 @@
                                     <a data-bs-toggle="modal" data-bs-target="#detailFoto" class="card-title btn btn-sm btn-primary">Ganti Foto Pasar</a>
                                     <button type="submit" class="btn btn-sm btn-outline-success">Simpan Data</button>
                                 </div>
+                            </div>
+                            <div class="row">
+                                <span class="text-danger text-end">* Data wajib diisi</span>
                             </div>
                         </form>
                     </div>
@@ -347,6 +339,15 @@
                 })
         })()
     </script>
+
+    @if ($errors->has('foto'))
+        <script type="text/javascript">
+            $( document ).ready(function() {
+                $('#detailFoto').modal('show');
+                $('#img_preview').hide();
+            });
+        </script>
+    @endif
 
     @if($message = Session::get('success'))
         <script>

@@ -73,7 +73,11 @@
                                                 @if ($data->id == $puspem->desa->id)
                                                     <option selected value="{{ $puspem->id_desa }}" onclick="showBatasDesa('{{$data->id}}')">{{ $puspem->desa->nama }}</option>
                                                 @else
-                                                    <option value="{{ $data->id }}" onclick="showBatasDesa('{{$data->id}}')">{{ $data->nama }}</option>
+                                                    @if ($data->batas_wilayah == NULL)
+                                                        <option value="" disabled>{{ $data->nama }}</option>
+                                                    @else
+                                                        <option value="{{ $data->id }}" onclick="showBatasDesa('{{$data->id}}')">{{ $data->nama }}</option>
+                                                    @endif
                                                 @endif
                                             @endforeach
                                         </select>
@@ -160,6 +164,9 @@
                                     <a data-bs-toggle="modal" data-bs-target="#detailFoto" class="card-title btn btn-sm btn-primary">Ganti Foto Puspem</a>
                                     <button type="submit" class="btn btn-sm btn-outline-success">Simpan Pembaharuan Data</button>
                                 </div>
+                            </div>
+                            <div class="row">
+                                <span class="text-danger text-end">* Data wajib diisi</span>
                             </div>
                         </form>
                     </div>

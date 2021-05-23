@@ -141,6 +141,9 @@
                                     <button type="submit" class="btn btn-sm btn-outline-success">Simpan Data</button>
                                 </div>
                             </div>
+                            <div class="row">
+                                <span class="text-danger text-end">* Data wajib diisi</span>
+                            </div>
                         </form>
                     </div>
                 </div>
