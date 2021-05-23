@@ -28,6 +28,29 @@ class TempatIbadahController extends Controller
 
     public function simpanTempatIbadah(Request $request)
     {
+        $this->validate($request,[
+            'lokasi_desa' => "required",
+            'nama_tempat_ibadah' => "required|regex:/^[a-z ,.'-]+$/i|min:3|max:100",
+            'foto' => "image|mimes:jpeg,png,jpg|max:5000",
+            'umat_agama' => "required",
+            'alamat' => "required|regex:/^[a-z0-9 ,.'-]+$/i|min:3",
+            'latTempatIbadah' => "required",
+            'lngTempatIbadah' => "required",
+        ],
+        [
+            'lokasi_desa.required' => "Lokasi desa wajib dipilih",
+            'nama_tempat_ibadah.required' => "Nama tempat ibadah wajib diisi",
+            'nama_tempat_ibadah.regex' => "Format penulisan nama tempat ibadah tidak sesuai",
+            'nama_tempat_ibadah.min' => "Nama tempat ibadah minimal berjumlah 3 karakter",
+            'nama_tempat_ibadah.max' => "Nama tempat ibadah maksimal berjumlah 100 karakter",
+            'foto.image' => "Foto potensi desa harus berupa gambar",
+            'foto.mimes' => "Foto potensi desa harus berupa gambar png, jpg, jpeg",
+            'foto.max' => "Foto potensi desa maksimal berukuran 5 Mb",
+            'umat_agama.required' => "Umat Agama tempat ibadah wajib dipilih",
+            'alamat.required' => "Alamat tempat ibadah wajib diisi",
+            'alamat.regex' => "Format penulisan alamat tempat ibadah tidak sesuai",
+        ]);
+        
         if ($request->foto == NULL) {
             $filename = NULL;
         } else {
@@ -94,6 +117,29 @@ class TempatIbadahController extends Controller
 
     public function updateTempatIbadah(Request $request, TempatIbadah $tempatIbadah)
     {
+        $this->validate($request,[
+            'lokasi_desa' => "required",
+            'nama_tempat_ibadah' => "required|regex:/^[a-z ,.'-]+$/i|min:3|max:100",
+            'foto' => "image|mimes:jpeg,png,jpg|max:5000",
+            'umat_agama' => "required",
+            'alamat' => "required|regex:/^[a-z0-9 ,.'-]+$/i|min:3",
+            'latTempatIbadah' => "required",
+            'lngTempatIbadah' => "required",
+        ],
+        [
+            'lokasi_desa.required' => "Lokasi desa wajib dipilih",
+            'nama_tempat_ibadah.required' => "Nama tempat ibadah wajib diisi",
+            'nama_tempat_ibadah.regex' => "Format penulisan nama tempat ibadah tidak sesuai",
+            'nama_tempat_ibadah.min' => "Nama tempat ibadah minimal berjumlah 3 karakter",
+            'nama_tempat_ibadah.max' => "Nama tempat ibadah maksimal berjumlah 100 karakter",
+            'foto.image' => "Foto tempat ibadah harus berupa gambar",
+            'foto.mimes' => "Foto tempat ibadah harus berupa gambar png, jpg, jpeg",
+            'foto.max' => "Foto tempat ibadah maksimal berukuran 5 Mb",
+            'umat_agama.required' => "Umat Agama tempat ibadah wajib dipilih",
+            'alamat.required' => "Alamat tempat ibadah wajib diisi",
+            'alamat.regex' => "Format penulisan alamat tempat ibadah tidak sesuai",
+        ]);
+
         if (
             $request->lokasi_desa == $tempatIbadah->id_desa &&
             $request->nama_tempat_ibadah == $tempatIbadah->nama &&

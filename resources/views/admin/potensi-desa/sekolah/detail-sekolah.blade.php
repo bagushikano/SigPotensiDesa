@@ -219,6 +219,7 @@
             img.onload = function() {
                 URL.revokeObjectURL(img.src) // free memory
             }
+            $('#img_preview').show();
         });
 
         $('#closeModal').on('click', function () {

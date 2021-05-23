@@ -172,6 +172,7 @@
             img.onload = function() {
                 URL.revokeObjectURL(img.src) // free memory
             }
+            $('#img_preview').show();
         });
 
         $('#closeModal').on('click', function () {
@@ -347,6 +348,7 @@
         <script type="text/javascript">
             $( document ).ready(function() {
                 $('#detailFoto').modal('show');
+                $('#img_preview').hide();
             });
         </script>
     @endif
