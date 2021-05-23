@@ -325,23 +325,6 @@
             //         removalMode: false,
             //     });
         // });
-
-        // JS bawaan dari Bootstrap 5 untuk melakukan realtime validation ketika form required
-        (function () {
-            'use strict'
-            var forms = document.querySelectorAll('.needs-validation')
-            Array.prototype.slice.call(forms)
-                .forEach(function (form) {
-                    form.addEventListener('submit', function (event) {
-                        if (!form.checkValidity()) {
-                        event.preventDefault()
-                        event.stopPropagation()
-                        }
-
-                        form.classList.add('was-validated')
-                    }, false)
-                })
-        })()
     </script>
 
     @if ($errors->has('foto'))

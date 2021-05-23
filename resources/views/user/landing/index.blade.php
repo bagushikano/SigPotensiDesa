@@ -29,59 +29,47 @@
             height:100vh;
          }
     </style>
-<body class="bg-dark">
 </head>
-    {{-- <ul class="nav justify-content-end navbar-light fixed-top">
-        <li class="nav-item dropdown me-4">
-            <a class="nav-link link-dark" data-bs-toggle="dropdown">
-                <svg xmlns="http://www.w3.org/1000/svg" width="20" height="20" fill="currentColor" class="bi bi-grid-3x3-gap-fill" viewBox="0 0 16 16">
-                    <path d="M1 2a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2zm5 0a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V2zm5 0a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1V2zM1 7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V7zm5 0a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7zm5 0a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1V7zM1 12a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1v-2zm5 0a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1v-2zm5 0a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1v-2z"/>
-                </svg>
-            </a>
-            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                <div class="text-center"><a class="text-decoration-none link-dark" href="{{ route('Login Form') }}">Masuk</a></div>
-            </ul>
-        </li>
-    </ul> --}}
+<body class="bg-dark">
     <div class="container-map">
         <div class="row p-0 m-0">
             <div class="col-12 p-0" id="main">
-                    <div class="row test">
-                        <div class="col-12 overflow-auto bg-light" id="sidebar" style="height: 100vh; width:400px">
-                            <div class="card-body mx-auto">
-                                <button type="button" class="btn-close" aria-label="Close" style="float: right" onclick="hideSidebar()" id="tombolhide"></button>
-                                <img class="card-img-top mt-2" id="img_preview" src="" alt="">
-                                <p class="text-center" id="loader">Silahkan Tunggu ...</p>
-                                <div class="form-floating mt-2 mb-3" id="formNama">
-                                    <input type="text" class="form-control" id="nama" value="Nama Objectnya" >
-                                    <label>Nama Potensi Desa</label>
-                                </div>
-                                <div class="form-floating mt-2 mb-3" id="formJenjang">
-                                    <input type="text" class="form-control" id="jenjang" value="Janjang Sekolah" >
-                                    <label>Jenjang</label>
-                                </div>
-                                <div class="form-floating mt-2 mb-3" id="formJenis">
-                                    <input type="text" class="form-control" id="jenis" value="Jenis Sekolah" >
-                                    <label>Jenis Sekolah</label>
-                                </div>
-                                <div class="form-floating mt-2 mb-3" id="formTingkat">
-                                    <input type="text" class="form-control" id="tingkat" value="Tingkat Pemerintahan" >
-                                    <label>Tingkat</label>
-                                </div>
-                                <div class="form-floating mt-2 mb-3" id="formAgama">
-                                    <input type="text" class="form-control" id="agama" value="Umat Agama" >
-                                    <label>Umat Agama</label>
-                                </div>
-                                <div class="form-floating mt-2 mb-3" id="formAlamat">
-                                    <textarea class="form-control" id="alamat" style="height: 200px"></textarea>
-                                    <label>Alamat</label>
-                                </div>
-                                <div class="form-floating mt-2 mb-3" id="linkGmaps">
-                                    <a class='text-decoration-none text-dark' id="gmaps" target='_blank' href=""><i class='fas fa-map-marked-alt'></i> Lihat di Gmaps</a>
-                                </div>
+                <div class="row test">
+                    <div class="col-12 overflow-auto bg-light" id="sidebar" style="height: 100vh; width:400px">
+                        <div class="card-body mx-auto">
+                            <button type="button" class="btn-close" aria-label="Close" style="float: right" onclick="hideSidebar()" id="tombolhide"></button>
+                            <img class="card-img-top mt-2" id="img_preview" src="" alt="">
+                            <p class="text-center" id="loader">Silahkan Tunggu ...</p>
+                            <div class="form-floating mt-2 mb-3" id="formNama">
+                                <input type="text" class="form-control" id="nama" value="Nama Objectnya" >
+                                <label>Nama Potensi Desa</label>
+                            </div>
+                            <div class="form-floating mt-2 mb-3" id="formJenjang">
+                                <input type="text" class="form-control" id="jenjang" value="Janjang Sekolah" >
+                                <label>Jenjang</label>
+                            </div>
+                            <div class="form-floating mt-2 mb-3" id="formJenis">
+                                <input type="text" class="form-control" id="jenis" value="Jenis Sekolah" >
+                                <label>Jenis Sekolah</label>
+                            </div>
+                            <div class="form-floating mt-2 mb-3" id="formTingkat">
+                                <input type="text" class="form-control" id="tingkat" value="Tingkat Pemerintahan" >
+                                <label>Tingkat</label>
+                            </div>
+                            <div class="form-floating mt-2 mb-3" id="formAgama">
+                                <input type="text" class="form-control" id="agama" value="Umat Agama" >
+                                <label>Umat Agama</label>
+                            </div>
+                            <div class="form-floating mt-2 mb-3" id="formAlamat">
+                                <textarea class="form-control" id="alamat" style="height: 200px"></textarea>
+                                <label>Alamat</label>
+                            </div>
+                            <div class="form-floating mt-2 mb-3" id="linkGmaps">
+                                <a class='text-decoration-none text-dark' id="gmaps" target='_blank' href=""><i class='fas fa-map-marked-alt'></i> Lihat di Gmaps</a>
                             </div>
                         </div>
                     </div>
+                </div>
                 <div class="" id="mapid"></div>
             </div>
         </div>
@@ -101,7 +89,7 @@
 
         L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
             attribution: 'Sistem Informasi Geografis Potensi Desa &copy; {{ date('Y', strtotime(date('Y-m-d H:i:s'))) }}',
-            maxZoom: 18,
+            maxZoom: 20,
             minZoom: 1,
             id: 'mapbox/streets-v11',
             tileSize: 512,
@@ -124,7 +112,7 @@
         $("#linkGmaps").hide();
         $("#loader").hide();
         showBatasDesa();
-        mymap.invalidateSize()
+        mymap.invalidateSize();
 
         function showSidebar() {
             $("#sidebar").show();
@@ -343,7 +331,8 @@
         
         // Fungsi untuk show/hide Marker ketika Zoomend
         mymap.on('zoomend' , function (e) {
-            if (mymap.getZoom()<12)
+            mymap.invalidateSize();
+            if (mymap.getZoom()<15)
             {
                 for(; Object.keys(mymap._layers).length > 2;) {
                     mymap.removeLayer(mymap._layers[Object.keys(mymap._layers)[2]]);

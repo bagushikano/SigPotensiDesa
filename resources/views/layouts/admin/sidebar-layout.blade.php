@@ -20,13 +20,19 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="" id="profile-admin" class="nav-link">
+                            <a data-bs-toggle="modal" data-bs-target="#profileAdmin" class="nav-link">
                                 <i class="nav-icon fas fa-id-badge"></i>
                                 <p>Profile Pribadi</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="" id="admin-dashboard" class="nav-link">
+                            <a data-bs-toggle="modal" data-bs-target="#passwordAdmin" class="nav-link">
+                                <i class="nav-icon fas fa-unlock-alt"></i>
+                                <p>Ganti Password</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a data-bs-toggle="modal" data-bs-target="#tambahAdmin" class="nav-link">
                                 <i class="nav-icon fas fa-user-plus"></i>
                                 <p>Tambah Admin</p>
                             </a>

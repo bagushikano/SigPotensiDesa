@@ -179,7 +179,7 @@
 
         // Fungsi untuk show/hide Marker ketika Zoomend
         mymap.on('zoomend' , function (e) {
-            if (mymap.getZoom()<12)
+            if (mymap.getZoom()<15)
             {
                 for(; Object.keys(mymap._layers).length > 2;) {
                     mymap.removeLayer(mymap._layers[Object.keys(mymap._layers)[2]]);
