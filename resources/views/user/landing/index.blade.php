@@ -41,27 +41,27 @@
                             <img class="card-img-top mt-2" id="img_preview" src="" alt="">
                             <p class="text-center" id="loader">Silahkan Tunggu ...</p>
                             <div class="form-floating mt-2 mb-3" id="formNama">
-                                <input type="text" class="form-control" id="nama" value="Nama Objectnya" >
+                                <input type="text" class="form-control" id="nama" value="Nama Objectnya"  readonly>
                                 <label>Nama Potensi Desa</label>
                             </div>
                             <div class="form-floating mt-2 mb-3" id="formJenjang">
-                                <input type="text" class="form-control" id="jenjang" value="Janjang Sekolah" >
+                                <input type="text" class="form-control" id="jenjang" value="Janjang Sekolah"  readonly>
                                 <label>Jenjang</label>
                             </div>
                             <div class="form-floating mt-2 mb-3" id="formJenis">
-                                <input type="text" class="form-control" id="jenis" value="Jenis Sekolah" >
+                                <input type="text" class="form-control" id="jenis" value="Jenis Sekolah"  readonly>
                                 <label>Jenis Sekolah</label>
                             </div>
                             <div class="form-floating mt-2 mb-3" id="formTingkat">
-                                <input type="text" class="form-control" id="tingkat" value="Tingkat Pemerintahan" >
+                                <input type="text" class="form-control" id="tingkat" value="Tingkat Pemerintahan"  readonly>
                                 <label>Tingkat</label>
                             </div>
                             <div class="form-floating mt-2 mb-3" id="formAgama">
-                                <input type="text" class="form-control" id="agama" value="Umat Agama" >
+                                <input type="text" class="form-control" id="agama" value="Umat Agama"  readonly>
                                 <label>Umat Agama</label>
                             </div>
                             <div class="form-floating mt-2 mb-3" id="formAlamat">
-                                <textarea class="form-control" id="alamat" style="height: 200px"></textarea>
+                                <textarea class="form-control" id="alamat" style="height: 200px" readonly></textarea>
                                 <label>Alamat</label>
                             </div>
                             <div class="form-floating mt-2 mb-3" id="linkGmaps">
