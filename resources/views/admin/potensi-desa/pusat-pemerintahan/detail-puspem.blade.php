@@ -51,7 +51,7 @@
                                 <div class="col-12">
                                     <div class="form-floating mb-3">
                                         <input type="text" class="form-control @error('nama_puspem') is-invalid @enderror" id="nama_puspem" name="nama_puspem" placeholder="Masukan nama pusat pemerintahan" value="{{ old('nama_puspem', $puspem->nama) }}" autocomplete="off" required>
-                                        <label for="nama_puspem">Nama Pusat Pemerintahan</label>
+                                        <label for="nama_puspem">Nama Pusat Pemerintahan<span class="text-danger">*</span></label>
                                         @error('nama_puspem')
                                             <div class="invalid-feedback text-start">
                                                 {{ $message }}
@@ -86,7 +86,7 @@
                                                 Desa lokasi puspem wajib diisi
                                             </div>
                                         @enderror
-                                        <label for="lokasi_desa">Lokasi Desa</label>
+                                        <label for="lokasi_desa">Lokasi Desa<span class="text-danger">*</span></label>
                                     </div>
                                 </div>
                                 <div class="col-sm-12 col-md-6">
@@ -117,46 +117,31 @@
                                                 Tingkat pemerintahan wajib diisi
                                             </div>
                                         @enderror
-                                        <label for="tingkat_pemerintahan">Tingkat Pemerintahan</label>
+                                        <label for="tingkat_pemerintahan">Tingkat Pemerintahan<span class="text-danger">*</span></label>
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-sm-12 col-md-6">
                                     <div class="mb-3">
-                                        <label for="latPuspem" class="form-label">Koordinat Latitude</label>
+                                        <label for="latPuspem" class="form-label">Koordinat Latitude<span class="text-danger">*</span></label>
                                         <input type="text" class="form-control disabled" id="latPuspem" name="latPuspem" placeholder="Koordinat latitude pusat pemerintahan" value="{{ old('latPuspem', $puspem->lat) }}" required readonly>
-                                        @error('latPuspem')
-                                            <div class="invalid-feedback text-start">
-                                                {{ $message }}
-                                            </div>
-                                        @else
-                                            <div class="invalid-feedback">
-                                                Silahkan pilih lokasi pusat pemerintahan pada peta
-                                            </div>
-                                        @enderror
                                     </div>
                                 </div>
                                 <div class="col-sm-12 col-md-6">
                                     <div class="mb-3">
-                                        <label for="lngPuspem" class="form-label">Koordinat Longitude</label>
+                                        <label for="lngPuspem" class="form-label">Koordinat Longitude<span class="text-danger">*</span></label>
                                         <input type="text" class="form-control" id="lngPuspem" name="lngPuspem" placeholder="Koordinat longitude pusat pemerintahan" value="{{ old('lngPuspem', $puspem->lng) }}" required readonly>
-                                        @error('lngPuspem')
-                                            <div class="invalid-feedback text-start">
-                                                {{ $message }}
-                                            </div>
-                                        @else
-                                            <div class="invalid-feedback">
-                                                Silahkan pilih lokasi pusat pemerintahan pada peta
-                                            </div>
-                                        @enderror
                                     </div>
                                 </div>
+                                @if ($errors->has('lngPuspem') && $errors->has('latPuspem'))
+                                    <p class="text-end text-danger">Lokasi pusat pemerintahan pada peta wajib ditentukan</p>
+                                @endif
                             </div>
                             <div class="row">
                                 <div class="col-12">
                                     <div class="mb-3">
-                                        <label for="alamat" class="form-label">Alamat Pusat Pemerintahan</label>
+                                        <label for="alamat" class="form-label">Alamat Pusat Pemerintahan<span class="text-danger">*</span></label>
                                         <textarea class="form-control @error('alamat') is-invalid @enderror" id="alamat" placeholder="Masukan alamat pusat pemerintahan" name="alamat" style="height: 60px" required>{{ old('alamat', $puspem->alamat ) }}</textarea>
                                         @error('alamat')
                                             <div class="invalid-feedback text-start">
@@ -333,6 +318,14 @@
                 })
         })()
     </script>
+
+    @if ($errors->has('foto'))
+        <script type="text/javascript">
+            $( document ).ready(function() {
+                $('#detailFoto').modal('show');
+            });
+        </script>
+    @endif
 
     @if($message = Session::get('success'))
         <script>

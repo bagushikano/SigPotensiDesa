@@ -47,8 +47,6 @@ class PasarController extends Controller
             'foto.max' => "Foto potensi desa maksimal berukuran 5 Mb",
             'alamat.required' => "Alamat pasar wajib diisi",
             'alamat.regex' => "Format penulisan alamat pasar tidak sesuai",
-            'latPasar.required' => "Koordinat Latitude pasar wajib diisi",
-            'lngPasar.required' => "Koordinat Longitude pasar wajib diisi",
         ]);
 
         if ($request->foto == NULL) {

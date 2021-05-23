@@ -59,7 +59,7 @@
                                                 <a href="{{ route('Detail Pasar', $data->id) }}" class="btn btn-warning btn-sm">
                                                     <i class="fas fa-eye"></i>
                                                 </a>
-                                                <button type="submit" onclick="deleteDesa('{{$data->id}}')" class="btn btn-sm btn-danger">
+                                                <button type="submit" onclick="deletePasar('{{$data->id}}')" class="btn btn-sm btn-danger">
                                                     <i class="fas fa-trash"></i>
                                                 </button>
                                             </td>
@@ -68,7 +68,7 @@
                                                     <i class="fas fa-eye"></i>
                                                     Detail
                                                 </a>
-                                                <button onclick="deleteDesa('{{$data->id}}')" class="btn btn-sm btn-danger">
+                                                <button onclick="deletePasar('{{$data->id}}')" class="btn btn-sm btn-danger">
                                                     <i class="fas fa-trash"></i>
                                                     Hapus
                                                 </button>
@@ -122,7 +122,7 @@
             });
         });
 
-        function deleteDesa(desa) {
+        function deletePasar(desa) {
             Swal.fire({
                 title: 'Peringatan',
                 text: 'Apakah anda yakin akan menghapus pasar ?',

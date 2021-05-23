@@ -28,6 +28,29 @@ class PuspemController extends Controller
 
     public function simpanPuspem(Request $request)
     {
+        $this->validate($request,[
+            'lokasi_desa' => "required",
+            'nama_puspem' => "required|regex:/^[a-z ,.'-]+$/i|min:3|max:100",
+            'foto' => "image|mimes:jpeg,png,jpg|max:5000",
+            'tingkat_pemerintahan' => "required",
+            'alamat' => "required|regex:/^[a-z0-9 ,.'-]+$/i|min:3",
+            'latPuspem' => "required",
+            'lngPuspem' => "required",
+        ],
+        [
+            'lokasi_desa.required' => "Lokasi desa wajib dipilih",
+            'nama_puspem.required' => "Nama pusat pemerintahan wajib diisi",
+            'nama_puspem.regex' => "Format penulisan nama pusat pemerintahan tidak sesuai",
+            'nama_puspem.min' => "Nama pusat pemerintahan minimal berjumlah 3 karakter",
+            'nama_puspem.max' => "Nama pusat pemerintahan maksimal berjumlah 100 karakter",
+            'foto.image' => "Foto potensi desa harus berupa gambar",
+            'foto.mimes' => "Foto potensi desa harus berupa gambar png, jpg, jpeg",
+            'foto.max' => "Foto potensi desa maksimal berukuran 5 Mb",
+            'tingkat.required' => "Tingkat Pemerintahan wajib dipilih",
+            'alamat.required' => "Alamat pusat pemerintahan wajib diisi",
+            'alamat.regex' => "Format penulisan alamat pusat pemerintahan tidak sesuai",
+        ]);
+
         if ($request->foto == NULL) {
             $filename = NULL;
         } else {
@@ -120,6 +143,29 @@ class PuspemController extends Controller
 
     public function updatePuspem(Request $request, Puspem $puspem)
     {
+        $this->validate($request,[
+            'lokasi_desa' => "required",
+            'nama_puspem' => "required|regex:/^[a-z ,.'-]+$/i|min:3|max:100",
+            'foto' => "image|mimes:jpeg,png,jpg|max:5000",
+            'tingkat_pemerintahan' => "required",
+            'alamat' => "required|regex:/^[a-z0-9 ,.'-]+$/i|min:3",
+            'latPuspem' => "required",
+            'lngPuspem' => "required",
+        ],
+        [
+            'lokasi_desa.required' => "Lokasi desa wajib dipilih",
+            'nama_puspem.required' => "Nama pusat pemerintahan wajib diisi",
+            'nama_puspem.regex' => "Format penulisan nama pusat pemerintahan tidak sesuai",
+            'nama_puspem.min' => "Nama pusat pemerintahan minimal berjumlah 3 karakter",
+            'nama_puspem.max' => "Nama pusat pemerintahan maksimal berjumlah 100 karakter",
+            'foto.image' => "Foto potensi desa harus berupa gambar",
+            'foto.mimes' => "Foto potensi desa harus berupa gambar png, jpg, jpeg",
+            'foto.max' => "Foto potensi desa maksimal berukuran 5 Mb",
+            'tingkat.required' => "Tingkat Pemerintahan wajib dipilih",
+            'alamat.required' => "Alamat pusat pemerintahan wajib diisi",
+            'alamat.regex' => "Format penulisan alamat pusat pemerintahan tidak sesuai",
+        ]);
+
         if (
             $request->lokasi_desa == $puspem->id_desa &&
             $request->nama_puspem == $puspem->nama &&
