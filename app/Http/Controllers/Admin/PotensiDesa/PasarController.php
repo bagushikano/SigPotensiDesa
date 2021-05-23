@@ -28,6 +28,29 @@ class PasarController extends Controller
     
     public function simpanPasar(Request $request)
     {
+        $this->validate($request,[
+            'lokasi_desa' => "required",
+            'nama_pasar' => "required|regex:/^[a-z ,.'-]+$/i|min:3|max:100",
+            'foto' => "image|mimes:jpeg,png,jpg|max:5000",
+            'alamat' => "required|regex:/^[a-z0-9 ,.'-]+$/i|min:3",
+            'latPasar' => "required",
+            'lngPasar' => "required",
+        ],
+        [
+            'lokasi_desa.required' => "Lokasi desa wajib dipilih",
+            'nama_pasar.required' => "Nama pasar wajib diisi",
+            'nama_pasar.regex' => "Format penulisan nama pasar tidak sesuai",
+            'nama_pasar.min' => "Nama pasar minimal berjumlah 3 karakter",
+            'nama_pasar.max' => "Nama pasar maksimal berjumlah 100 karakter",
+            'foto.image' => "Foto potensi desa harus berupa gambar",
+            'foto.mimes' => "Foto potensi desa harus berupa gambar png, jpg, jpeg",
+            'foto.max' => "Foto potensi desa maksimal berukuran 5 Mb",
+            'alamat.required' => "Alamat pasar wajib diisi",
+            'alamat.regex' => "Format penulisan alamat pasar tidak sesuai",
+            'latPasar.required' => "Koordinat Latitude pasar wajib diisi",
+            'lngPasar.required' => "Koordinat Longitude pasar wajib diisi",
+        ]);
+
         if ($request->foto == NULL) {
             $filename = NULL;
         } else {
@@ -73,8 +96,6 @@ class PasarController extends Controller
 
     public function imgPasar(Pasar $pasar)
     {
-        // $pasar = Pasar::where('id', $idPasar)->first();
-
         if ($pasar->foto != NULL) {
             if(File::exists(storage_path($pasar->foto))) {
                 return response()->file(
@@ -93,28 +114,31 @@ class PasarController extends Controller
         
     }
 
-    public function hapusPasar(Pasar $pasar)
-    {
-        $today = Carbon::now()->setTimezone('GMT+8')->toDateString();
-        $cekPotensiDesa = PotensiDesa::where('id_desa', $pasar->id_desa)->first();
-    
-        $hapusPasar = Pasar::where('id', $pasar->id)->update([
-            'deleted_at' => $today
-        ]);
-
-        $potensiDesa = PotensiDesa::where('id_desa', $pasar->id_desa)->update([
-            'pasar' => $cekPotensiDesa->pasar - 1
-        ]);
-
-        if ($hapusPasar && $potensiDesa) {
-            return redirect()->back()->with('success', 'Data Potensi Desa (Pasar) Berhasil Dihapus');
-        } else {
-            return redirect()->back()->with('failed', 'Data Potensi Desa Gagal Dihapus');
-        }
-    }
-
     public function updatePasar(Request $request, Pasar $pasar)
     {
+        $this->validate($request,[
+            'lokasi_desa' => "required",
+            'nama_pasar' => "required|regex:/^[a-z ,.'-]+$/i|min:3|max:100",
+            'foto' => "image|mimes:jpeg,png,jpg|max:5000",
+            'alamat' => "required|regex:/^[a-z0-9 ,.'-]+$/i|min:3",
+            'latPasar' => "required",
+            'lngPasar' => "required",
+        ],
+        [
+            'lokasi_desa.required' => "Lokasi desa wajib dipilih",
+            'nama_pasar.required' => "Nama pasar wajib diisi",
+            'nama_pasar.regex' => "Format penulisan nama pasar tidak sesuai",
+            'nama_pasar.min' => "Nama pasar minimal berjumlah 3 karakter",
+            'nama_pasar.max' => "Nama pasar maksimal berjumlah 100 karakter",
+            'foto.image' => "Foto pasar harus berupa gambar",
+            'foto.mimes' => "Foto pasar harus berupa gambar png, jpg, jpeg",
+            'foto.max' => "Foto pasar maksimal berukuran 5 Mb",
+            'alamat.required' => "Alamat pasar wajib diisi",
+            'alamat.regex' => "Format penulisan alamat pasar tidak sesuai",
+            'latPasar.required' => "Koordinat Latitude pasar wajib diisi",
+            'lngPasar.required' => "Koordinat Longitude pasar wajib diisi",
+        ]);
+
         if (
             $request->lokasi_desa == $pasar->id_desa &&
             $request->nama_pasar == $pasar->nama &&
@@ -159,5 +183,25 @@ class PasarController extends Controller
             }
         }
         
+    }
+
+    public function hapusPasar(Pasar $pasar)
+    {
+        $today = Carbon::now()->setTimezone('GMT+8')->toDateString();
+        $cekPotensiDesa = PotensiDesa::where('id_desa', $pasar->id_desa)->first();
+    
+        $hapusPasar = Pasar::where('id', $pasar->id)->update([
+            'deleted_at' => $today
+        ]);
+
+        $potensiDesa = PotensiDesa::where('id_desa', $pasar->id_desa)->update([
+            'pasar' => $cekPotensiDesa->pasar - 1
+        ]);
+
+        if ($hapusPasar && $potensiDesa) {
+            return redirect()->back()->with('success', 'Data Potensi Desa (Pasar) Berhasil Dihapus');
+        } else {
+            return redirect()->back()->with('failed', 'Data Potensi Desa Gagal Dihapus');
+        }
     }
 }

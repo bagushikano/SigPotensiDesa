@@ -235,9 +235,7 @@
 
     @if (count($errors) > 0)
         <script type="text/javascript">
-            $( document ).ready(function() {
-                $('#tambahDesa').modal('show');
-            });
+            $('#batas_desa').val('');
         </script>
     @endif
 

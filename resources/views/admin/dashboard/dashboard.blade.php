@@ -53,25 +53,32 @@
             position: 'bottomright'
         }).addTo(mymap);
 
-        var desa = {!! json_encode($desa->toArray()) !!}
-        desa.forEach(element => {
-            var koor = jQuery.parseJSON(element['batas_wilayah']);
-            var id = jQuery.parseJSON(element['id']);
-            var pathCoords = makePolygon(koor);
-            var pathLine = L.polygon(pathCoords, {
-                id: element['id'],
-                color: element['warna'],
-                fillColor: element['warna'],
-                fillOpacity: 0.4,
-                fillOpacity: 0.4,
-                nama: element['nama'],
-            }).addTo(mymap);
+        showBatasDesa();
+        mymap.invalidateSize()
 
-            pathLine.on('click', function(e) {
-                $('#detailDesa').modal('show');
-                $("#nama_desa").val(element['nama']);
-            } );
-        });
+
+        // Menampilkan Batas Desa
+        function showBatasDesa() {
+            var desa = {!! json_encode($desa->toArray()) !!}
+            desa.forEach(element => {
+                var koor = jQuery.parseJSON(element['batas_wilayah']);
+                var id = jQuery.parseJSON(element['id']);
+                var pathCoords = makePolygon(koor);
+                var pathLine = L.polygon(pathCoords, {
+                    id: element['id'],
+                    color: element['warna'],
+                    fillColor: element['warna'],
+                    fillOpacity: 0.4,
+                    fillOpacity: 0.4,
+                    nama: element['nama'],
+                }).addTo(mymap);
+
+                pathLine.on('click', function(e) {
+                    $('#detailDesa').modal('show');
+                    $("#nama_desa").val(element['nama']);
+                } );
+            });
+        }
 
         // Menghubungkan antar koordinat batas desa
         function makePolygon(data){
@@ -113,49 +120,81 @@
 
 
         // Menampilkan Marker dari db
-        let pasar = {!! json_encode($pasar) !!}
-        pasar.forEach(element => {
-            let markerPasar = L.marker([element.lat, element.lng], {
-                icon: pasarIcon,
-            }).bindPopup().addTo(mymap);
-            var msgPasar = "<ul class='list-unstyled'><li class='fw-bold text-center mb-2'>"+element['nama']+"</li><li>Desa: "+element['nama_desa']+"</li><li>Alamat: "+element['alamat']+"</li><li><a class='text-decoration-none text-dark' target='_blank' href='https://www.google.com/maps/place/"+element['lat']+","+element['lng']+"''><i class='fas fa-map-marked-alt'></i> Lihat di Gmaps</a></li></ul>"
-            markerPasar.bindPopup(msgPasar);
-            markerPasar.on('click', function() {
-                markerPasar.openPopup();
+        function showMarkerPasar() {
+            let pasar = {!! json_encode($pasar) !!}
+            pasar.forEach(element => {
+                let markerPasar = L.marker([element.lat, element.lng], {
+                    icon: pasarIcon,
+                }).bindPopup().addTo(mymap);
+                var msgPasar = "<ul class='list-unstyled'><li class='fw-bold text-center mb-2'>"+element['nama']+"</li><li>Desa: "+element['nama_desa']+"</li><li>Alamat: "+element['alamat']+"</li><li><a class='text-decoration-none text-dark' target='_blank' href='https://www.google.com/maps/place/"+element['lat']+","+element['lng']+"''><i class='fas fa-map-marked-alt'></i> Lihat di Gmaps</a></li></ul>"
+                markerPasar.bindPopup(msgPasar);
+                markerPasar.on('click', function() {
+                    markerPasar.openPopup();
+                });
             });
-        });
-        let puspem = {!! json_encode($puspem) !!}
-        puspem.forEach(element => {
-            let markerPuspem = L.marker([element.lat, element.lng], {
-                icon: puspemIcon,
-            }).bindPopup().addTo(mymap);
-            var msgPuspem = "<ul class='list-unstyled'><li class='fw-bold text-center mb-2'>"+element['nama']+"</li><li>Desa: "+element['nama_desa']+"</li><li>Tingkat: "+element['tingkat']+"</li><li>Alamat: "+element['alamat']+"</li><li><a class='text-decoration-none text-dark' target='_blank' href='https://www.google.com/maps/place/"+element['lat']+","+element['lng']+"''><i class='fas fa-map-marked-alt'></i> Lihat di Gmaps</a></li></ul>"
-            markerPuspem.bindPopup(msgPuspem);
-            markerPuspem.on('click', function() {
-                markerPuspem.openPopup();
+        }
+
+        function showMarkerPuspem() {
+            let puspem = {!! json_encode($puspem) !!}
+            puspem.forEach(element => {
+                let markerPuspem = L.marker([element.lat, element.lng], {
+                    icon: puspemIcon,
+                }).bindPopup().addTo(mymap);
+                var msgPuspem = "<ul class='list-unstyled'><li class='fw-bold text-center mb-2'>"+element['nama']+"</li><li>Desa: "+element['nama_desa']+"</li><li>Tingkat: "+element['tingkat']+"</li><li>Alamat: "+element['alamat']+"</li><li><a class='text-decoration-none text-dark' target='_blank' href='https://www.google.com/maps/place/"+element['lat']+","+element['lng']+"''><i class='fas fa-map-marked-alt'></i> Lihat di Gmaps</a></li></ul>"
+                markerPuspem.bindPopup(msgPuspem);
+                markerPuspem.on('click', function() {
+                    markerPuspem.openPopup();
+                });
             });
-        });
-        let sekolah = {!! json_encode($sekolah) !!}
-        sekolah.forEach(element => {
-            let markerSekolah = L.marker([element.lat, element.lng], {
-                icon: sekolahIcon,
-            }).bindPopup().addTo(mymap);
-            var msgSekolah = "<ul class='list-unstyled'><li class='fw-bold text-center mb-2'>"+element['nama']+"</li><li>Desa: "+element['nama_desa']+"</li><li>Jenjang: "+element['jenjang']+"</li><li>Jenis Sekolah: "+element['jenis_sekolah']+"</li><li>Alamat: "+element['alamat']+"</li><li><a class='text-decoration-none text-dark' target='_blank' href='https://www.google.com/maps/place/"+element['lat']+","+element['lng']+"''><i class='fas fa-map-marked-alt'></i> Lihat di Gmaps</a></li></ul>"
-            markerSekolah.bindPopup(msgSekolah);
-            markerSekolah.on('click', function() {
-                markerSekolah.openPopup();
+        }
+
+        function showMarkerSekolah() {
+            let sekolah = {!! json_encode($sekolah) !!}
+            sekolah.forEach(element => {
+                let markerSekolah = L.marker([element.lat, element.lng], {
+                    icon: sekolahIcon,
+                }).bindPopup().addTo(mymap);
+                var msgSekolah = "<ul class='list-unstyled'><li class='fw-bold text-center mb-2'>"+element['nama']+"</li><li>Desa: "+element['nama_desa']+"</li><li>Jenjang: "+element['jenjang']+"</li><li>Jenis Sekolah: "+element['jenis_sekolah']+"</li><li>Alamat: "+element['alamat']+"</li><li><a class='text-decoration-none text-dark' target='_blank' href='https://www.google.com/maps/place/"+element['lat']+","+element['lng']+"''><i class='fas fa-map-marked-alt'></i> Lihat di Gmaps</a></li></ul>"
+                markerSekolah.bindPopup(msgSekolah);
+                markerSekolah.on('click', function() {
+                    markerSekolah.openPopup();
+                });
             });
-        });
-        let tempatIbadah = {!! json_encode($tempatIbadah) !!}
-        tempatIbadah.forEach(element => {
-            let markerTempatIbadah = L.marker([element.lat, element.lng], {
-                icon: sekolahIcon,
-            }).bindPopup().addTo(mymap);
-            var msgTempatIbadah = "<ul class='list-unstyled'><li class='fw-bold text-center mb-2'>"+element['nama']+"</li><li>Desa: "+element['nama_desa']+"</li><li>Ibadat Umat: "+element['agama']+"</li><li>Alamat: "+element['alamat']+"</li><li><a class='text-decoration-none text-dark' target='_blank' href='https://www.google.com/maps/place/"+element['lat']+","+element['lng']+"''><i class='fas fa-map-marked-alt'></i> Lihat di Gmaps</a></li></ul>"
-            markerTempatIbadah.bindPopup(msgTempatIbadah);
-            markerTempatIbadah.on('click', function() {
-                markerTempatIbadah.openPopup();
+        }
+
+        function showMarkerTempatIbadah() {
+            let tempatIbadah = {!! json_encode($tempatIbadah) !!}
+            tempatIbadah.forEach(element => {
+                let markerTempatIbadah = L.marker([element.lat, element.lng], {
+                    icon: sekolahIcon,
+                }).bindPopup().addTo(mymap);
+                var msgTempatIbadah = "<ul class='list-unstyled'><li class='fw-bold text-center mb-2'>"+element['nama']+"</li><li>Desa: "+element['nama_desa']+"</li><li>Ibadat Umat: "+element['agama']+"</li><li>Alamat: "+element['alamat']+"</li><li><a class='text-decoration-none text-dark' target='_blank' href='https://www.google.com/maps/place/"+element['lat']+","+element['lng']+"''><i class='fas fa-map-marked-alt'></i> Lihat di Gmaps</a></li></ul>"
+                markerTempatIbadah.bindPopup(msgTempatIbadah);
+                markerTempatIbadah.on('click', function() {
+                    markerTempatIbadah.openPopup();
+                });
             });
+        }
+
+
+        // Fungsi untuk show/hide Marker ketika Zoomend
+        mymap.on('zoomend' , function (e) {
+            if (mymap.getZoom()<12)
+            {
+                for(; Object.keys(mymap._layers).length > 2;) {
+                    mymap.removeLayer(mymap._layers[Object.keys(mymap._layers)[2]]);
+                }
+                showBatasDesa();
+            } else {
+                for(; Object.keys(mymap._layers).length > 1;) {
+                    mymap.removeLayer(mymap._layers[Object.keys(mymap._layers)[1]]);
+                }
+                showBatasDesa();
+                showMarkerPasar();
+                showMarkerPuspem();
+                showMarkerSekolah();
+                showMarkerTempatIbadah();
+            }
         });
     </script>
 @endpush

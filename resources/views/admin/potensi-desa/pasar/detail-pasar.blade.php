@@ -51,7 +51,7 @@
                                 <div class="col-sm-12 col-md-6">
                                     <div class="form-floating mb-3">
                                         <input type="text" class="form-control @error('nama_pasar') is-invalid @enderror" id="nama_pasar" name="nama_pasar" placeholder="Masukan nama pasar" value="{{ old('nama_pasar', $pasar->nama) }}" autocomplete="off" required>
-                                        <label for="nama_pasar">Nama Pasar</label>
+                                        <label for="nama_pasar">Nama Pasar<span class="text-danger">*</span></label>
                                         @error('nama_pasar')
                                             <div class="invalid-feedback text-start">
                                                 {{ $message }}
@@ -84,46 +84,31 @@
                                                 Desa lokasi pasar wajib diisi
                                             </div>
                                         @enderror
-                                        <label for="lokasi_desa">Lokasi Desa</label>
+                                        <label for="lokasi_desa">Lokasi Desa<span class="text-danger">*</span></label>
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-sm-12 col-md-6">
                                     <div class="mb-3">
-                                        <label for="latPasar" class="form-label">Koordinat Latitude</label>
+                                        <label for="latPasar" class="form-label">Koordinat Latitude<span class="text-danger">*</span></label>
                                         <input type="text" class="form-control disabled" id="latPasar" name="latPasar" placeholder="Koordinat latitude pasar" value="{{ old('latPasar', $pasar->lat) }}" required readonly>
-                                        @error('latPasar')
-                                            <div class="invalid-feedback text-start">
-                                                {{ $message }}
-                                            </div>
-                                        @else
-                                            <div class="invalid-feedback">
-                                                Koordinat latitude pasar wajib diisi
-                                            </div>
-                                        @enderror
                                     </div>
                                 </div>
                                 <div class="col-sm-12 col-md-6">
                                     <div class="mb-3">
-                                        <label for="lngPasar" class="form-label">Koordinat Longitude</label>
+                                        <label for="lngPasar" class="form-label">Koordinat Longitude<span class="text-danger">*</span></label>
                                         <input type="text" class="form-control" id="lngPasar" name="lngPasar" placeholder="Koordinat longitude pasar" value="{{ old('lngPasar', $pasar->lng) }}" required readonly>
-                                        @error('lngPasar')
-                                            <div class="invalid-feedback text-start">
-                                                {{ $message }}
-                                            </div>
-                                        @else
-                                            <div class="invalid-feedback">
-                                                Koordinat longitude pasar wajib diisi
-                                            </div>
-                                        @enderror
                                     </div>
                                 </div>
+                                @if ($errors->has('lngPasar') && $errors->has('latPasar'))
+                                    <p class="text-end text-danger">Lokasi pasar pada peta wajib ditentukan</p>
+                                @endif
                             </div>
                             <div class="row">
                                 <div class="col-12">
                                     <div class="mb-3">
-                                        <label for="alamat" class="form-label">Alamat Pasar</label>
+                                        <label for="alamat" class="form-label">Alamat Pasar<span class="text-danger">*</span></label>
                                         <textarea class="form-control @error('alamat') is-invalid @enderror" id="alamat" placeholder="Masukan alamat pasar" name="alamat" style="height: 60px" required>{{ old('alamat', $pasar->alamat ) }}</textarea>
                                         @error('alamat')
                                             <div class="invalid-feedback text-start">
@@ -184,7 +169,7 @@
 
         $('#closeModal').on('click', function () {
             $(this).find('img').trigger('reset');
-            $('#img_preview').attr('src', "{{route('Image Pasar', $pasar->id)}}");
+            $('#img_preview').attr('src', "{{route('Image Pasar', $pasar->id)}}?{{date('YmdHis')}}");
             $("#inputFoto").val('');
             document.getElementById('labelFoto').innerHTML
                 = 'Ganti Foto Pasar';
@@ -350,6 +335,14 @@
                 })
         })()
     </script>
+
+    @if ($errors->has('foto'))
+        <script type="text/javascript">
+            $( document ).ready(function() {
+                $('#detailFoto').modal('show');
+            });
+        </script>
+    @endif
 
     @if($message = Session::get('success'))
         <script>

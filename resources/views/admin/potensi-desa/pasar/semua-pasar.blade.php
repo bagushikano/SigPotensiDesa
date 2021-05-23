@@ -59,26 +59,23 @@
                                                 <a href="{{ route('Detail Pasar', $data->id) }}" class="btn btn-warning btn-sm">
                                                     <i class="fas fa-eye"></i>
                                                 </a>
-                                                <form action="{{ route('Hapus Pasar', $data->id) }}" method="POST" class="d-inline">
-                                                    @csrf
-                                                    <button type="submit" class="btn btn-sm btn-danger">
-                                                        <i class="fas fa-trash"></i>
-                                                    </button>
-                                                </form>
+                                                <button type="submit" onclick="deleteDesa('{{$data->id}}')" class="btn btn-sm btn-danger">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
                                             </td>
                                             <td class="text-center align-middle d-none d-md-table-cell">
                                                 <a href="{{ route('Detail Pasar', $data->id) }}" class="btn btn-warning btn-sm">
                                                     <i class="fas fa-eye"></i>
                                                     Detail
                                                 </a>
-                                                <form action="{{ route('Hapus Pasar', $data->id) }}" method="POST" class="d-inline">
-                                                    @csrf
-                                                    <button type="submit" class="btn btn-sm btn-danger">
-                                                        <i class="fas fa-trash"></i>
-                                                        Hapus
-                                                    </button>
-                                                </form>
+                                                <button onclick="deleteDesa('{{$data->id}}')" class="btn btn-sm btn-danger">
+                                                    <i class="fas fa-trash"></i>
+                                                    Hapus
+                                                </button>
                                             </td>
+                                            <form action="{{ route('Hapus Pasar', $data->id) }}" id="hapus-pasar" method="POST" class="d-inline">
+                                                @csrf
+                                            </form>
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -124,6 +121,23 @@
                 },
             });
         });
+
+        function deleteDesa(desa) {
+            Swal.fire({
+                title: 'Peringatan',
+                text: 'Apakah anda yakin akan menghapus pasar ?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: "Ya, hapus",
+                cancelButtonText: 'Tidak, batalkan',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $('#hapus-pasar').submit();
+                }
+            })
+        }
     </script>
 
     @if($message = Session::get('success'))

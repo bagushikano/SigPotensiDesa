@@ -22,10 +22,11 @@ class ManajemenDesaController extends Controller
     public function tambahDesa(Request $request)
     {
         $this->validate($request,[
-            'nama_desa' => "required|min:3|max:100",
+            'nama_desa' => "required|regex:/^[a-z ,.'-]+$/i|min:3|max:100",
         ],
         [
             'nama_desa.required' => "Nama desa wajib diisi",
+            'nama_desa.regex' => "Format penulisan nama desa tidak sesuai",
             'nama_desa.min' => "Nama desa minimal berjumlah 3 karakter",
             'nama_desa.max' => "Nama desa maksimal berjumlah 50 karakter",
         ]);
@@ -34,8 +35,10 @@ class ManajemenDesaController extends Controller
             'nama' => $request->nama_desa,
         ]);
 
+        $idDesa = $desa->id;
+
         if ($desa) {
-            return redirect()->back()->with(['confirm' => 'Data Desa Baru Berhasil Ditambahkan. Apakah anda ingin menambahkan batas desa ?']);
+            return redirect()->back()->with(['confirm' => 'Data Desa Baru Berhasil Ditambahkan. Apakah anda ingin menambahkan batas desa ?', 'idDesa' => $idDesa]);
         } else {
             return redirect()->back()->with(['failed' => 'Data Desa Baru Gagal Ditambahkan']);
         }   
@@ -55,6 +58,16 @@ class ManajemenDesaController extends Controller
 
     public function updateDesa(Request $request, Desa $desa)
     {
+        $this->validate($request,[
+            'nama_desa' => "required|regex:/^[a-z ,.'-]+$/i|min:3|max:100"
+        ],
+        [
+            'nama_desa.required' => "Nama desa wajib diisi",
+            'nama_desa.regex' => "Format penulisan nama desa tidak sesuai",
+            'nama_desa.min' => "Nama desa minimal berjumlah 3 karakter",
+            'nama_desa.max' => "Nama desa maksimal berjumlah 50 karakter",
+        ]);
+
         $updateDesa = Desa::where('id', $desa->id)->update([
             'nama' => $request->nama_desa,
             'warna' => $request->warna,

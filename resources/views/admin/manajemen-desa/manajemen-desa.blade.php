@@ -171,7 +171,7 @@
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            confirmButtonText: `<a class="text-decoration-none link-light" class href="{{ route('Landing Page') }}">Iya, tambahkan</a>`,
+            confirmButtonText: `<a class="text-decoration-none link-light" class href="{{ route('Detail Desa', session()->get('idDesa')) }}">Iya, tambahkan</a>`,
             cancelButtonText: 'Tidak, lain kali',
           })
         </script>

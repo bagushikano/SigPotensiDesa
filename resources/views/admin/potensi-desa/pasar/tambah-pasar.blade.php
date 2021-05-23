@@ -41,7 +41,7 @@
                                 <div class="col-sm-12 col-md-6">
                                     <div class="form-floating mb-3">
                                         <input type="text" class="form-control @error('nama_pasar') is-invalid @enderror" id="nama_pasar" name="nama_pasar" placeholder="Masukan nama pasar" value="{{ old('nama_pasar') }}" autocomplete="off" required>
-                                        <label for="nama_pasar">Nama Pasar</label>
+                                        <label for="nama_pasar">Nama Pasar<span class="text-danger">*</span></label>
                                         @error('nama_pasar')
                                             <div class="invalid-feedback text-start">
                                                 {{ $message }}
@@ -59,7 +59,11 @@
                                         <select class="form-select" id="lokasi_desa" name="lokasi_desa" required>
                                             <option disabled selected value="">Pilih desa lokasi pasar</option>
                                             @foreach ($desa as $data)
-                                                <option value="{{ $data->id }}" onclick="showBatasDesa('{{$data->id}}')">{{ $data->nama }}</option>
+                                                @if ($data->batas_wilayah == NULL)
+                                                    <option value="" disabled>{{ $data->nama }}</option>
+                                                @else
+                                                    <option value="{{ $data->id }}" onclick="showBatasDesa('{{$data->id}}')">{{ $data->nama }}</option>
+                                                @endif
                                             @endforeach
                                         </select>
                                         @error('lokasi_desa')
@@ -71,46 +75,31 @@
                                                 Desa lokasi pasar wajib diisi
                                             </div>
                                         @enderror
-                                        <label for="lokasi_desa">Lokasi Desa</label>
+                                        <label for="lokasi_desa">Lokasi Desa<span class="text-danger">*</span></label>
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-sm-12 col-md-6">
                                     <div class="mb-3">
-                                        <label for="latPasar" class="form-label">Koordinat Latitude</label>
+                                        <label for="latPasar" class="form-label">Koordinat Latitude<span class="text-danger">*</span></label>
                                         <input type="text" class="form-control disabled" id="latPasar" name="latPasar" placeholder="Koordinat latitude pasar" required readonly>
-                                        @error('latPasar')
-                                            <div class="invalid-feedback text-start">
-                                                {{ $message }}
-                                            </div>
-                                        @else
-                                            <div class="invalid-feedback">
-                                                Koordinat latitude pasar wajib diisi
-                                            </div>
-                                        @enderror
                                     </div>
                                 </div>
                                 <div class="col-sm-12 col-md-6">
                                     <div class="mb-3">
-                                        <label for="lngPasar" class="form-label">Koordinat Longitude</label>
+                                        <label for="lngPasar" class="form-label">Koordinat Longitude<span class="text-danger">*</span></label>
                                         <input type="text" class="form-control" id="lngPasar" name="lngPasar" placeholder="Koordinat longitude pasar" required readonly>
-                                        @error('lngPasar')
-                                            <div class="invalid-feedback text-start">
-                                                {{ $message }}
-                                            </div>
-                                        @else
-                                            <div class="invalid-feedback">
-                                                Koordinat longitude pasar wajib diisi
-                                            </div>
-                                        @enderror
                                     </div>
                                 </div>
+                                @if ($errors->has('lngPasar') && $errors->has('latPasar'))
+                                    <p class="text-end text-danger">Lokasi pasar pada peta wajib ditentukan</p>
+                                @endif
                             </div>
                             <div class="row">
                                 <div class="col-12">
                                     <div class="mb-3">
-                                        <label for="alamat" class="form-label">Alamat Pasar</label>
+                                        <label for="alamat" class="form-label">Alamat Pasar<span class="text-danger">*</span></label>
                                         <textarea class="form-control @error('alamat') is-invalid @enderror" id="alamat" placeholder="Masukan alamat pasar" name="alamat" style="height: 60px" required>{{ old('alamat') }}</textarea>
                                         @error('alamat')
                                             <div class="invalid-feedback text-start">
@@ -129,6 +118,9 @@
                                     <a data-bs-toggle="modal" data-bs-target="#tambahFoto" class="card-title btn btn-sm btn-primary">Tambah Foto Pasar</a>
                                     <button type="submit" class="btn btn-sm btn-outline-success">Simpan Data</button>
                                 </div>
+                            </div>
+                            <div class="row">
+                                <span class="text-danger text-end">* Data wajib diisi</span>
                             </div>
                         </form>
                     </div>
@@ -170,12 +162,15 @@
             bsCustomFileInput.init();
         });
 
+        $('#img_preview').hide();
+
         $('#inputFoto').on('change', function(event){
             var img = document.getElementById('img_preview');
             img.src = URL.createObjectURL(event.target.files[0]);
             img.onload = function() {
                 URL.revokeObjectURL(img.src) // free memory
             }
+            $('#img_preview').show();
         });
 
         // Inisialisasi Map
@@ -305,6 +300,14 @@
                 })
         })()
     </script>
+
+    @if ($errors->has('foto'))
+        <script type="text/javascript">
+            $( document ).ready(function() {
+                $('#tambahFoto').modal('show');
+            });
+        </script>
+    @endif
 
     @if($message = Session::get('success'))
         <script>
