@@ -116,10 +116,12 @@
 
         function showSidebar() {
             $("#sidebar").show();
+            mymap.invalidateSize();
         }
         
         function hideSidebar() {
             $("#sidebar").hide();
+            mymap.invalidateSize();
         }
 
         function showBatasDesa() {
