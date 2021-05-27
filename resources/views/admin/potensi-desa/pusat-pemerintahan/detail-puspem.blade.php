@@ -249,7 +249,8 @@
                 fillOpacity: 0.4,
                 fillOpacity: 0.4,
                 nama: element['nama'],
-            }).addTo(mymap); 
+            }).addTo(mymap);
+            mymap.fitBounds(pathLine.getBounds());
         });
 
         // Inisialisasi Map Icon
@@ -268,7 +269,7 @@
 
         marker.dragging.enable();
 
-        marker.on('dragend', function(e){
+        marker.on('drag', function(e){
             $('#latPuspem').val(e.target._latlng.lat); // Set field latPuspem dengan nilai lat baru
             $('#lngPuspem').val(e.target._latlng.lng); // Set field lngPuspem dengan nilai lng baru
         });
@@ -282,10 +283,6 @@
                     for(; Object.keys(mymap._layers).length > 1;) {
                         mymap.removeLayer(mymap._layers[Object.keys(mymap._layers)[1]]);
                     }
-                    let puspem = {!! json_encode($puspem) !!}
-                    let marker = L.marker([puspem.lat, puspem.lng], {
-                        icon: mapIcon,
-                    }).bindPopup().addTo(mymap);
                     let koor = jQuery.parseJSON(element['batas_wilayah']);
                     let pathCoords = makePolygon(koor);
                     let pathLine = L.polygon(pathCoords, {
@@ -294,6 +291,16 @@
                         fillColor: element['warna'],
                         fillOpacity: 0.4,
                     }).addTo(mymap);
+                    mymap.fitBounds(pathLine.getBounds());
+                    let puspem = {!! json_encode($puspem) !!}
+                    let marker = L.marker([puspem.lat, puspem.lng], {
+                        icon: mapIcon,
+                    }).bindPopup().addTo(mymap);
+                    marker.dragging.enable();
+                    marker.on('drag', function(e){
+                        $('#latPuspem').val(e.target._latlng.lat); // Set field latPuspem dengan nilai lat baru
+                        $('#lngPuspem').val(e.target._latlng.lng); // Set field lngPuspem dengan nilai lng baru
+                    });
                 }
             });
         }

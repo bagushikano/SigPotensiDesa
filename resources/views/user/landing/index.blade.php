@@ -116,12 +116,13 @@
 
         function showSidebar() {
             $("#sidebar").show();
-            mymap.invalidateSize();
+            // mymap.invalidateSize();
+            mymap.fitBounds(mymap.getBounds());
         }
         
         function hideSidebar() {
             $("#sidebar").hide();
-            mymap.invalidateSize();
+            mymap.fitBounds(mymap.getBounds());
         }
 
         function showBatasDesa() {
@@ -140,6 +141,7 @@
                 }).addTo(mymap);
 
                 pathLine.on('click', function(e) {
+                    mymap.fitBounds(pathLine.getBounds());
                     $('#detailDesa').modal('show');
                     $("#nama_desa").val(element['nama']);
                 });
@@ -193,7 +195,8 @@
                 markerPasar = L.marker([element.lat, element.lng], {
                     icon: pasarIcon,
                 }).addTo(mymap);
-                markerPasar.on('click', function() {
+                markerPasar.on('click', function(e) {
+                    mymap.setView(mymap.unproject(mymap.project(e.latlng)), 19, {animate: true});
                     $('#img_preview').hide();
                     $("#formTingkat").hide();
                     $('#formJenjang').hide();
@@ -225,7 +228,8 @@
                 markerPuspem = L.marker([element.lat, element.lng], {
                     icon: puspemIcon,
                 }).addTo(mymap);
-                markerPuspem.on('click', function() {
+                markerPuspem.on('click', function(e) {
+                    mymap.setView(mymap.unproject(mymap.project(e.latlng)), 19, {animate: true});
                     $('#img_preview').hide();
                     $("#formTingkat").hide();
                     $('#formJenjang').hide();
@@ -267,7 +271,8 @@
                 markerSekolah = L.marker([element.lat, element.lng], {
                     icon: sekolahIcon,
                 }).addTo(mymap);
-                markerSekolah.on('click', function() {
+                markerSekolah.on('click', function(e) {
+                    mymap.setView(mymap.unproject(mymap.project(e.latlng)), 19, {animate: true});
                     $('#img_preview').hide();
                     $("#formTingkat").hide();
                     $('#formJenjang').hide();
@@ -302,7 +307,8 @@
                 markerTempatIbadah = L.marker([element.lat, element.lng], {
                     icon: tempatIbadahIcon,
                 }).addTo(mymap);
-                markerTempatIbadah.on('click', function() {
+                markerTempatIbadah.on('click', function(e) {
+                    mymap.setView(mymap.unproject(mymap.project(e.latlng)), 19, {animate: true});
                     $('#img_preview').hide();
                     $("#formTingkat").hide();
                     $('#formJenjang').hide();
@@ -333,7 +339,8 @@
         
         // Fungsi untuk show/hide Marker ketika Zoomend
         mymap.on('zoomend' , function (e) {
-            mymap.invalidateSize();
+            // mymap.invalidateSize();
+            mymap.fitBounds(mymap.getBounds());
             if (mymap.getZoom()<15)
             {
                 for(; Object.keys(mymap._layers).length > 2;) {

@@ -203,7 +203,7 @@ class PuspemController extends Controller
             $updatePuspem = Puspem::where('id', $puspem->id)->update([
                 'id_desa' => $request->lokasi_desa,
                 'nama' => $request->nama_puspem,
-                'foto' => $filename,
+                'foto' => $imgMarker,
                 'tingkat' => $request->tingkat_pemerintahan,
                 'alamat' => $request->alamat,
                 'lat' => $request->latPuspem,

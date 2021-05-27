@@ -177,7 +177,7 @@ class TempatIbadahController extends Controller
             $updateTempatIbadah = TempatIbadah::where('id', $tempatIbadah->id)->update([
                 'id_desa' => $request->lokasi_desa,
                 'nama' => $request->nama_tempat_ibadah,
-                'foto' => $filename,
+                'foto' => $imgMarker,
                 'agama' => $request->umat_agama,
                 'alamat' => $request->alamat,
                 'lat' => $request->latTempatIbadah,

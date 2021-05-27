@@ -86,6 +86,7 @@
                                             <option disabled selected value="">Pilih tingkat pemerintahan</option>
                                             <option value="Pemda">Pemda</option>
                                             <option value="Pemkab">Pemkab</option>
+                                            <option value="Pemkot">Pemkot</option>
                                             <option value="Pemprov">Pemprov</option>
                                         </select>
                                         @error('tingkat_pemerintahan')
@@ -233,6 +234,7 @@
                         fillColor: element['warna'],
                         fillOpacity: 0.4,
                     }).addTo(mymap);
+                    mymap.fitBounds(pathLine.getBounds());
                     pathLine.on('click', klikBatasDesa); // Memanggil fungsi klikBatasDesa
                 }
             });

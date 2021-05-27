@@ -264,6 +264,7 @@
                 fillOpacity: 0.4,
                 nama: element['nama'],
             }).addTo(mymap); 
+            mymap.fitBounds(pathLine.getBounds());
         });
 
         // Inisialisasi Map Icon
@@ -282,7 +283,7 @@
 
         marker.dragging.enable();
 
-        marker.on('dragend', function(e){
+        marker.on('drag', function(e){
             $('#latSekolah').val(e.target._latlng.lat); // Set field latSekolah dengan nilai lat baru
             $('#lngSekolah').val(e.target._latlng.lng); // Set field lngPSekolah dengan nilai lng baru
         });
@@ -296,10 +297,6 @@
                     for(; Object.keys(mymap._layers).length > 1;) {
                         mymap.removeLayer(mymap._layers[Object.keys(mymap._layers)[1]]);
                     }
-                    let sekolah = {!! json_encode($sekolah) !!}
-                    let marker = L.marker([sekolah.lat, sekolah.lng], {
-                        icon: mapIcon,
-                    }).bindPopup().addTo(mymap);
                     let koor = jQuery.parseJSON(element['batas_wilayah']);
                     let pathCoords = makePolygon(koor);
                     let pathLine = L.polygon(pathCoords, {
@@ -308,6 +305,16 @@
                         fillColor: element['warna'],
                         fillOpacity: 0.4,
                     }).addTo(mymap);
+                    mymap.fitBounds(pathLine.getBounds());
+                    let sekolah = {!! json_encode($sekolah) !!}
+                    let marker = L.marker([sekolah.lat, sekolah.lng], {
+                        icon: mapIcon,
+                    }).addTo(mymap);
+                    marker.dragging.enable();
+                    marker.on('drag', function(e){
+                        $('#latSekolah').val(e.target._latlng.lat); // Set field latSekolah dengan nilai lat baru
+                        $('#lngSekolah').val(e.target._latlng.lng); // Set field lngPSekolah dengan nilai lng baru
+                    });
                 }
             });
         }

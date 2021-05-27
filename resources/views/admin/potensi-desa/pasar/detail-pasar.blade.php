@@ -225,6 +225,8 @@
                 nama: element['nama'],
             }).addTo(mymap);
 
+            mymap.fitBounds(pathLine.getBounds());
+
             // Menampilkan Marker dari db
             let pasar = {!! json_encode($pasar) !!}
             let marker = L.marker([pasar.lat, pasar.lng], {
@@ -248,10 +250,6 @@
                     for(; Object.keys(mymap._layers).length > 1;) {
                         mymap.removeLayer(mymap._layers[Object.keys(mymap._layers)[1]]);
                     }
-                    let pasar = {!! json_encode($pasar) !!}
-                    let marker = L.marker([pasar.lat, pasar.lng], {
-                        icon: mapIcon,
-                    }).bindPopup().addTo(mymap);
                     let koor = jQuery.parseJSON(element['batas_wilayah']);
                     let pathCoords = makePolygon(koor);
                     let pathLine = L.polygon(pathCoords, {
@@ -260,6 +258,16 @@
                         fillColor: element['warna'],
                         fillOpacity: 0.4,
                     }).addTo(mymap);
+                    mymap.fitBounds(pathLine.getBounds());
+                    let pasar = {!! json_encode($pasar) !!}
+                    let marker = L.marker([pasar.lat, pasar.lng], {
+                        icon: mapIcon,
+                    }).bindPopup().addTo(mymap);
+                    marker.dragging.enable();
+                    marker.on('drag', function(e){
+                        $('#lngPasar').val(e.target._latlng.lng); // Set field lngPasar dengan nilai lng baru
+                        $('#latPasar').val(e.target._latlng.lat); // Set field latPasar dengan nilai lat baru
+                    });
                 }
             });
         }

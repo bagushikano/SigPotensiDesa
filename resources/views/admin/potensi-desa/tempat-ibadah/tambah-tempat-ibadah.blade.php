@@ -238,6 +238,7 @@
                         fillColor: element['warna'],
                         fillOpacity: 0.4,
                     }).addTo(mymap);
+                    mymap.fitBounds(pathLine.getBounds());
                     pathLine.on('click', klikBatasDesa); // Memanggil fungsi klikBatasDesa
                 }
             });

@@ -244,7 +244,8 @@
                 fillOpacity: 0.4,
                 fillOpacity: 0.4,
                 nama: element['nama'],
-            }).addTo(mymap); 
+            }).addTo(mymap);
+            mymap.fitBounds(pathLine.getBounds());
         });
 
         // Inisialisasi Map Icon
@@ -263,7 +264,7 @@
 
         marker.dragging.enable();
 
-        marker.on('dragend', function(e){
+        marker.on('drag', function(e){
             $('#latTempatIbadah').val(e.target._latlng.lat); // Set field latTempatIbadah dengan nilai lat baru
             $('#lngTempatIbadah').val(e.target._latlng.lng); // Set field lngPTempatIbadah dengan nilai lng baru
         });
@@ -277,10 +278,6 @@
                     for(; Object.keys(mymap._layers).length > 1;) {
                         mymap.removeLayer(mymap._layers[Object.keys(mymap._layers)[1]]);
                     }
-                    let tempatIbadah = {!! json_encode($tempatIbadah) !!}
-                    let marker = L.marker([tempatIbadah.lat, tempatIbadah.lng], {
-                        icon: mapIcon,
-                    }).bindPopup().addTo(mymap);
                     let koor = jQuery.parseJSON(element['batas_wilayah']);
                     let pathCoords = makePolygon(koor);
                     let pathLine = L.polygon(pathCoords, {
@@ -289,6 +286,16 @@
                         fillColor: element['warna'],
                         fillOpacity: 0.4,
                     }).addTo(mymap);
+                    mymap.fitBounds(pathLine.getBounds());
+                    let tempatIbadah = {!! json_encode($tempatIbadah) !!}
+                    let marker = L.marker([tempatIbadah.lat, tempatIbadah.lng], {
+                        icon: mapIcon,
+                    }).bindPopup().addTo(mymap);
+                    marker.dragging.enable();
+                    marker.on('drag', function(e){
+                        $('#latTempatIbadah').val(e.target._latlng.lat); // Set field latTempatIbadah dengan nilai lat baru
+                        $('#lngTempatIbadah').val(e.target._latlng.lng); // Set field lngPTempatIbadah dengan nilai lng baru
+                    });
                 }
             });
         }
