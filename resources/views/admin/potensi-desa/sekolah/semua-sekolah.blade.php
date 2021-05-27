@@ -38,13 +38,13 @@
                         </div>
                     @else
                         <div class="card-body table-responsive-md">
-                            <table id="tbSekolah" class="table table-bordered table-hover">
+                            <table id="tbSekolah" class="table table-responsive-sm table-bordered table-hover">
                                 <thead class="text-center">
                                     <tr>
                                         <th>No</th>
                                         <th>Nama Sekolah</th>
                                         <th>Jenjang</th>
-                                        <th class="d-none d-md-table-cell">Jenis Sekolah</th>
+                                        <th>Jenis Sekolah</th>
                                         <th class="d-md-none">Tindakan</th>
                                         <th class="d-none d-md-table-cell">Tindakan</th>
                                     </tr>
@@ -55,7 +55,7 @@
                                             <td class="align-middle">{{ $loop->iteration }}</td>
                                             <td class="align-middle">{{ $data->nama }}</td>
                                             <td class="align-middle">{{ $data->jenjang }}</td>
-                                            <td class="align-middle d-none d-md-table-cell">{{ $data->jenis_sekolah }}</td>
+                                            <td class="align-middle">{{ $data->jenis_sekolah }}</td>
                                             <td class="text-center align-middle d-md-none">
                                                 <a href="{{ route('Detail Sekolah', $data->id) }}" class="btn btn-warning btn-sm">
                                                     <i class="fas fa-eye"></i>

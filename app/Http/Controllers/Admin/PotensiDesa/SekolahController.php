@@ -14,6 +14,11 @@ use App\Model\PotensiDesa;
 
 class SekolahController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     public function semuaSekolah()
     {
         $sekolah = Sekolah::where('deleted_at', NULL)->orderBy('id', 'desc')->get();

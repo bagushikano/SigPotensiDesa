@@ -105,6 +105,12 @@
                         <p>Tentang</p>
                     </a>
                 </li>
+                <li class="nav-item" id="admin-report">
+                    <a href="{{ route('Report') }}" id="report" class="nav-link">
+                        <i class="nav-icon fas fa-chart-line"></i>
+                        <p>Report</p>
+                    </a>
+                </li>
             </ul>
         </nav>
     </div>

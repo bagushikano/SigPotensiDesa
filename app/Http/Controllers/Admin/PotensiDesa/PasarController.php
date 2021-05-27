@@ -14,6 +14,11 @@ use App\Model\PotensiDesa;
 
 class PasarController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     public function semuaPasar()
     {
         $pasar = Pasar::where('deleted_at', NULL)->orderBy('id', 'desc')->get();

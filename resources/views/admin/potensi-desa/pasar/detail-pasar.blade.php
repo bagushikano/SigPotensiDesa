@@ -203,6 +203,13 @@
         }).addTo(mymap);
 
         let pathLine;
+        // Inisialisasi Map Icon
+        let mapIcon = L.icon({
+            iconUrl: "/maps/icon/1",
+            iconSize: [27, 27],
+            iconAnchor: [16, 16],
+            popupAnchor: [0, -32],
+        });
 
         // Memunculkan batas desa (Polyline) dari db bedasarkan id_desa di field
         let desa = {!! json_encode($satuDesa) !!}
@@ -216,29 +223,21 @@
                 fillOpacity: 0.4,
                 fillOpacity: 0.4,
                 nama: element['nama'],
-            }).addTo(mymap); 
+            }).addTo(mymap);
+
+            // Menampilkan Marker dari db
+            let pasar = {!! json_encode($pasar) !!}
+            let marker = L.marker([pasar.lat, pasar.lng], {
+                icon: mapIcon,
+            }).addTo(mymap);
+
+            marker.dragging.enable();
+            marker.on('drag', function(e){
+                $('#lngPasar').val(e.target._latlng.lng); // Set field lngPasar dengan nilai lng baru
+                $('#latPasar').val(e.target._latlng.lat); // Set field latPasar dengan nilai lat baru
+            });
         });
 
-        // Inisialisasi Map Icon
-        let mapIcon = L.icon({
-            iconUrl: "/maps/icon/1",
-            iconSize: [27, 27],
-            iconAnchor: [16, 16],
-            popupAnchor: [0, -32],
-        });
-
-        // Menampilkan Marker dari db
-        let pasar = {!! json_encode($pasar) !!}
-        let marker = L.marker([pasar.lat, pasar.lng], {
-            icon: mapIcon,
-        }).addTo(mymap);
-
-        marker.dragging.enable();
-
-        marker.on('dragend', function(e){
-            $('#latPasar').val(e.target._latlng.lat); // Set field latPasar dengan nilai lat baru
-            $('#lngPasar').val(e.target._latlng.lng); // Set field lngPasar dengan nilai lng baru
-        });
 
         // Menampilkan batas desa (Polyline) ketika desa dipilih pada field Lokasi Desa
         function showBatasDesa(desa) {

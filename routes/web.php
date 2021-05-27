@@ -71,3 +71,6 @@ Route::get('/tempat-ibadah/detail/{tempatIbadah}', 'Admin\PotensiDesa\TempatIbad
 Route::get('/tempat-ibadah/getImg/{tempatIbadah}', 'Admin\PotensiDesa\TempatIbadahController@imgTempatIbadah')->name('Image Tempat Ibadah');
 Route::post('/tempat-ibadah/update/{tempatIbadah}', 'Admin\PotensiDesa\TempatIbadahController@updateTempatIbadah')->name('Update Tempat Ibadah');
 Route::post('/tempat-ibadah/hapus/{tempatIbadah}', 'Admin\PotensiDesa\TempatIbadahController@hapusTempatIbadah')->name('Hapus Tempat Ibadah');
+
+
+Route::get('/report', 'Admin\Report\ReportController@semuaPotensiDesa')->name('Report');

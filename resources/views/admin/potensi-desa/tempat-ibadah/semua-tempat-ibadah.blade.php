@@ -38,7 +38,7 @@
                         </div>
                     @else
                         <div class="card-body table-responsive-md">
-                            <table id="tbTempatIbadah" class="table table-bordered table-hover">
+                            <table id="tbTempatIbadah" class="table table-responsive-sm table-bordered table-hover">
                                 <thead class="text-center">
                                     <tr>
                                         <th>No</th>

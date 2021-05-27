@@ -14,6 +14,11 @@ use App\Model\PotensiDesa;
 
 class PuspemController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     public function semuaPuspem()
     {
         $puspem = Puspem::where('deleted_at', NULL)->orderBy('id', 'desc')->get();
