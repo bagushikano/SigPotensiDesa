@@ -17,6 +17,7 @@ Route::get('/maps/icon/{id}', 'Admin\Images\ImageController@getIcon');
 
 
 Route::get('/', 'User\Landing\LandingController@landing')->name('Landing Page');
+Route::post('/kunjungan', 'User\Landing\LandingController@tambahKunjungan')->name('Tambah Kunjungan');
 
 
 Route::post('/tambah/admin', 'Admin\Auth\RegisController@tambahAdmin')->name('Tambah Admin')->middleware('auth');
@@ -74,3 +75,5 @@ Route::post('/tempat-ibadah/hapus/{tempatIbadah}', 'Admin\PotensiDesa\TempatIbad
 
 
 Route::get('/report', 'Admin\Report\ReportController@semuaPotensiDesa')->name('Report');
+Route::get('/report/potensi-desa/{desa}', 'Admin\Report\ReportController@detailPotensiDesa')->name('Detail Report');
+Route::get('/report/jumlah-kunjungan/{desa}', 'Admin\Report\ReportController@jumlahKunjungan')->name('Jumlah Kunjungan');

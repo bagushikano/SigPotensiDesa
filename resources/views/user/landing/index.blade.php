@@ -4,7 +4,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#7952b3">
-
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
+    <link rel="icon" type="image/png" href="{{ asset('logo.png') }}">
     <title>Maps Potensi Desa</title>
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
@@ -218,6 +219,12 @@
                         $('#formAlamat').show();
                         $('#linkGmaps').show();
                     }, 2000);
+                    $.ajax({
+                        type:'POST',
+                        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                        url:"{{ route('Tambah Kunjungan') }}",
+                        data:{id_desa:element['id_desa'], id_potensi_desa:element['id'], jenis_potensi:'Pasar'},
+                    });
                 });
             });
         }
@@ -260,6 +267,12 @@
                         $('#formAlamat').show();
                         $("#linkGmaps").show();
                     }, 2000);
+                    $.ajax({
+                        type:'POST',
+                        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                        url:"{{ route('Tambah Kunjungan') }}",
+                        data:{id_desa:element['id_desa'], id_potensi_desa:element['id'], jenis_potensi:'Pusat Pemerintahan'}
+                    });
                     // mymap.panBy([-450, 0]);
                 });
             });
@@ -297,6 +310,12 @@
                         $('#formAlamat').show();
                         $("#linkGmaps").show();
                     }, 2000);
+                    $.ajax({
+                        type:'POST',
+                        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                        url:"{{ route('Tambah Kunjungan') }}",
+                        data:{id_desa:element['id_desa'], id_potensi_desa:element['id'], jenis_potensi:'Sekolah'}
+                    });
                 });
             });
         }
@@ -332,6 +351,12 @@
                         $('#formAlamat').show();
                         $("#linkGmaps").show();
                     }, 2000);
+                    $.ajax({
+                        type:'POST',
+                        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                        url:"{{ route('Tambah Kunjungan') }}",
+                        data:{id_desa:element['id_desa'], id_potensi_desa:element['id'], jenis_potensi:'Tempat Ibadah'},
+                    });
                 });
             });
         }

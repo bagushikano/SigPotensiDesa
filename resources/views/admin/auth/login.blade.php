@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    {{-- <link rel="icon" type="image/png" href="{{ asset('images/sipandu-logo.ico') }}"> --}}
+    <link rel="icon" type="image/png" href="{{ asset('logo.png') }}">
     <title>Login Admin</title>
 
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
@@ -23,7 +23,7 @@
     <div class="login-box">
         <div class="card card-outline card-primary">
             <div class="card-header bg-white text-center">
-                <img class="rounded mx-auto d-block" src="..." alt="sipandu logo" width="100" height="100">
+                <img class="rounded mx-auto d-block" src="{{ asset('logo.png') }}" alt="sipandu logo" width="150" height="150">
                 <a href="" class="text-decoration-none h4 fw-bold">Pemetaan Potensi Desa</a>
                 <p class="login-box-msg mb-0 pb-0 px-0 pb-3 fw-bold h6">Selamat Datang Admin</p>
             </div>

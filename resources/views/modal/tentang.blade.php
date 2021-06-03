@@ -9,7 +9,7 @@
                 <div class="modal-body my-auto">
                     <p class="my-auto text-center"><span class="fw-bold">Developed by:</span> I Gede Hadi Darmawan</p>
                     <p class="my-auto text-center"><span class="fw-bold">Framework:</span> Laravel 7.x, Bootstrap 5</p>
-                    <p class="my-auto text-center"><span class="fw-bold">Template/Pluggin:</span> Leaflet, Mapbox, Geoman, jQuery, SweetAlert2, AdminLTE 3</p>
+                    <p class="my-auto text-center"><span class="fw-bold">Template/Pluggin:</span> Leaflet, Mapbox, Geoman, jQuery, SweetAlert2, ChartJs, FontAwesome, AdminLTE 3</p>
                     <p class="my-auto text-center"><span class="fw-bold">Language:</span> HTML, PHP, JavaScript</p>
                 </div>
                 <div class="modal-footer my-auto mx-auto">

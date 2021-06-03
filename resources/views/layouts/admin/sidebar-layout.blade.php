@@ -1,8 +1,8 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-2">
 {{-- Brand Logo Start --}}
     <a href="" class="brand-link text-decoration-none text-center">
-        {{-- <img src="{{ asset('/images/sipandu-logo.png') }}" alt="Potensi Desa Logo" class="brand-image img-circle elevation-3" style="opacity: .8"> --}}
-        <span class="brand-text font-weight-light fw-bold">Potensi Desa</span>
+        <img src="{{ asset('logo.png') }}" alt="Potensi Desa Logo" class="brand-image img-circle elevation-2" style="opacity: .8">
+        <span class="brand-text fw-bold fs-6">Pemetaan Potensi Desa</span>
     </a>
 {{-- Brand Logo End --}}
 
@@ -41,7 +41,7 @@
                             <form action="{{ route('Logout') }}" method="POST" class="nav-link p-0 m-0">
                                 @csrf
                                 <button class="nav-link text-danger text-start btn-block">
-                                    <i class="nav-icon fas fa-sign-out-alt"></i>
+                                    <i class="nav-icon fas fa-power-off"></i>
                                     <p>Logout</p>
                                 </button>
                             </form>

@@ -70,7 +70,7 @@
     </div>
 </div>
 
-@push('js')pt>
+@push('js')
     @if ($errors->has('nama') || $errors->has('username') || $errors->has('nomor_telepon') || $errors->has('alamat'))
         <script type="text/javascript">
             $( document ).ready(function() {

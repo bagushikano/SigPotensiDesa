@@ -19,8 +19,8 @@
             </nav>
         </div>
     </div>
-    <div class="container-fluid">
-        <div class="row p-0">
+    <div class="container-fluid px-0">
+        <div class="row">
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
@@ -29,7 +29,11 @@
                                 <h3 class="card-title my-auto">Daftar Seluruh Desa</h3>
                             </div>
                             <div class="col-6 my-auto d-flex justify-content-end">
-                                <a data-bs-toggle="modal" data-bs-target="#tambahDesa" class="card-title btn btn-success my-auto">Tambah Desa</a>
+                                <a data-bs-toggle="modal" data-bs-target="#tambahDesa" class="card-title btn btn-success my-auto">
+                                    <i class="fas fa-plus"></i>
+                                    <span class="border-end mx-2"></span>
+                                    Tambah Desa
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -61,6 +65,7 @@
                                             <td class="text-center align-middle d-none d-md-table-cell">
                                                 <a href="{{ route('Detail Desa', $data->id) }}" class="btn btn-warning btn-sm">
                                                     <i class="fas fa-eye"></i>
+                                                    <span class="border-end mx-2"></span>
                                                     Detail
                                                 </a>
                                             </td>

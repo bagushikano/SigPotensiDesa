@@ -40,4 +40,9 @@ class Desa extends Model
     {
         return $this->hasMany(PotensiDesa::class, 'id_desa', 'id');
     }
+
+    public function kunjungan()
+    {
+        return $this->hasMany(Kunjungan::class, 'id_desa', 'id');
+    }
 }

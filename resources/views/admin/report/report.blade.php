@@ -21,7 +21,7 @@
     </div>
     <div class="container-fluid">
         <div class="row">
-            <div class="col-12 p-0">
+            <div class="col-12 px-0">
                 <div class="card">
                     <div class="card-header">
                         <div class="row">
@@ -45,8 +45,8 @@
                                         <th>Sekolah</th>
                                         <th>Pusat Pemerintahan</th>
                                         <th>Tempat Ibadah</th>
-                                        {{-- <th class="d-md-none">Tindakan</th>
-                                        <th class="d-none d-md-table-cell">Tindakan</th> --}}
+                                        <th class="d-md-none">Tindakan</th>
+                                        <th class="d-none d-md-table-cell">Tindakan</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -74,17 +74,18 @@
                                             @else
                                                 <td class="align-middle">{{ $data->tempat_ibadah }}</td>
                                             @endif
-                                            {{-- <td class="text-center align-middle d-md-none">
-                                                <a href="{{ route('Detail Tempat Ibadah', $data->id) }}" class="btn btn-warning btn-sm">
+                                            <td class="text-center align-middle d-md-none">
+                                                <a href="{{ route('Detail Report', $data->id_desa) }}" class="btn btn-warning btn-sm">
                                                     <i class="fas fa-eye"></i>
                                                 </a>
                                             </td>
                                             <td class="text-center align-middle d-none d-md-table-cell">
-                                                <a href="{{ route('Detail Tempat Ibadah', $data->id) }}" class="btn btn-warning btn-sm">
+                                                <a href="{{ route('Detail Report', $data->id_desa) }}" class="btn btn-warning btn-sm">
                                                     <i class="fas fa-eye"></i>
+                                                    <span class="border-end mx-2 border-dark"></span>
                                                     Detail
                                                 </a>
-                                            </td> --}}
+                                            </td>
                                         </tr>
                                     @endforeach
                                 </tbody>

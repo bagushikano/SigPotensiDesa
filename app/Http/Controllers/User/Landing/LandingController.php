@@ -4,11 +4,13 @@ namespace App\Http\Controllers\User\Landing;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 use App\Model\Desa;
 use App\Model\Pasar;
 use App\Model\Sekolah;
 use App\Model\Puspem;
 use App\Model\TempatIbadah;
+use App\Model\Kunjungan;
 
 class LandingController extends Controller
 {
@@ -33,5 +35,23 @@ class LandingController extends Controller
         ->get();
 
         return view('user/landing/index', compact('desa', 'pasar', 'sekolah', 'puspem', 'tempatIbadah'));
+    }
+
+    public function tambahKunjungan(Request $request)
+    {
+        $date = Carbon::now()->setTimezone('GMT+8');
+        $thn_kunjungan = $date->format('Y');
+        $bln_kunjungan = $date->format('m');
+        $tgl_kunjungan = $date->format('d');
+
+        Kunjungan::create([
+            'id_desa' => $request->id_desa,
+            'id_potensi_desa' => $request->id_potensi_desa,
+            'jenis_potensi' => $request->jenis_potensi,
+            'jumlah_kunjungan' => 1,
+            'tanggal_kunjungan' => $tgl_kunjungan,
+            'bulan_kunjungan' => $bln_kunjungan,
+            'tahun_kunjungan' => $thn_kunjungan,
+        ]);
     }
 }
