@@ -99,16 +99,16 @@
                     </li>
                 </li>
                 <div class="dropdown-divider"></div>
-                <li class="nav-item">
-                    <a data-bs-toggle="modal" data-bs-target="#tentang" class="nav-link">
-                        <i class="nav-icon fas fa-info-circle"></i>
-                        <p>Tentang</p>
-                    </a>
-                </li>
                 <li class="nav-item" id="admin-report">
                     <a href="{{ route('Report') }}" id="report" class="nav-link">
                         <i class="nav-icon fas fa-chart-line"></i>
                         <p>Report</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a data-bs-toggle="modal" data-bs-target="#tentang" class="nav-link">
+                        <i class="nav-icon fas fa-info-circle"></i>
+                        <p>Tentang</p>
                     </a>
                 </li>
             </ul>

@@ -29,7 +29,11 @@
                                 <h3 class="card-title my-auto">Daftar Pasar</h3>
                             </div>
                             <div class="col-6 my-auto d-flex justify-content-end">
-                                <a href="{{ route('Tambah Pasar') }}" class="card-title btn btn-success my-auto">Tambah Pasar</a>
+                                <a href="{{ route('Tambah Pasar') }}" class="card-title btn btn-success my-auto">
+                                    <i class="fas fa-plus"></i>
+                                    <span class="border-end mx-2"></span>
+                                    Tambah Pasar
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -66,10 +70,12 @@
                                             <td class="text-center align-middle d-none d-md-table-cell">
                                                 <a href="{{ route('Detail Pasar', $data->id) }}" class="btn btn-warning btn-sm">
                                                     <i class="fas fa-eye"></i>
+                                                    <span class="border-end mx-2 border-dark"></span>
                                                     Detail
                                                 </a>
                                                 <button onclick="deletePasar('{{$data->id}}')" class="btn btn-sm btn-danger">
                                                     <i class="fas fa-trash"></i>
+                                                    <span class="border-end mx-2"></span>
                                                     Hapus
                                                 </button>
                                             </td>

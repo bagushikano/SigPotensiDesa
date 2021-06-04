@@ -48,7 +48,7 @@
         @include('modal/tambah-admin')  
     </div>
 
-    <!-- jQuery -->
+
     <script src="{{asset('admin-template/plugins/jquery/jquery.min.js')}}"></script>
     <script src="{{asset('admin-template/plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
     <script src="{{asset('admin-template/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js')}}"></script>
@@ -84,6 +84,30 @@
           });
         }
 
+        // function resetFormPassword() {
+        //     $("#formTambahDesa").trigger("reset");
+        //     $('#nama_desa').removeClass('is-invalid');
+        //     $("#nama_desa").val('');
+        // }
+        // function resetFormProfile() {
+        //     $("#formTambahDesa").trigger("reset");
+        //     $('#nama_desa').removeClass('is-invalid');
+        //     $("#nama_desa").val('');
+        // }
+        // function resetFormRegister() {
+        //     console.log('test');
+        //     $("#formRegisterAdmin").trigger("reset");
+        //     $('#nama_admin').trigger("reset");
+        //     $('#nama_admin').removeClass('is-invalid');
+        //     $("#nama_admin").val('');
+        //     $('#username_admin').removeClass('is-invalid');
+        //     $("#username_admin").val('');
+        //     $('#nomor_telepon_admin').removeClass('is-invalid');
+        //     $("#nomor_telepon_admin").val('');
+        //     $('#alamat_admin').removeClass('is-invalid');
+        //     $("#alamat_admin").val('');
+        // }
+
         // JS bawaan dari Bootstrap 5 untuk melakukan realtime validation ketika form required
         (function () {
             'use strict'
@@ -92,10 +116,9 @@
                 .forEach(function (form) {
                     form.addEventListener('submit', function (event) {
                         if (!form.checkValidity()) {
-                        event.preventDefault()
-                        event.stopPropagation()
+                            event.preventDefault()
+                            event.stopPropagation()
                         }
-
                         form.classList.add('was-validated')
                     }, false)
                 })

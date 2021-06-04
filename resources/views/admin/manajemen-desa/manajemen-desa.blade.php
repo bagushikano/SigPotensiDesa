@@ -65,7 +65,7 @@
                                             <td class="text-center align-middle d-none d-md-table-cell">
                                                 <a href="{{ route('Detail Desa', $data->id) }}" class="btn btn-warning btn-sm">
                                                     <i class="fas fa-eye"></i>
-                                                    <span class="border-end mx-2"></span>
+                                                    <span class="border-end mx-2 border-dark"></span>
                                                     Detail
                                                 </a>
                                             </td>

@@ -28,7 +28,11 @@
                                 <h3 class="card-title my-auto">Daftar Tempat Ibadah</h3>
                             </div>
                             <div class="col-6 my-auto d-flex justify-content-end">
-                                <a href="{{ route('Tambah Tempat Ibadah') }}" class="card-title btn btn-success my-auto">Tambah Tempat Ibadah</a>
+                                <a href="{{ route('Tambah Tempat Ibadah') }}" class="card-title btn btn-success my-auto">
+                                    <i class="fas fa-plus"></i>
+                                    <span class="border-end mx-2"></span>
+                                    Tambah Tempat Ibadah
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -67,10 +71,12 @@
                                             <td class="text-center align-middle d-none d-md-table-cell">
                                                 <a href="{{ route('Detail Tempat Ibadah', $data->id) }}" class="btn btn-warning btn-sm">
                                                     <i class="fas fa-eye"></i>
+                                                    <span class="border-end border-dark mx-2"></span>
                                                     Detail
                                                 </a>
                                                 <button onclick="deleteTempatIbadah('{{$data->id}}')" class="btn btn-sm btn-danger">
                                                     <i class="fas fa-trash"></i>
+                                                    <span class="border-end mx-2"></span>
                                                     Hapus
                                                 </button>
                                             </td>

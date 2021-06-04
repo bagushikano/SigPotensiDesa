@@ -62,8 +62,16 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kembali</button>
-                    <button type="submit" class="btn btn-success">Simpan</button>
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+                        <i class="fas fa-times"></i>
+                        <span class="border-end mx-2"></span>
+                        Batal
+                    </button>
+                    <button type="submit" class="btn btn-success">
+                        <i class="fas fa-save"></i>
+                        <span class="border-end mx-2"></span>
+                        Simpan
+                    </button>
                 </div>
             </form>
         </div>

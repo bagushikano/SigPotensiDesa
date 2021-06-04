@@ -161,7 +161,11 @@
                             </div>
                             <div class="row">
                                 <div class="col-12 text-right">
-                                    <a data-bs-toggle="modal" data-bs-target="#detailFoto" class="card-title btn btn-sm btn-primary">Ganti Foto Puspem</a>
+                                    <a data-bs-toggle="modal" data-bs-target="#detailFoto" class="card-title btn btn-sm btn-primary">
+                                        <i class="fas fa-image"></i>
+                                        <span class="border-end mx-2"></span>
+                                        Ganti Foto Puspem
+                                    </a>
                                     <button type="submit" class="btn btn-sm btn-outline-success">Simpan Pembaharuan Data</button>
                                 </div>
                             </div>
