@@ -11,6 +11,7 @@ use App\Model\Pasar;
 use App\Model\Desa;
 use App\Model\JenisPotensi;
 use App\Model\PotensiDesa;
+use App\Model\Kunjungan;
 
 class PasarController extends Controller
 {

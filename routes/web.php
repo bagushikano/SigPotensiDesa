@@ -24,7 +24,7 @@ Route::post('/tambah/admin', 'Admin\Auth\RegisController@tambahAdmin')->name('Ta
 Route::get('/login', 'Admin\Auth\LoginController@loginForm')->name('Login Form')->middleware('guest');
 Route::post('/profile/admin/update/{admin}', 'Admin\Auth\ProfileController@updateProfile')->name('Update Profile Admin')->middleware('auth');
 Route::post('/password/admin/ubah/{admin}', 'Admin\Auth\ProfileController@ubahPassword')->name('Ubah Password Admin')->middleware('auth');
-Route::post('/login', 'Admin\Auth\LoginController@login')->name('Login');
+Route::post('/login', 'Admin\Auth\LoginController@login')->name('Login')->middleware('guest');
 Route::post('/logout', 'Admin\Auth\LoginController@logout')->name('Logout')->middleware('auth');
 
 
