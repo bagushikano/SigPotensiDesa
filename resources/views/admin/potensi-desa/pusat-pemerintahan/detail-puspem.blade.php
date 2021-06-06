@@ -69,17 +69,7 @@
                                 <div class="col-sm-12 col-md-6">
                                     <div class="form-floating mb-3">
                                         <select class="form-select" id="lokasi_desa" name="lokasi_desa" aria-label="Floating label select example" required>
-                                            @foreach ($desa as $data)
-                                                @if ($data->id == $puspem->desa->id)
-                                                    <option selected value="{{ $puspem->id_desa }}" onclick="showBatasDesa('{{$data->id}}')">{{ $puspem->desa->nama }}</option>
-                                                @else
-                                                    @if ($data->batas_wilayah == NULL)
-                                                        <option value="" disabled>{{ $data->nama }}</option>
-                                                    @else
-                                                        <option value="{{ $data->id }}" onclick="showBatasDesa('{{$data->id}}')">{{ $data->nama }}</option>
-                                                    @endif
-                                                @endif
-                                            @endforeach
+                                            <option selected value="{{ $puspem->id_desa }}">{{ $puspem->desa->nama }}</option>
                                         </select>
                                         @error('lokasi_desa')
                                             <div class="invalid-feedback text-start">
@@ -270,11 +260,13 @@
             icon: mapIcon,
         }).addTo(mymap);
 
-        marker.dragging.enable();
-
-        marker.on('drag', function(e){
-            $('#latPuspem').val(e.target._latlng.lat); // Set field latPuspem dengan nilai lat baru
-            $('#lngPuspem').val(e.target._latlng.lng); // Set field lngPuspem dengan nilai lng baru
+        pathLine.on('click', function (e) {
+            if (marker) {
+                mymap.removeLayer(marker);
+            }
+                marker = new L.marker(e.latlng, {icon: mapIcon}).addTo(mymap);
+                $('#latPuspem').val(e.latlng.lat); 
+                $('#lngPuspem').val(e.latlng.lng); 
         });
 
         // Menampilkan batas desa (Polyline) ketika desa dipilih pada field Lokasi Desa
@@ -295,14 +287,14 @@
                         fillOpacity: 0.4,
                     }).addTo(mymap);
                     mymap.fitBounds(pathLine.getBounds());
-                    let puspem = {!! json_encode($puspem) !!}
-                    let marker = L.marker([puspem.lat, puspem.lng], {
-                        icon: mapIcon,
-                    }).bindPopup().addTo(mymap);
-                    marker.dragging.enable();
-                    marker.on('drag', function(e){
-                        $('#latPuspem').val(e.target._latlng.lat); // Set field latPuspem dengan nilai lat baru
-                        $('#lngPuspem').val(e.target._latlng.lng); // Set field lngPuspem dengan nilai lng baru
+                    let marker;
+                    pathLine.on('click', function (e) {
+                        if (marker) {
+                            mymap.removeLayer(marker);
+                        }
+                            marker = new L.marker(e.latlng, {icon: mapIcon}).addTo(mymap);
+                            $('#latPuspem').val(e.latlng.lat); 
+                            $('#lngPuspem').val(e.latlng.lng); 
                     });
                 }
             });

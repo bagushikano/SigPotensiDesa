@@ -67,17 +67,7 @@
                                 <div class="col-sm-12 col-md-6">
                                     <div class="form-floating mb-3">
                                         <select class="form-select" id="lokasi_desa" name="lokasi_desa" required>
-                                            @foreach ($desa as $data)
-                                                @if ($data->id == $sekolah->desa->id)
-                                                    <option selected value="{{ $sekolah->id_desa }}" onclick="showBatasDesa('{{$data->id}}')">{{ $sekolah->desa->nama }}</option>
-                                                @else
-                                                    @if ($data->batas_wilayah == NULL)
-                                                    <option value="" disabled>{{ $data->nama }}</option>
-                                                    @else
-                                                        <option value="{{ $data->id }}" onclick="showBatasDesa('{{$data->id}}')">{{ $data->nama }}</option>
-                                                    @endif
-                                                @endif
-                                            @endforeach
+                                            <option selected value="{{ $sekolah->id_desa }}">{{ $sekolah->desa->nama }}</option>
                                         </select>
                                         @error('lokasi_desa')
                                             <div class="invalid-feedback text-start">
@@ -285,11 +275,13 @@
             icon: mapIcon,
         }).addTo(mymap);
 
-        marker.dragging.enable();
-
-        marker.on('drag', function(e){
-            $('#latSekolah').val(e.target._latlng.lat); // Set field latSekolah dengan nilai lat baru
-            $('#lngSekolah').val(e.target._latlng.lng); // Set field lngPSekolah dengan nilai lng baru
+        pathLine.on('click', function (e) {
+            if (marker) {
+                mymap.removeLayer(marker);
+            }
+                marker = new L.marker(e.latlng, {icon: mapIcon}).addTo(mymap);
+                $('#latSekolah').val(e.latlng.lat); 
+                $('#lngSekolah').val(e.latlng.lng); 
         });
 
         // Menampilkan batas desa (Polyline) ketika desa dipilih pada field Lokasi Desa
@@ -310,14 +302,14 @@
                         fillOpacity: 0.4,
                     }).addTo(mymap);
                     mymap.fitBounds(pathLine.getBounds());
-                    let sekolah = {!! json_encode($sekolah) !!}
-                    let marker = L.marker([sekolah.lat, sekolah.lng], {
-                        icon: mapIcon,
-                    }).addTo(mymap);
-                    marker.dragging.enable();
-                    marker.on('drag', function(e){
-                        $('#latSekolah').val(e.target._latlng.lat); // Set field latSekolah dengan nilai lat baru
-                        $('#lngSekolah').val(e.target._latlng.lng); // Set field lngPSekolah dengan nilai lng baru
+                    let marker;
+                    pathLine.on('click', function (e) {
+                        if (marker) {
+                            mymap.removeLayer(marker);
+                        }
+                            marker = new L.marker(e.latlng, {icon: mapIcon}).addTo(mymap);
+                            $('#latSekolah').val(e.latlng.lat); 
+                            $('#lngSekolah').val(e.latlng.lng); 
                     });
                 }
             });

@@ -67,17 +67,7 @@
                                 <div class="col-sm-12 col-md-6">
                                     <div class="form-floating mb-3">
                                         <select class="form-select" id="lokasi_desa" name="lokasi_desa" aria-label="Floating label select example" required>
-                                            @foreach ($desa as $data)
-                                                @if ($data->id == $pasar->desa->id)
-                                                    <option selected value="{{ $pasar->id_desa }}" onclick="showBatasDesa('{{$data->id}}')">{{ $pasar->desa->nama }}</option>
-                                                @else
-                                                    @if ($data->batas_wilayah == NULL)
-                                                        <option value="" disabled>{{ $data->nama }}</option>
-                                                    @else
-                                                        <option value="{{ $data->id }}" onclick="showBatasDesa('{{$data->id}}')">{{ $data->nama }}</option>
-                                                    @endif
-                                                @endif
-                                            @endforeach
+                                            <option selected value="{{ $pasar->id_desa }}">{{ $pasar->desa->nama }}</option>
                                         </select>
                                         @error('lokasi_desa')
                                             <div class="invalid-feedback text-start">
@@ -230,18 +220,40 @@
             }).addTo(mymap);
 
             mymap.fitBounds(pathLine.getBounds());
-
             // Menampilkan Marker dari db
             let pasar = {!! json_encode($pasar) !!}
             let marker = L.marker([pasar.lat, pasar.lng], {
                 icon: mapIcon,
             }).addTo(mymap);
 
-            marker.dragging.enable();
-            marker.on('drag', function(e){
-                $('#lngPasar').val(e.target._latlng.lng); // Set field lngPasar dengan nilai lng baru
-                $('#latPasar').val(e.target._latlng.lat); // Set field latPasar dengan nilai lat baru
+            pathLine.on('click', function (e) {
+                if (marker) {
+                    mymap.removeLayer(marker);
+                }
+                    marker = new L.marker(e.latlng, {icon: mapIcon}).addTo(mymap);
+                    $('#latPasar').val(e.latlng.lat); // Set field latPasar dengan nilai lat baru
+                    $('#lngPasar').val(e.latlng.lng); // Set field lngPasar dengan nilai lng baru
+                // mymap;
+                // pathLine.off('click', klikBatasDesa); // Disable fungsi onClik pada layer batas desa
+                // Event ketika marker pada map di klik
+                // marker.on('click', function() {
+                //     mymap.removeLayer(marker) // Menghapus marker
+                //     $('#latPasar').val(''); // Set field latPasar dengan nilai lat baru
+                //     $('#lngPasar').val(''); // Set field lngPasar dengan nilai lng baru
+                //     pathLine.on('click', klikBatasDesa); // Enable fungsi onClik pada layer batas desa setelah marker sebelumnya di hapus
+                // });
+                // $('#latPasar').val(e.latlng.lat); // Set field latPasar dengan nilai lat baru
+                // $('#lngPasar').val(e.latlng.lng); // Set field lngPasar dengan nilai lng baru
             });
+
+            
+
+            // marker.dragging.enable();
+            
+            // marker.on('drag', function(e){
+            //     $('#lngPasar').val(e.target._latlng.lng); // Set field lngPasar dengan nilai lng baru
+            //     $('#latPasar').val(e.target._latlng.lat); // Set field latPasar dengan nilai lat baru
+            // });
         });
 
 
@@ -263,18 +275,56 @@
                         fillOpacity: 0.4,
                     }).addTo(mymap);
                     mymap.fitBounds(pathLine.getBounds());
-                    let pasar = {!! json_encode($pasar) !!}
-                    let marker = L.marker([pasar.lat, pasar.lng], {
-                        icon: mapIcon,
-                    }).bindPopup().addTo(mymap);
-                    marker.dragging.enable();
-                    marker.on('drag', function(e){
-                        $('#lngPasar').val(e.target._latlng.lng); // Set field lngPasar dengan nilai lng baru
-                        $('#latPasar').val(e.target._latlng.lat); // Set field latPasar dengan nilai lat baru
+                    // let pasar = {!! json_encode($pasar) !!}
+                    // let marker = L.marker([pasar.lat, pasar.lng], {
+                    //     icon: mapIcon,
+                    // }).addTo(mymap);
+
+                    let marker;
+                    pathLine.on('click', function (e) {
+                        // marker = new L.marker(e.latlng, {icon: mapIcon}).addTo(mymap);
+                        if (marker) {
+                            mymap.removeLayer(marker);
+                        }
+                            marker = new L.marker(e.latlng, {icon: mapIcon}).addTo(mymap);
+                            $('#latPasar').val(e.latlng.lat); // Set field latPasar dengan nilai lat baru
+                            $('#lngPasar').val(e.latlng.lng); // Set field lngPasar dengan nilai lng baru
+                        // mymap;
+                        // pathLine.off('click', klikBatasDesa); // Disable fungsi onClik pada layer batas desa
+                        // Event ketika marker pada map di klik
+                        // marker.on('click', function() {
+                        //     mymap.removeLayer(marker) // Menghapus marker
+                        //     $('#latPasar').val(''); // Set field latPasar dengan nilai lat baru
+                        //     $('#lngPasar').val(''); // Set field lngPasar dengan nilai lng baru
+                        //     pathLine.on('click', klikBatasDesa); // Enable fungsi onClik pada layer batas desa setelah marker sebelumnya di hapus
+                        // });
+                        // $('#latPasar').val(e.latlng.lat); // Set field latPasar dengan nilai lat baru
+                        // $('#lngPasar').val(e.latlng.lng); // Set field lngPasar dengan nilai lng baru
                     });
+                    // marker.dragging.enable();
+                    // marker.on('drag', function(e){
+                    //     $('#lngPasar').val(e.target._latlng.lng); // Set field lngPasar dengan nilai lng baru
+                    //     $('#latPasar').val(e.target._latlng.lat); // Set field latPasar dengan nilai lat baru
+                    // });
                 }
             });
         }
+
+                // Digunakan untuk membuat event on klik pada batas desa yang tampil
+        function moveMarker(e) {
+            marker = new L.marker(e.latlng, {icon: mapIcon});
+            pathLine.off('click', klikBatasDesa); // Disable fungsi onClik pada layer batas desa
+            // Event ketika marker pada map di klik
+            marker.on('click', function() {
+                mymap.removeLayer(marker) // Menghapus marker
+                $('#latPasar').val(''); // Set field latPasar dengan nilai lat baru
+                $('#lngPasar').val(''); // Set field lngPasar dengan nilai lng baru
+                pathLine.on('click', klikBatasDesa); // Enable fungsi onClik pada layer batas desa setelah marker sebelumnya di hapus
+            });
+            $('#latPasar').val(e.latlng.lat); // Set field latPasar dengan nilai lat baru
+            $('#lngPasar').val(e.latlng.lng); // Set field lngPasar dengan nilai lng baru
+            mymap.addLayer(marker);
+        };
 
         // Menghubungkan antar koordinat batas desa
         function makePolygon(data){

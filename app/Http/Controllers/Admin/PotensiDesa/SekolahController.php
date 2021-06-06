@@ -35,7 +35,7 @@ class SekolahController extends Controller
     {
         $this->validate($request,[
             'lokasi_desa' => "required",
-            'nama_sekolah' => "required|regex:/^[a-z ,.'-]+$/i|min:3|max:100",
+            'nama_sekolah' => "required|regex:/^[a-z0-9 ,.'-]+$/i|min:3|max:100",
             'foto' => "image|mimes:jpeg,png,jpg|max:5000",
             'jenjang' => "required",
             'jenis_sekolah' => "required",
@@ -126,7 +126,7 @@ class SekolahController extends Controller
     {
         $this->validate($request,[
             'lokasi_desa' => "required",
-            'nama_sekolah' => "required|regex:/^[a-z ,.'-]+$/i|min:3|max:100",
+            'nama_sekolah' => "required|regex:/^[a-z0-9 ,.'-]+$/i|min:3|max:100",
             'foto' => "image|mimes:jpeg,png,jpg|max:5000",
             'jenjang' => "required",
             'jenis_sekolah' => "required",
