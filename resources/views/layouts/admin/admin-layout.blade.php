@@ -43,9 +43,9 @@
         {{-- Footer End --}}
 
         @include('modal/tentang')  
-        @include('modal/profile-admin')  
+        {{-- @include('modal/profile-admin')  
         @include('modal/password-admin')  
-        @include('modal/tambah-admin')  
+        @include('modal/tambah-admin')   --}}
     </div>
 
 
