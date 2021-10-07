@@ -38,9 +38,11 @@ class ManajemenDesaController extends Controller
         $idDesa = $desa->id;
 
         if ($desa) {
-            return redirect()->back()->with(['confirm' => 'Data Desa Baru Berhasil Ditambahkan. Apakah anda ingin menambahkan batas desa ?', 'idDesa' => $idDesa]);
+            return ('Success');
+            // return redirect()->back()->with(['confirm' => 'Data Desa Baru Berhasil Ditambahkan. Apakah anda ingin menambahkan batas desa ?', 'idDesa' => $idDesa]);
         } else {
-            return redirect()->back()->with(['failed' => 'Data Desa Baru Gagal Ditambahkan']);
+            return('Failed');
+            // return redirect()->back()->with(['failed' => 'Data Desa Baru Gagal Ditambahkan']);
         }   
     }
 

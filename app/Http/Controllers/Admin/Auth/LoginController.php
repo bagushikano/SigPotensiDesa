@@ -10,10 +10,10 @@ use App\Model\Admin;
 
 class LoginController extends Controller
 {
-    public function loginForm()
-    {
-        return view('admin/auth/login');
-    }
+    // public function loginForm()
+    // {
+    //     return view('admin/auth/login');
+    // }
 
     public function login(Request $request)
     {
