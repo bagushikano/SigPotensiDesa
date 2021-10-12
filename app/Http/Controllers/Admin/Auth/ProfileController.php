@@ -10,10 +10,10 @@ use App\Model\Admin;
 
 class ProfileController extends Controller
 {
-    // public function __construct()
-    // {
-    //     $this->middleware('auth');
-    // }
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     
     public function updateProfile(Admin $admin, Request $request)
     {

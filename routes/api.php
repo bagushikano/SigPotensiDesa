@@ -16,4 +16,4 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('/register', 'Admin\Auth\RegisController@register');
 
-Route::post('anajemen-desa/tambah', 'Admin\ManajemenDesa\ManajemenDesaController@tambahDesa');
+Route::post('manajemen-desa/tambah', 'Admin\ManajemenDesa\ManajemenDesaController@tambahDesa');
